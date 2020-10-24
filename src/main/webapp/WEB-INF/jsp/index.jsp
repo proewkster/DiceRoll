@@ -8,9 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="css/style.css">
     <title>DiceRoll BoardGames</title>
 </head>
 <body>
     <p>Under Construction</p>
+    <br>
+    <button >JEFF</button>
+    <button><a href="contact.jsp">Contact</a></button>
+    <button onclick="window.location.href='contact.jsp'">Over Ons</button>
+    <button>Winkelmand</button>
 </body>
 </html>
