@@ -20,10 +20,10 @@
             </div>
             <nav>
                 <ul>
-                    <li><a class="highlight" href="index.jsp">Home</a></li>
-                    <li><a href="contact.jsp">Contact</a></li>
-                    <li><a href="overons.jsp">Over Ons</a></li>
-                    <li><a href="categorie.jsp">Categorie</a></li>
+                    <li><a class="highlight" href="/">Home</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/overons">Over Ons</a></li>
+                    <li><a href="/categorie">Categorie</a></li>
                 </ul>
             </nav>
         </div>
@@ -65,7 +65,7 @@
 
     </section>
 
-    <p>Under Construction</p>
+    <footer>Under Construction</footer>
 
 </body>
 </html>

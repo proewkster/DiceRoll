@@ -8,9 +8,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Contact</title>
 </head>
 <body>
-
+<header>
+    <div class="container">
+        <div id="Branding">
+            <H1><span class="highlight">DiceRoll</span> BoardGames</H1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a class="highlight" href="/contact">Contact</a></li>
+                <li><a href="/overons">Over Ons</a></li>
+                <li><a href="/categorie">Categorie</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+    <p>Under construction</p>
 </body>
 </html>

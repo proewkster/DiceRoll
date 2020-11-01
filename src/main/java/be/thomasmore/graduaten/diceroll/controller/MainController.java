@@ -16,4 +16,13 @@ public class MainController {
     public String registerUser() {
         return "register";
     }
+
+    @RequestMapping("/contact")
+    public String contact(){return "contact";}
+
+    @RequestMapping("/overons")
+    public String overons(){return "overons";}
+
+    @RequestMapping("/categorie")
+    public String categorie(){return "categorie";}
 }
