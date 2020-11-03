@@ -13,7 +13,7 @@
 </head>
 <body>
     <h1>Register for an account</h1>
-    <form action="/showuser" th:th:object="user" method="post" enctype="utf8">
+    <form action="/showuser" method="post" enctype="utf8">
         <div>
             <label>First Name:</label>
             <input type="text" name="firstName" id="firstName">

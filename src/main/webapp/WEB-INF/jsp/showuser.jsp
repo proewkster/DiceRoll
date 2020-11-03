@@ -17,5 +17,9 @@
 </head>
 <body>
     <h1>New user account details</h1>
+    <p>Voornaam: ${user.firstName}</p>
+    <p>Achternaam: ${user.lastName}</p>
+    <p>Emailadres: ${user.email}</p>
+    <p>Paswoord: ${user.password}</p>
 </body>
 </html>
