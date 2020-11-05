@@ -127,3 +127,32 @@ footer{
 p{
    font-weight: bold;
 }
+
+.bg-modal{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content{
+    width: 300px;
+    height: 300px;
+    background-color: white;
+    border-radius: 4px;
+    overflow: scroll;
+}
+.modal-content button:hover{
+    font-weight: bold;
+    cursor: pointer;
+}
+.buttonac{
+    background-color: #e8491d;
+    color: white;
+    border: none;
+    font-size: 16px;
+    padding: 5px;
+}

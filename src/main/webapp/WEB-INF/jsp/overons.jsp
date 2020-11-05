@@ -21,8 +21,10 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/contact">Contact</a></li>
-                <li><a class="highlight"  href="/overons">Over Ons</a></li>
+                <li><a class="highlight" href="/overons">Over Ons</a></li>
                 <li><a href="/categorie">Categorie</a></li>
+                <li><a href="/winkelmand">Winkelmand</a></li>
+                <li><a href="/signin">Sign in</a></li>
             </ul>
         </nav>
     </div>

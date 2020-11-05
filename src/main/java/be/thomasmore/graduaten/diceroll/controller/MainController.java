@@ -19,4 +19,8 @@ public class MainController {
 
     @RequestMapping("/categorie")
     public String categorie(){return "categorie";}
+
+    @RequestMapping("/winkelmand")
+    public String winkelmand(){return "winkelmand";}
+
 }

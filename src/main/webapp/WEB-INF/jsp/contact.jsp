@@ -23,6 +23,8 @@
                 <li><a class="highlight" href="/contact">Contact</a></li>
                 <li><a href="/overons">Over Ons</a></li>
                 <li><a href="/categorie">Categorie</a></li>
+                <li><a href="/winkelmand">Winkelmand</a></li>
+                <li><a href="/signin">Sign in</a></li>
             </ul>
         </nav>
     </div>
