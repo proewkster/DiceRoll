@@ -8,22 +8,21 @@ import java.util.Date;
 public class User {
     //Attributes
     @Id
-    public String userId;
-    public String firstName;
-    public String lastName;
-    public String email;
-    public String password;
-    public Date birthdate;
-    public String zipCode;
-    public String city;
-    public String street;
-    public String streetNumber;
-    public String bus;
-    public String country;
-    public String phoneNumber;
-    public String mobileNumber;
-    public String role;
-    public Date created;
+    private String userId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private Date birthdate;
+    private String zipCode;
+    private String city;
+    private String streetAddress;
+    private String bus;
+    private String country;
+    private String phoneNumber;
+    private String mobileNumber;
+    private String role;
+    private Date created;
 
     //Getters and Setters
     public String getUserId() {
@@ -90,20 +89,12 @@ public class User {
         this.city = city;
     }
 
-    public String getStreet() {
-        return street;
+    public String getStreetAddress() {
+        return streetAddress;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getStreetNumber() {
-        return streetNumber;
-    }
-
-    public void setStreetNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
+    public void setStreetAddress(String street) {
+        this.streetAddress = streetAddress;
     }
 
     public String getBus() {
