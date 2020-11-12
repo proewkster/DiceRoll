@@ -17,8 +17,6 @@ public class User {
     private String zipCode;
     private String city;
     private String streetAddress;
-    private String bus;
-    private String country;
     private String phoneNumber;
     private String mobileNumber;
     private String role;
@@ -93,24 +91,8 @@ public class User {
         return streetAddress;
     }
 
-    public void setStreetAddress(String street) {
+    public void setStreetAddress(String streetAddress) {
         this.streetAddress = streetAddress;
-    }
-
-    public String getBus() {
-        return bus;
-    }
-
-    public void setBus(String bus) {
-        this.bus = bus;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public String getPhoneNumber() {
@@ -137,7 +119,36 @@ public class User {
         this.created = created;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     //Constructors
     public User() {
+    }
+
+    //Methods
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", birthdate=" + birthdate +
+                ", zipCode='" + zipCode + '\'' +
+                ", city='" + city + '\'' +
+                ", streetAddress='" + streetAddress + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", mobileNumber='" + mobileNumber + '\'' +
+                ", role='" + role + '\'' +
+                ", created=" + created +
+                '}';
     }
 }

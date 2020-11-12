@@ -147,7 +147,7 @@ public class UserDTO {
                 ", birthdate='" + birthdate + '\'' +
                 ", zipcode=" + zipcode +
                 ", city='" + city + '\'' +
-                ", street='" + streetAddress + '\'' +
+                ", streetAddress='" + streetAddress + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", mobileNumber='" + mobileNumber + '\'' +
                 '}';

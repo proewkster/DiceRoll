@@ -1,7 +1,17 @@
 package be.thomasmore.graduaten.diceroll.service;
 
 import be.thomasmore.graduaten.diceroll.entity.User;
+import be.thomasmore.graduaten.diceroll.objects.UserDTO;
+
+import java.util.Optional;
 
 public interface UserService {
-    User getUserById(String userId);
+
+    boolean userExists(String email);
+
+    Optional<User> getUserById(String userId);
+    Optional<User> getUserByEmail(String email);
+
+    User save(User user);
+    User register(UserDTO userDTO) throws Exception;
 }
