@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.List" %>
+<%@ page import="be.thomasmore.graduaten.diceroll.entity.Game" %><%--
   Created by IntelliJ IDEA.
   User: Koen Van Looy
   Date: 25/10/2020
@@ -29,6 +30,16 @@
         </nav>
     </div>
 </header>
-    <p>under construction</p>
+<main>
+    <%
+        List<Game> games = (List<Game>) request.getAttribute("games");
+        for (Game game: games){
+            out.print("ID: "+game.getGameID() +" - Naam: "+game.getTitle() + " - minimum aantal spelers: "+game.getMinPlayers()+ "<br>");
+        }
+    %>
+
+</main>
+<footer><p>under construction</p></footer>
+
 </body>
 </html>

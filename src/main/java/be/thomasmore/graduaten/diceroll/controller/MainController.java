@@ -1,10 +1,18 @@
 package be.thomasmore.graduaten.diceroll.controller;
 
+import be.thomasmore.graduaten.diceroll.entity.Game;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import be.thomasmore.graduaten.diceroll.service.GameService;
+
+import java.util.List;
 
 @Controller
 public class MainController {
+    @Autowired
+    GameService gameService;
 
     @RequestMapping("/")
     public String index() {
@@ -18,7 +26,10 @@ public class MainController {
     public String overons(){return "overons";}
 
     @RequestMapping("/categorie")
-    public String categorie(){return "categorie";}
+    public String categorie(Model model){
+        List<Game> games = gameService.getGames();
+        model.addAttribute("games", games);
+        return "categorie";}
 
     @RequestMapping("/winkelmand")
     public String winkelmand(){return "winkelmand";}
