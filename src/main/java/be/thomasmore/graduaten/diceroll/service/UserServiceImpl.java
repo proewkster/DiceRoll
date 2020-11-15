@@ -12,7 +12,6 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -32,14 +31,17 @@ public class UserServiceImpl implements UserService {
         return this.getUserByEmail(email).isPresent();
     }
 
-    public Optional<User> getUserById(String userID) {
+    @Override
+    public Optional<User> getUserById(Long userID) {
         return _repo.findById(userID);
     }
 
+    @Override
     public Optional<User> getUserByEmail(String email) {
         return _repo.findUserByEmail(email);
     }
 
+    @Override
     public User save(User user) {
         return _repo.save(user);
     }
@@ -54,9 +56,6 @@ public class UserServiceImpl implements UserService {
         //Map UserDTO model to User model
         _mapper.map(userDTO, user);
 
-        //Set new UID for User model
-        user.setUserId(UUID.randomUUID().toString());
-
         //Set User model creation date
         user.setCreated(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
 
@@ -64,7 +63,7 @@ public class UserServiceImpl implements UserService {
         user.setRole("user");
 
         //Save the User model in the database
-        //return save(user); --> Temporarily disabled until DB connection is restored
-        return user;
+        return save(user);
+        //return user;
     }
 }

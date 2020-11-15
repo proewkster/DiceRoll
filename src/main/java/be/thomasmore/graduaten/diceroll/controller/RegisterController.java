@@ -50,11 +50,11 @@ public class RegisterController {
     {
 
         //Check if user already exists
-        //if (_userService.userExists(userDTO.getEmail())) {
-        //
-        //    //Inject error message in validation result for email field
-        //    bindingResult.addError(new FieldError("userDTO","email","This email address is already in use."));
-        //}
+        if (_userService.userExists(userDTO.getEmail())) {
+
+            //Inject error message in validation result for email field
+            bindingResult.addError(new FieldError("userDTO","email","This email address is already in use."));
+        }
 
         //Check matching passwords
         if (userDTO.getPassword() != null && userDTO.getConfirmPassword() != null) {

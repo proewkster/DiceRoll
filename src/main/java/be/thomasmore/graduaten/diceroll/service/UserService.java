@@ -9,7 +9,7 @@ public interface UserService {
 
     boolean userExists(String email);
 
-    Optional<User> getUserById(String userId);
+    Optional<User> getUserById(Long userId);
     Optional<User> getUserByEmail(String email);
 
     User save(User user);

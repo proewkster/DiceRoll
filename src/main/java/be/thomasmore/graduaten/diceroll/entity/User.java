@@ -1,33 +1,48 @@
 package be.thomasmore.graduaten.diceroll.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name="Users")
 public class User {
     //Attributes
     @Id
-    private String userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="UserID")
+    private Long userId;
+    @Column(name="Firstname")
     private String firstName;
+    @Column(name="Lastname")
     private String lastName;
+    @Column(name="Email")
     private String email;
+    @Column(name="Password")
     private String password;
+    @Column(name="Birthdate")
     private Date birthdate;
+    @Column(name="PostalCode")
     private String zipCode;
+    @Column(name="City")
     private String city;
+    @Column(name="StreetAddress")
     private String streetAddress;
+    @Column(name="PhoneNumber")
     private String phoneNumber;
+    @Column(name="MobileNumber")
     private String mobileNumber;
+    @Column(name="Role")
     private String role;
+    @Column(name="Created")
     private Date created;
 
     //Getters and Setters
-    public String getUserId() {
+
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -136,7 +151,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userId='" + userId + '\'' +
+                "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
