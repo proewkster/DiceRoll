@@ -156,3 +156,27 @@ p{
     font-size: 16px;
     padding: 5px;
 }
+.flexcontainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+.gameList{
+    width: 400px;
+    height: 500px;
+    margin: 10px;
+    border: black 1px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.gametext{
+    padding-left: 10px;
+    width: auto;
+}
+.gameList img{
+    max-width: 90%;
+    margin: 10px 5% 0px 5%;
+    object-fit: contain;
+}

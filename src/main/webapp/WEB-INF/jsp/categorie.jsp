@@ -33,13 +33,28 @@
 <main>
     <%
         List<Game> games = (List<Game>) request.getAttribute("games");
+        out.print("<div class=\"flexcontainer\">");
         for (Game game: games){
-            out.print("ID: "+game.getGameID() +" - Naam: "+game.getTitle() + " - minimum aantal spelers: "+game.getMinPlayers()+ "<br>");
+            out.print("<div class=\"gameList\">");
+            if (game.getImgURL()==null){
+                out.print("<img src=\"images/no-image-available-icon-13.jpg\"></img>");
+            }
+            else{ out.print("<img src="+game.getImgURL()+"></img>");}
+            out.print("<div class=\"gametext\">");
+            out.print("<p>"+game.getTitle()+"</p>");
+            out.print("<p>Dit spel heeft een rating van "+game.getRating()+"/10.</p>");
+            out.print("<p>Koopprijs: €"+game.getPrice_Sale()+"</p>");
+            out.print("<p>Huurprijs: €"+game.getPrice_Rent()+"</p>");
+            out.print("</div>");
+            out.print("</div>");
         }
+            out.print("</div>");
     %>
 
 </main>
-<footer><p>under construction</p></footer>
+<footer>
+
+</footer>
 
 </body>
 </html>
