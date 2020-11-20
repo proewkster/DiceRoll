@@ -1,6 +1,15 @@
 package be.thomasmore.graduaten.diceroll.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -53,6 +62,25 @@ public class Game {
         Stock_Sale = stock_Sale;
         Stock_Rent = stock_Rent;
     }
+    @Pattern(regexp = "[0-9][0-9][0-9][0-9]",message = "DateFormat = YYYY")
+    public String getYear() {
+        if (Year != null){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy");
+        return dateFormat.format(Year);
+        }
+        return "2000";
+    }
+    public void setYear(String year) throws Exception{
+        this.Year = new SimpleDateFormat("yyyy").parse(year);
+    }
+
+    public String getDistributor() {
+        return Distributor;
+    }
+
+    public void setDistributor(String distributor) {
+        Distributor = distributor;
+    }
 
     public Long getGameID() {
         return GameID;
@@ -61,7 +89,7 @@ public class Game {
     public void setGameID(Long gameID) {
         GameID = gameID;
     }
-
+    @NotBlank(message = "Minplayer moet ingevuld zijn")
     public String getTitle() {
         return Title;
     }
@@ -69,7 +97,7 @@ public class Game {
     public void setTitle(String title) {
         Title = title;
     }
-
+    @NotNull(message = "Value May not be null")
     public Long getMinPlayers() {
         return MinPlayers;
     }
@@ -77,7 +105,7 @@ public class Game {
     public void setMinPlayers(Long minPlayers) {
         MinPlayers = minPlayers;
     }
-
+    @NotNull(message = "Value May not be null")
     public Long getMaxPlayers() {
         return MaxPlayers;
     }
@@ -85,7 +113,7 @@ public class Game {
     public void setMaxPlayers(Long maxPlayers) {
         MaxPlayers = maxPlayers;
     }
-
+    @NotNull(message = "Value May not be null")
     public Long getMinTime() {
         return MinTime;
     }
@@ -93,7 +121,7 @@ public class Game {
     public void setMinTime(Long minTime) {
         MinTime = minTime;
     }
-
+    @NotNull(message = "Value May not be null")
     public Long getMaxtime() {
         return Maxtime;
     }
@@ -101,7 +129,7 @@ public class Game {
     public void setMaxtime(Long maxtime) {
         Maxtime = maxtime;
     }
-
+    @NotNull(message = "Value May not be null")
     public Long getAvgTime() {
         return AvgTime;
     }
@@ -109,15 +137,7 @@ public class Game {
     public void setAvgTime(Long avgTime) {
         AvgTime = avgTime;
     }
-
-    public Date getYear() {
-        return Year;
-    }
-
-    public void setYear(Date year) {
-        Year = year;
-    }
-
+    @NotNull(message = "Value May not be null")
     public Long getRating() {
         return Rating;
     }
@@ -125,7 +145,7 @@ public class Game {
     public void setRating(Long rating) {
         Rating = rating;
     }
-
+    @NotNull(message = "Value May not be null")
     public Long getNumVotes() {
         return NumVotes;
     }
@@ -133,7 +153,7 @@ public class Game {
     public void setNumVotes(Long numVotes) {
         NumVotes = numVotes;
     }
-
+    @NotBlank(message = "No null String allowed")
     public String getImgURL() {
         return ImgURL;
     }
@@ -141,7 +161,7 @@ public class Game {
     public void setImgURL(String imgURL) {
         ImgURL = imgURL;
     }
-
+    @NotNull(message = "Value May not be null")
     public Long getAge() {
         return Age;
     }
@@ -149,7 +169,7 @@ public class Game {
     public void setAge(Long age) {
         Age = age;
     }
-
+    @NotBlank(message = "No null String allowed")
     public String getCategory() {
         return Category;
     }
@@ -157,7 +177,7 @@ public class Game {
     public void setCategory(String category) {
         Category = category;
     }
-
+    @NotBlank(message = "No null String allowed")
     public String getDesigner() {
         return Designer;
     }
@@ -165,7 +185,7 @@ public class Game {
     public void setDesigner(String designer) {
         Designer = designer;
     }
-
+    @NotBlank(message = "No null String allowed")
     public String getDistributer() {
         return Distributor;
     }
@@ -173,7 +193,7 @@ public class Game {
     public void setDistributer(String distributer) {
         Distributor = distributer;
     }
-
+    @NotNull(message = "Value May not be null")
     public double getPrice_Sale() {
         return Price_Sale;
     }
@@ -181,7 +201,7 @@ public class Game {
     public void setPrice_Sale(double price_Sale) {
         Price_Sale = price_Sale;
     }
-
+    @NotNull(message = "Value May not be null")
     public double getPrice_Rent() {
         return Price_Rent;
     }
@@ -189,7 +209,7 @@ public class Game {
     public void setPrice_Rent(double price_Rent) {
         Price_Rent = price_Rent;
     }
-
+    @NotNull(message = "Value May not be null")
     public Long getStock_Sale() {
         return Stock_Sale;
     }
@@ -197,7 +217,7 @@ public class Game {
     public void setStock_Sale(Long stock_Sale) {
         Stock_Sale = stock_Sale;
     }
-
+    @NotNull(message = "Value May not be null")
     public Long getStock_Rent() {
         return Stock_Rent;
     }
