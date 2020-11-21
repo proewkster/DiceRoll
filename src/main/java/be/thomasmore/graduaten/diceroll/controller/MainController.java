@@ -18,7 +18,9 @@ public class MainController {
     GameService gameService;
 
     @RequestMapping("/")
-    public String index() {
+    public String index(Model model) {
+        List<Game> games = gameService.getHighestRated();
+        model.addAttribute("games", games);
         return "index";
     }
 

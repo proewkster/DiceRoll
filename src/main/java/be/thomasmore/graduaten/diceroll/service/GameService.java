@@ -10,6 +10,7 @@ public interface GameService {
     List<Game> getGames();
     List<Game> getGamesByTitle(String keyword);
     List<Game> getGamesById(Long id);
+    List<Game> getHighestRated();
     public Game addGame(GameDTO gameDTO) throws Exception;
     public String deleteGame(Long id);
     public void  saveGame(Game game);

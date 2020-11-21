@@ -177,6 +177,7 @@ p{
 }
 .gameList img{
     max-width: 90%;
+    max-height: 50%;
     margin: 10px 5% 0px 5%;
     object-fit: contain;
 }

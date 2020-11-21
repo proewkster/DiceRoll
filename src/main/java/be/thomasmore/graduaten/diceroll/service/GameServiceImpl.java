@@ -4,6 +4,7 @@ import be.thomasmore.graduaten.diceroll.entity.Game;
 import be.thomasmore.graduaten.diceroll.objects.GameDTO;
 import be.thomasmore.graduaten.diceroll.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public class GameServiceImpl implements GameService {
     public List<Game> getGames() {
         return gameRepository.findAll();
     }
+    @Override
+    public List<Game> getHighestRated(){return gameRepository.getTop20ByRating();}
+
 
     @Override
     public Game addGame(GameDTO gameDTO) throws Exception {
@@ -74,5 +78,7 @@ public class GameServiceImpl implements GameService {
         }
         return gameRepository.findAll();
     }
+
+
 }
 
