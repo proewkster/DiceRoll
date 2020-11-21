@@ -7,15 +7,14 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AuthorityServiceImpl implements AuthorityService {
+public class AuthorityService {
 
     private final AuthorityRepository _repo;
 
-    public AuthorityServiceImpl(AuthorityRepository repo) {
+    public AuthorityService(AuthorityRepository repo) {
         this._repo = repo;
     }
 
-    @Override
     public Optional<Authority> findAuthorityByName(String name) {
         return _repo.findAuthorityByName(name);
     }

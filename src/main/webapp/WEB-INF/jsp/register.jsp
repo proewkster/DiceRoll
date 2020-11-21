@@ -146,7 +146,7 @@
                 <button type="submit" class="btn btn-dark btn-block col-md-6 mt-4 mx-4">Register</button>
             </div>
             <div class="row justify-content-center">
-                <p class="py-1">Already have an account? <a href="/signin">Sign in</a></p>
+                <p class="py-1">Already have an account? <a href="login">Sign in</a></p>
             </div>
 
         </form:form>

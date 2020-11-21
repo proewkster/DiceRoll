@@ -1,7 +1,7 @@
 package be.thomasmore.graduaten.diceroll.controller;
 
 import be.thomasmore.graduaten.diceroll.objects.UserDTO;
-import be.thomasmore.graduaten.diceroll.service.UserServiceImpl;
+import be.thomasmore.graduaten.diceroll.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,10 @@ import javax.validation.Valid;
 public class RegisterController {
 
     private static final Logger log = LoggerFactory.getLogger(RegisterController.class);
-    private final UserServiceImpl _userService;
+    private final UserService _userService;
 
     @Autowired
-    public RegisterController(UserServiceImpl userService) {
+    public RegisterController(UserService userService) {
         this._userService = userService;
     }
 

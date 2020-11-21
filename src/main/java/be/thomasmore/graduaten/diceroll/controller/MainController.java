@@ -1,11 +1,14 @@
 package be.thomasmore.graduaten.diceroll.controller;
 
 import be.thomasmore.graduaten.diceroll.entity.Game;
+import be.thomasmore.graduaten.diceroll.entity.User;
+import be.thomasmore.graduaten.diceroll.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import be.thomasmore.graduaten.diceroll.service.GameService;
 
 import java.util.List;
 

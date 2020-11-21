@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserService {
 
     private final UserRepository _repo;
     private final ModelMapper _mapper;
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private final AuthorityService authorityService;
 
     @Autowired
-    public UserServiceImpl(UserRepository repo, ModelMapper mapper, BCryptPasswordEncoder encoder, AuthorityService authService){
+    public UserService(UserRepository repo, ModelMapper mapper, BCryptPasswordEncoder encoder, AuthorityService authService){
         this._repo = repo;
         this._mapper = mapper;
         this._encoder = encoder;
@@ -36,17 +36,14 @@ public class UserServiceImpl implements UserService {
         return this.findUserByEmail(email).isPresent();
     }
 
-    @Override
     public Optional<User> findUserById(Integer userID) {
         return _repo.findById(userID);
     }
 
-    @Override
     public Optional<User> findUserByEmail(String email) {
         return _repo.findUserByEmail(email);
     }
 
-    @Override
     public User save(User user) {
         return _repo.save(user);
     }

@@ -1,16 +1,24 @@
 package be.thomasmore.graduaten.diceroll.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name="Users")
-public class User {
+public class User implements UserDetails {
+    //User class implements UserDetails so this object can be used on the SecurityConfiguration for authentication and authorization purposes
+    //Because of this, some default getters needed an Override of the interface
+    //These methods are grouped further down in the class and replace the default getters for this class
+
     //Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="UserID")
-    private Long userId;
+    private int userId;
     @Column(name="Firstname")
     private String firstName;
     @Column(name="Lastname")
@@ -31,18 +39,22 @@ public class User {
     private String phoneNumber;
     @Column(name="MobileNumber")
     private String mobileNumber;
-    @Column(name="Role")
-    private String role;
     @Column(name="Created")
     private Date created;
+    @Column(name="Enabled")
+    private boolean enabled = true;
 
-    //Getters and Setters
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @JoinTable(name = "UserAuthorities",joinColumns=@JoinColumn(name = "UserID"),inverseJoinColumns=@JoinColumn(name = "AuthorityID"))
+    private List<Authority> authorities;
 
-    public Long getUserId() {
+    //Default Getters and Setters
+
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -68,10 +80,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -134,12 +142,12 @@ public class User {
         this.created = created;
     }
 
-    public String getRole() {
-        return role;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 
     //Constructors
@@ -162,8 +170,51 @@ public class User {
                 ", streetAddress='" + streetAddress + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", mobileNumber='" + mobileNumber + '\'' +
-                ", role='" + role + '\'' +
                 ", created=" + created +
+                ", enabled=" + enabled +
+                ", authorities=" + authorities +
                 '}';
+    }
+
+    //Methods for UserDetails interface
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        //Convert database values to values of type GrantedAuthority for authorization purposes
+        Set<GrantedAuthority> auth = new HashSet<>();
+        this.authorities.forEach(x -> auth.add(new SimpleGrantedAuthority("ROLE_" + x.getName()))); //Append "ROLE_" before actual Authority. Spring Security expects this
+        return auth;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    //Hardcoded, not used
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    //Hardcoded, not used
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    //Hardcoded, not used
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
     }
 }

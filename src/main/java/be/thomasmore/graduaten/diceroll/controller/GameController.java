@@ -1,10 +1,8 @@
 package be.thomasmore.graduaten.diceroll.controller;
 
 import be.thomasmore.graduaten.diceroll.entity.Game;
-import be.thomasmore.graduaten.diceroll.objects.GameDTO;
 import be.thomasmore.graduaten.diceroll.objects.Search;
 import be.thomasmore.graduaten.diceroll.service.GameService;
-import be.thomasmore.graduaten.diceroll.service.UserServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
