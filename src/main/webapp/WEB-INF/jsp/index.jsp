@@ -1,5 +1,7 @@
 <%@ page import="be.thomasmore.graduaten.diceroll.entity.Game" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
   Created by IntelliJ IDEA.
   User: Jeroen Leyssen
   Date: 24/10/2020
@@ -10,27 +12,17 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width">
+    <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <title> DiceRollBoardGames</title>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div id="Branding">
-                <H1><span class="highlight">DiceRoll</span> BoardGames</H1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a class="highlight" href="/">Home</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                    <li><a href="/overons">Over Ons</a></li>
-                    <li><a href="/categorie">Categorie</a></li>
-                    <li><a href="/winkelmand">Winkelmand</a></li>
-                    <li><a href="/login">Sign in</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+
+<jsp:include page="navbar.jsp">
+    <jsp:param name="userFirstName" value="${authUser.firstName}"/>
+</jsp:include>
+
     <section id="showcase">
         <div class="container">
             <H1>Fantastisch Leuke Boardgames</H1>
@@ -282,6 +274,8 @@
             </ul>
         </div>
     </div>
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 <script>
     document.querySelector('.buttonac').addEventListener('click',function (){document.querySelector('.bg-modal').style.display='none';});
 </script>

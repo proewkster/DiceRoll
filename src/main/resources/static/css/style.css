@@ -24,6 +24,19 @@ ul{
     padding-right: 20px;
     color: white;
 }
+.highlight{
+    color: #e8491d;
+    font-weight: bold;
+}
+
+.navbar-color{
+    background-color: #2f4f4f;
+}
+
+/*Navbar*/
+.navbar-dropdown-menu{
+    width: 300px !important;
+}
 
 /*Header*/
 header{

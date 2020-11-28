@@ -1,7 +1,6 @@
 package be.thomasmore.graduaten.diceroll.controller;
 
-import be.thomasmore.graduaten.diceroll.entity.User;
-import org.springframework.security.core.context.SecurityContextHolder;
+import be.thomasmore.graduaten.diceroll.helper.UserInformation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +17,8 @@ public class LoginController {
             Model model) {
 
         //If a user is already logged in, redirect to authenticated page
-        if (getPrincipal() != null) {
-            return new ModelAndView("authenticated");
+        if (UserInformation.getAuthenticatedUser() != null) {
+            return new ModelAndView("");
         }
 
         //Reset all parameters
@@ -43,21 +42,5 @@ public class LoginController {
 
         //Return login page
         return mv;
-    }
-
-    //Authentication page for login success
-    @GetMapping("/authenticated")
-    public String authenticated(Model model) {
-        model.addAttribute("user",getPrincipal());
-        return "authenticated";
-    }
-
-    //Get logged in user
-    private User getPrincipal() {
-        User authUser = null;
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
-            authUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }
-        return authUser;
     }
 }

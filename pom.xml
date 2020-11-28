@@ -106,12 +106,26 @@
             <version>2.3.5.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>3.1.2.RELEASE</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.webjars/font-awesome -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>font-awesome</artifactId>
+            <version>4.7.0</version>
+        </dependency>
+
 
     </dependencies>
 

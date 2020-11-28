@@ -9,10 +9,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>DiceRoll - Login</title>
+    <meta name="viewport" content="width=device-width">
     <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>DiceRoll - Login</title>
 </head>
 <body>
+<jsp:include page="navbar.jsp">
+    <jsp:param name="userFirstName" value="${authUser.firstName}"/>
+</jsp:include>
+
 <div class="row justify-content-center">
     <div class="col text-center">
         <h1 class="display-5 bg-dark text-light py-1">Sign in</h1>
@@ -35,7 +42,7 @@
 
                 <div class="form-row py-1">
                     <label>Email Address:</label>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="username"/>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="email address"/>
                 </div>
 
                 <div class="form-row py-1">

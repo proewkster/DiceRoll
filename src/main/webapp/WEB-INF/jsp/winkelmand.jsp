@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Koen Van Looy
@@ -8,27 +9,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>winkelmand</title>
     <meta name="viewport" content="width=device-width">
+    <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <title>winkelmand</title>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div id="Branding">
-                <H1><span class="highlight">DiceRoll</span> BoardGames</H1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a  href="/">Home</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                    <li><a href="/overons">Over Ons</a></li>
-                    <li><a href="/categorie">Categorie</a></li>
-                    <li><a class="highlight" href="/winkelmand">Winkelmand</a></li>
-                    <li><a href="/login">Sign in</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<jsp:include page="navbar.jsp">
+    <jsp:param name="userFirstName" value="${authUser.firstName}"/>
+</jsp:include>
+
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Jeroen Leyssen
@@ -10,10 +11,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>DiceRoll - Register</title>
+    <meta name="viewport" content="width=device-width">
     <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>DiceRoll - Register</title>
 </head>
 <body>
+<jsp:include page="navbar.jsp">
+    <jsp:param name="userFirstName" value="${authUser.firstName}"/>
+</jsp:include>
     <div class="row justify-content-center">
         <div class="col text-center">
             <h1 class="display-5 bg-dark text-light py-1">Register for an account</h1>
