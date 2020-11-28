@@ -1,7 +1,9 @@
 package be.thomasmore.graduaten.diceroll.controller;
 
+import be.thomasmore.graduaten.diceroll.entity.Categorie;
 import be.thomasmore.graduaten.diceroll.entity.Game;
 import be.thomasmore.graduaten.diceroll.entity.User;
+import be.thomasmore.graduaten.diceroll.service.CategorieService;
 import be.thomasmore.graduaten.diceroll.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +18,8 @@ import java.util.List;
 public class MainController {
     @Autowired
     GameService gameService;
+    @Autowired
+    CategorieService categorieService;
 
     @RequestMapping("/")
     public String index(Model model) {
@@ -32,6 +36,8 @@ public class MainController {
 
     @RequestMapping("/categorie")
     public String categorie(Model model){
+        List<Categorie> categories = categorieService.getCategories();
+        model.addAttribute("categories", categories);
         List<Game> games = gameService.getGames();
         model.addAttribute("games", games);
         return "categorie";}
