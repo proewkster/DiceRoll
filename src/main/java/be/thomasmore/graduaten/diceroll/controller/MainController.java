@@ -23,17 +23,40 @@ public class MainController {
     CategorieService categorieService;
 
     @RequestMapping("/")
-    public String index(Model model) {
+    public ModelAndView index() {
+        ModelAndView mv = new ModelAndView("index");
+
+        User authUser = UserInformation.getAuthenticatedUser();
+
+        mv.addObject("authUser", authUser);
+
         List<Game> games = gameService.getHighestRated();
-        model.addAttribute("games", games);
-        return "index";
+        mv.addObject("games", games);
+
+        return mv;
     }
 
-    @RequestMapping("/contact")
-    public String contact(){return "contact";}
+    @GetMapping("/contact")
+    public ModelAndView contact() {
+        ModelAndView mv = new ModelAndView("contact");
 
-    @RequestMapping("/overons")
-    public String overons(){return "overons";}
+        User authUser = UserInformation.getAuthenticatedUser();
+
+        mv.addObject("authUser", authUser);
+
+        return mv;
+    }
+
+    @GetMapping("/overons")
+    public ModelAndView overons() {
+        ModelAndView mv = new ModelAndView("overons");
+
+        User authUser = UserInformation.getAuthenticatedUser();
+
+        mv.addObject("authUser", authUser);
+
+        return mv;
+    }
 
     @RequestMapping("/categorie")
     public String categorie(Model model){
@@ -41,10 +64,19 @@ public class MainController {
         model.addAttribute("categories", categories);
         List<Game> games = gameService.getGames();
         model.addAttribute("games", games);
-        return "categorie";}
+        return "categorie";
+    }
 
-    @RequestMapping("/winkelmand")
-    public String winkelmand(){return "winkelmand";}
+    @GetMapping("/winkelmand")
+    public ModelAndView winkelmand() {
+        ModelAndView mv = new ModelAndView("winkelmand");
+
+        User authUser = UserInformation.getAuthenticatedUser();
+
+        mv.addObject("authUser", authUser);
+
+        return mv;
+    }
 
     @GetMapping("/newhome")
     public ModelAndView newHome() {
