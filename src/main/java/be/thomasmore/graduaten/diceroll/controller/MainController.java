@@ -29,12 +29,7 @@ public class MainController {
 
     @Autowired
     GameService gameService;
-    @Autowired
-    CategorieService categorieService;
 
-    List<TestDTO> testen = new ArrayList<TestDTO>();
-    List<RentGameDTO> rentGameDTOS = new ArrayList<RentGameDTO>();
-    int i = 0;
     @RequestMapping("/")
     public ModelAndView index(HttpSession session) {
         ModelAndView mv = new ModelAndView("index");
@@ -74,14 +69,6 @@ public class MainController {
         return mv;
     }
 
-    @RequestMapping("/categorie")
-    public String categorie(Model model){
-        List<Categorie> categories = categorieService.getCategories();
-        model.addAttribute("categories", categories);
-        List<Game> games = gameService.getGames();
-        model.addAttribute("games", games);
-        return "categorie";
-    }
     @RequestMapping("/RentGame")
     public ModelAndView rentGame(HttpSession session, @RequestParam String id){
         Game game = gameService.getGameById(Long.parseLong(id));

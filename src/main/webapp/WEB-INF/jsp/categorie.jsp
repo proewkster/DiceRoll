@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.List" %>
 <%@ page import="be.thomasmore.graduaten.diceroll.entity.Game" %>
 <%@ page import="be.thomasmore.graduaten.diceroll.entity.Categorie" %><%--
@@ -48,17 +49,18 @@
         <div class="container-fluid">
         <div class="row">
         <div class="col-md-3 col-lg-2  d-flex flex-column  border-right border-dark">
-            <!--
-            <form  id="formCategories" action="/categorie">
-                <input type="submit" value="toepassen">
-                <% //for (Categorie categorie: categories) {%>
-            <div class="form-check">
-            <% //out.print("<input onchange=\"document.getElementById('formCategories').submit()\"\n class=\"form-check-input d-inline"+categorie.getCategorieId()+"\" type=\"checkbox\" value=\"\" id=\""+categorie.getCategorieId()+"\">");
-            //out.print("<label class=\"form-check-label"+categorie.getCategorieId()+"\" for=\""+categorie.getCategorieId()+"\">"+categorie.getGenre()+"</label>");%>
-            </div>
-       <% //}%>
-            </form>
-            -->
+
+            <form:form  id="formCategories" action="/categorie" modelAttribute="filter" method="get">
+
+                <c:forEach items="${categories}" var="cat">
+
+                <form:checkbox name="${cat.categorieId}" path="id" value="${cat.categorieId}" onchange="document.getElementById('formCategories').submit()"/> ${cat.genre}
+<br>
+                </c:forEach>
+            </form:form>
+
+   </div>
+
 
     <%
         List<Game> games = (List<Game>) request.getAttribute("games");

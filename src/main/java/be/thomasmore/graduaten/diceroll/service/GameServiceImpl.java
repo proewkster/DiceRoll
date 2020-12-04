@@ -77,10 +77,13 @@ public class GameServiceImpl implements GameService {
         game.setStock_Sale(game.getStock_Sale()-stock);
         gameRepository.save(game);
     }
+@Override
+    public List<Game> getFilterCategorie(Long id){
+        if (id!= null){
+            return gameRepository.getfilter1categorie(id);
+        }
+        return gameRepository.findAll();
+}
 
-    @Override
-    public List<Game> getHighestRated() {
-        return null;
-    }
 }
 

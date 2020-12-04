@@ -65,6 +65,7 @@
         <div class="navbar-nav">
             <a class="nav-link d-flex justify-content-between" href="/">Home</a>
             <a class="nav-link d-flex justify-content-between" href="/contact">Contact</a>
+            <a class="nav-link d-flex justify-content-between" href="/categorie">Categorie</a>
             <a class="nav-link d-flex justify-content-between" href="/overons">Over Ons</a>
             <a class="nav-link disabled d-flex justify-content-between" href="/games">Games</a>
 

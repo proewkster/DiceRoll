@@ -15,4 +15,5 @@ public interface GameService {
     public Game addGame(GameDTO gameDTO) throws Exception;
     public String deleteGame(Long id);
     public void  saveGame(Game game);
+    List<Game> getFilterCategorie(Long Id);
 }

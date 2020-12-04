@@ -58,14 +58,12 @@
             out.print("<p>Huurprijs: €"+game.getPrice_Rent()+"</p>");
             out.print("</div>");
             out.print("</div>");
-
             counter++;
             if (counter==20){
                 break;
             }
         }
         out.print("</div>");
-
     %>
 </section>
     <section id="boxes">

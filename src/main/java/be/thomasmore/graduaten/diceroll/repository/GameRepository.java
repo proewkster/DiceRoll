@@ -16,4 +16,6 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     public List<Game> findAll(Long id);
 @Query("SELECT g FROM Game g ORDER BY g.Rating DESC")
     public  List<Game> getTop20ByRating();
+@Query("SELECT g FROM Game g INNER JOIN GameCategorie gc ON g.GameID=gc.GameID WHERE gc.CategorieId=?1")
+    public  List<Game> getfilter1categorie(Long id);
 }
