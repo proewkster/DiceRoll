@@ -26,7 +26,9 @@ import java.util.List;
 @Controller
 public class MainController {
 
-
+    List<TestDTO> testen = new ArrayList<TestDTO>();
+    List<RentGameDTO> rentGameDTOS = new ArrayList<RentGameDTO>();
+    int i = 0;
     @Autowired
     GameService gameService;
 
@@ -41,7 +43,7 @@ public class MainController {
         session.setAttribute("test",testen);
         session.setAttribute("RentGameDTOS",rentGameDTOS );
         i++;
-        List<Game> games = gameService.getGames();
+        List<Game> games = gameService.getHighestRated();
         mv.addObject("games", games);
         mv.addObject("i",i);
         return mv;

@@ -72,6 +72,12 @@ public class GameServiceImpl implements GameService {
         }
         return gameRepository.findAll();
     }
+
+    @Override
+    public List<Game> getHighestRated() {
+        return gameRepository.getTop20ByRating();
+    }
+
     @Override
     public void adjustStockGame(Game game, int stock){
         game.setStock_Sale(game.getStock_Sale()-stock);
