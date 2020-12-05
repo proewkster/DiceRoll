@@ -40,6 +40,7 @@ public class UserService {
         return _repo.findById(userID);
     }
 
+    public User GetUser(Integer userID){return _repo.getOne(userID);}
     public Optional<User> findUserByEmail(String email) {
         return _repo.findUserByEmail(email);
     }

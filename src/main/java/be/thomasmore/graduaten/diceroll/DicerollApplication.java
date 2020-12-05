@@ -13,6 +13,9 @@ public class DicerollApplication {
         SpringApplication.run(DicerollApplication.class, args);
     }
 
+
+
+
     @Bean
     public ModelMapper modelMapper(){
         return new ModelMapper();

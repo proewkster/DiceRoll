@@ -24,7 +24,6 @@ public class GameController {
     GameService gameService;
 @Autowired
     public GameController() {
-
 }
 
     @RequestMapping(value = "/game", method = RequestMethod.GET)

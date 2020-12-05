@@ -4,7 +4,6 @@ import be.thomasmore.graduaten.diceroll.entity.Game;
 import be.thomasmore.graduaten.diceroll.objects.GameDTO;
 import be.thomasmore.graduaten.diceroll.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,9 +20,6 @@ public class GameServiceImpl implements GameService {
     public List<Game> getGames() {
         return gameRepository.findAll();
     }
-    @Override
-    public List<Game> getHighestRated(){return gameRepository.getTop20ByRating();}
-
 
     @Override
     public Game addGame(GameDTO gameDTO) throws Exception {
@@ -43,9 +39,7 @@ public class GameServiceImpl implements GameService {
         game.setPrice_Sale(gameDTO.getPrice_Sale());
         game.setStock_Sale(gameDTO.getStock_sale());
         game.setStock_Rent(gameDTO.getStock_rent());
-
         game.setYear(gameDTO.getYear()) ;
-
         game.setRating(gameDTO.getRating());
         game.setNumVotes(gameDTO.getNumvotes());
 
@@ -78,7 +72,15 @@ public class GameServiceImpl implements GameService {
         }
         return gameRepository.findAll();
     }
+    @Override
+    public void adjustStockGame(Game game, int stock){
+        game.setStock_Sale(game.getStock_Sale()-stock);
+        gameRepository.save(game);
+    }
 
-
+    @Override
+    public List<Game> getHighestRated() {
+        return null;
+    }
 }
 

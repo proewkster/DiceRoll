@@ -1,5 +1,7 @@
 package be.thomasmore.graduaten.diceroll.entity;
 
+import org.hibernate.FetchMode;
+import org.hibernate.annotations.Fetch;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -11,9 +13,12 @@ import javax.validation.constraints.Size;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name= "Games")
+
 public class Game {
 
     @Id
@@ -37,6 +42,8 @@ public class Game {
     private double Price_Rent;
     private Long Stock_Sale;
     private Long Stock_Rent;
+    @OneToMany(mappedBy = "game")
+    Set<SoldGame> soldGame = new HashSet<>();
 
     public Game() {
     }
@@ -224,5 +231,13 @@ public class Game {
 
     public void setStock_Rent(Long stock_Rent) {
         Stock_Rent = stock_Rent;
+    }
+
+    public Set<SoldGame> getSoldGame() {
+        return soldGame;
+    }
+
+    public void setSoldGame(Set<SoldGame> soldGame) {
+        this.soldGame = soldGame;
     }
 }

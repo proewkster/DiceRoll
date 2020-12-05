@@ -17,7 +17,9 @@
     <link rel="stylesheet" href="css/style.css">
     <title> DiceRollBoardGames</title>
 </head>
+
 <body>
+
 
 <jsp:include page="navbar.jsp">
     <jsp:param name="userFirstName" value="${authUser.firstName}"/>
@@ -82,6 +84,7 @@
                 <img src="images/familyboard.jpg">
                 <h3>responsive web design</h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam volutp a suscipit in,</p>
+                <a href="/testOrder">Test</a>
             </div>
         </div>
 
@@ -277,7 +280,10 @@
 <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
 <script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 <script>
+    <% int i = (int) request.getAttribute("i"); if(i==1){%>
     document.querySelector('.buttonac').addEventListener('click',function (){document.querySelector('.bg-modal').style.display='none';});
+    window.onload = function (){document.querySelector('.bg-modal').style.display='flex';}
+    <%};%>
 </script>
 
 </body>

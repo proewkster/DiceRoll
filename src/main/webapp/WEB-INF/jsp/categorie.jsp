@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="java.util.List" %>
 <%@ page import="be.thomasmore.graduaten.diceroll.entity.Game" %>
 <%@ page import="be.thomasmore.graduaten.diceroll.entity.Categorie" %><%--
@@ -47,17 +48,17 @@
         <div class="container-fluid">
         <div class="row">
         <div class="col-md-3 col-lg-2  d-flex flex-column  border-right border-dark">
+            <!--
             <form  id="formCategories" action="/categorie">
                 <input type="submit" value="toepassen">
-                <% for (Categorie categorie: categories) {%>
+                <% //for (Categorie categorie: categories) {%>
             <div class="form-check">
-            <% out.print("<input onchange=\"document.getElementById('formCategories').submit()\"\n class=\"form-check-input d-inline"+categorie.getCategorieId()+"\" type=\"checkbox\" value=\"\" id=\""+categorie.getCategorieId()+"\">");
-            out.print("<label class=\"form-check-label"+categorie.getCategorieId()+"\" for=\""+categorie.getCategorieId()+"\">"+categorie.getGenre()+"</label>");%>
+            <% //out.print("<input onchange=\"document.getElementById('formCategories').submit()\"\n class=\"form-check-input d-inline"+categorie.getCategorieId()+"\" type=\"checkbox\" value=\"\" id=\""+categorie.getCategorieId()+"\">");
+            //out.print("<label class=\"form-check-label"+categorie.getCategorieId()+"\" for=\""+categorie.getCategorieId()+"\">"+categorie.getGenre()+"</label>");%>
             </div>
-
-       <% }%>
+       <% //}%>
             </form>
-        </div>
+            -->
 
     <%
         List<Game> games = (List<Game>) request.getAttribute("games");
@@ -73,6 +74,27 @@
             out.print("<p>Dit spel heeft een rating van "+game.getRating()+"/10.</p>");
             out.print("<p>Koopprijs: €"+game.getPrice_Sale()+"</p>");
             out.print("<p>Huurprijs: €"+game.getPrice_Rent()+"</p>");
+            %>
+
+            <table>
+                <form action="categories" method="get">
+                    <tr>
+                        <% out.print("<td><input id=\"id\" name=\"id\" type=\"hidden\" value="+game.getGameID()+ "></td>"); %>
+                    </tr>
+                    <tr>
+                        <td><label for="aantal">Aantal</label></td>
+                        <td><input id="aantal" type="number"  name="aantal"/></td>
+                    </tr>
+                    <tr>
+               <td><button class="buttonac" type="submit">Buy</button></td>
+                        <td><% out.print("<a class=buttonac href=/RentGame?id="+game.getGameID()+">Rent</a>");%></td>
+                    </tr>
+
+               </form>
+            </table>
+
+
+            <%
             out.print("</div>");
             out.print("</div>");
         }
@@ -80,8 +102,6 @@
         out.print("</div>");
         out.print("</div>");
     %>
-
-
 </main>
 <footer>
 
