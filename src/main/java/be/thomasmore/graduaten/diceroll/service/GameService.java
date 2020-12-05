@@ -16,4 +16,5 @@ public interface GameService {
     public String deleteGame(Long id);
     public void  saveGame(Game game);
     List<Game> getFilterCategorie(Long Id);
+    List<Game> getFilter2Categories(Long Id, Long id2);
 }

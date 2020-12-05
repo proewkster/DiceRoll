@@ -37,8 +37,21 @@ public class CategorieController {
         ModelAndView mav = new ModelAndView("categorie");
         List<Categorie> categories = categorieService.getCategories();
         List <Game> games = null;
-        if (filter.getId()!=null){
-        games = gameService.getFilterCategorie(filter.getId());}
+        if (filter.getCategorieIds() !=null) {
+            switch (filter.getCategorieIds().length) {
+                case 0:
+                    games = gameService.getGames();
+                    break;
+                case 1:
+                    games = gameService.getFilterCategorie(filter.getCategorieIds()[0]);
+                    break;
+                case 2:
+                    games = gameService.getFilter2Categories(filter.getCategorieIds()[0], filter.getCategorieIds()[1]);
+                    break;
+                default: games = gameService.getFilter2Categories(filter.getCategorieIds()[0], filter.getCategorieIds()[1]);
+                    break;
+            }
+        }
         else{
             games =  gameService.getGames();
         }

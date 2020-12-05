@@ -84,6 +84,13 @@ public class GameServiceImpl implements GameService {
         }
         return gameRepository.findAll();
 }
+    @Override
+    public List<Game> getFilter2Categories(Long id, Long id2){
+        if (id!= null && id2!=null){
+            return gameRepository.getfilter2categorie(id, id2);
+        }
+        return gameRepository.findAll();
+    }
 
 }
 

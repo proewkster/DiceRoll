@@ -46,6 +46,7 @@
     <%
         List<Categorie> categories = (List<Categorie>) request.getAttribute("categories");%>
         <h1>Categoriën</h1>
+    <p> Kies er maximaal 2 om specifiek te filteren.</p>
         <div class="container-fluid">
         <div class="row">
         <div class="col-md-3 col-lg-2  d-flex flex-column  border-right border-dark">
@@ -54,7 +55,7 @@
 
                 <c:forEach items="${categories}" var="cat">
 
-                <form:checkbox name="${cat.categorieId}" path="id" value="${cat.categorieId}" onchange="document.getElementById('formCategories').submit()"/> ${cat.genre}
+                <form:checkbox name="${cat.categorieId}" path="categorieIds" value="${cat.categorieId}" onchange="document.getElementById('formCategories').submit()"/> ${cat.genre}
 <br>
                 </c:forEach>
             </form:form>
