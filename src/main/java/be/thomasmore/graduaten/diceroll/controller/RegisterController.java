@@ -70,6 +70,7 @@ public class RegisterController {
         if(bindingResult.hasErrors()) {
             log.info(">> Controller has detected errors");
 
+            //Return original page with updated model to show errors
             ModelAndView mv = new ModelAndView("register");
             mv.addObject("userDTO", userDTO);
             return mv;

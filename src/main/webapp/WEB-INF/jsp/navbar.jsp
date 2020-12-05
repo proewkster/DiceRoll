@@ -50,10 +50,10 @@
 
             <!-- Menu elements when user is logged in -->
             <sec:authorize access="isAuthenticated()">
-                <a class="nav-link text-dark" href="userInfo">Mijn informatie</a>
+                <a class="nav-link text-dark" href="/user/info">Mijn informatie</a>
                 <a class="nav-link text-dark" href="userOrders">Mijn bestellingen</a>
                 <div class="dropdown-divider"></div>
-                <a class="nav-link text-dark" href="logout">
+                <a class="nav-link text-dark" href="/logout">
                     <i class="fa fa-sign-out mr-2"></i>Uitloggen
                 </a>
             </sec:authorize>

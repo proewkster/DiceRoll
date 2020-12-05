@@ -134,8 +134,6 @@ public class UserDTO {
     }
 
     //Methods
-
-
     @Override
     public String toString() {
         return "UserDTO{" +

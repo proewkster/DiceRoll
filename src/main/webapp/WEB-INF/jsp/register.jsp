@@ -21,6 +21,7 @@
 <jsp:include page="navbar.jsp">
     <jsp:param name="userFirstName" value="${authUser.firstName}"/>
 </jsp:include>
+
     <div class="row justify-content-center">
         <div class="col text-center">
             <h1 class="display-5 bg-dark text-light py-1">Register for an account</h1>

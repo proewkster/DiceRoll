@@ -91,7 +91,7 @@
     <footer>Under Construction</footer>
  <!-- bg-modal !-->
     <div class="bg-modal">
-        <div class="modal-content">
+        <div class="custom-modal-content">
 
             <button class="buttonac">Accept</button>
             <h1>Privacy Policy</h1>
