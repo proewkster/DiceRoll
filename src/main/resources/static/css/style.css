@@ -129,7 +129,10 @@ header nav{
 #boxes img{
     width: 150px;
 }
+.moreInfo{
+    background-color: #e8491d;
 
+}
 footer{
     margin-top: 20px;
     background: #e8491d;
@@ -189,9 +192,9 @@ p{
     padding-left: 10px;
     width: auto;
 }
-.gameList img{
+.gameList img, .afbModal{
     max-width: 90%;
     max-height: 50%;
-    margin: 10px 5% 0px 5%;
+    margin: 10px 5%;
     object-fit: contain;
 }

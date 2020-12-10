@@ -52,16 +52,54 @@
             }
             else{ out.print("<img src="+game.getImgURL()+"></img>");}
             out.print("<div class=\"gametext\">");
-            out.print("<p>"+game.getTitle()+"</p>");
+            out.print("<button type=\"button\" class=\"btn moreInfo\" data-toggle=\"modal\" data-target=\"#gameid"+game.getGameID()+"\">"+game.getTitle()+"</button>");
             out.print("<p>Dit spel heeft een rating van "+game.getRating()+"/10.</p>");
             out.print("<p>Koopprijs: €"+game.getPrice_Sale()+"</p>");
             out.print("<p>Huurprijs: €"+game.getPrice_Rent()+"</p>");
             out.print("</div>");
             out.print("</div>");
-            counter++;
-            if (counter==20){
-                break;
-            }
+            %>
+    <!-- Modal per Game-->
+
+
+    <div class="modal fade" id="<%out.print("gameid"+game.getGameID());%>" tabindex="-1" aria-labelledby="moreInfoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="<%out.print(game.getGameID());%>"><%out.print(game.getTitle());%></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Titel: <%out.print(game.getTitle());%></p>
+                    <div class="afbModal">
+                        <%  if (game.getImgURL()==null){
+                            out.print("<img src=\"images/no-image-available-icon-13.jpg\"></img>");
+                        }
+                        else{ out.print("<img class=\"img-fluid\" src="+game.getImgURL()+"></img>");}%>
+                    </div>
+                    <p>Mininimum aantal spelers: <%out.print(game.getMinPlayers());%></p>
+                    <p>Maximum aantal spelers: <%out.print(game.getMaxPlayers());%></p>
+                    <p>De gemiddelde duur: <%out.print(game.getAvgTime());%> min</p>
+                    <p>Vanaf: <%out.print(game.getAge());%> jaar</p>
+                    <p>Categorieën: <%out.print(game.getCategory());%></p>
+                    <p>Uitgever: <%out.print(game.getDistributer());%></p>
+                    <p>Jaar van publicatie: <%out.print(game.getYear());%></p>
+                    <p>Koopprijs: €<%out.print(game.getPrice_Sale());%></p>
+                    <p>Huurprijs: €<%out.print(game.getPrice_Rent());%></p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% counter++;
+        if (counter==20){
+            break;
+        }
         }
         out.print("</div>");
     %>
@@ -88,7 +126,7 @@
 
     </section>
 
-    <footer>Under Construction</footer>
+
  <!-- bg-modal !-->
     <div class="bg-modal">
         <div class="custom-modal-content">
