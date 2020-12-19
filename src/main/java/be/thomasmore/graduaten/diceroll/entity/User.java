@@ -1,51 +1,46 @@
 package be.thomasmore.graduaten.diceroll.entity;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="Users")
-public class User implements UserDetails {
-    //User class implements UserDetails so this object can be used on the SecurityConfiguration for authentication and authorization purposes
-    //Because of this, some default getters needed an Override of the interface
-    //These methods are grouped further down in the class and replace the default getters for this class
+public class User {
 
     //Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="UserID")
+    @Column(name = "UserID")
     private int userId;
-    @Column(name="Firstname")
+    @Column(name = "Firstname")
     private String firstName;
-    @Column(name="Lastname")
+    @Column(name = "Lastname")
     private String lastName;
-    @Column(name="Email")
+    @Column(name = "Email")
     private String email;
-    @Column(name="Password")
+    @Column(name = "Password")
     private String password;
-    @Column(name="Birthdate")
+    @Column(name = "Birthdate")
     private Date birthdate;
-    @Column(name="PostalCode")
+    @Column(name = "PostalCode")
     private String zipCode;
-    @Column(name="City")
+    @Column(name = "City")
     private String city;
-    @Column(name="StreetAddress")
+    @Column(name = "StreetAddress")
     private String streetAddress;
-    @Column(name="PhoneNumber")
+    @Column(name = "PhoneNumber")
     private String phoneNumber;
-    @Column(name="MobileNumber")
+    @Column(name = "MobileNumber")
     private String mobileNumber;
-    @Column(name="Created")
+    @Column(name = "Created")
     private Date created;
-    @Column(name="Enabled")
+    @Column(name = "Enabled")
     private boolean enabled = true;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-    @JoinTable(name = "UserAuthorities",joinColumns=@JoinColumn(name = "UserID"),inverseJoinColumns=@JoinColumn(name = "AuthorityID"))
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "UserAuthorities", joinColumns = @JoinColumn(name = "UserID"), inverseJoinColumns = @JoinColumn(name = "AuthorityID"))
     private List<Authority> authorities;
 
     //Default Getters and Setters
@@ -80,6 +75,10 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
@@ -142,8 +141,16 @@ public class User implements UserDetails {
         this.created = created;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public List<Authority> getAuthorities() {
+        return authorities;
     }
 
     public void setAuthorities(List<Authority> authorities) {
@@ -176,45 +183,29 @@ public class User implements UserDetails {
                 '}';
     }
 
-    //Methods for UserDetails interface
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        //Convert database values to values of type GrantedAuthority for authorization purposes
-        Set<GrantedAuthority> auth = new HashSet<>();
-        this.authorities.forEach(x -> auth.add(new SimpleGrantedAuthority("ROLE_" + x.getName()))); //Append "ROLE_" before actual Authority. Spring Security expects this
-        return auth;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userId == user.userId &&
+                enabled == user.enabled &&
+                firstName.equals(user.firstName) &&
+                lastName.equals(user.lastName) &&
+                email.equals(user.email) &&
+                password.equals(user.password) &&
+                birthdate.equals(user.birthdate) &&
+                zipCode.equals(user.zipCode) &&
+                city.equals(user.city) &&
+                streetAddress.equals(user.streetAddress) &&
+                Objects.equals(phoneNumber, user.phoneNumber) &&
+                Objects.equals(mobileNumber, user.mobileNumber) &&
+                created.equals(user.created) &&
+                authorities.equals(user.authorities);
     }
 
     @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
-    @Override
-    //Hardcoded, not used
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    //Hardcoded, not used
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    //Hardcoded, not used
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return this.enabled;
+    public int hashCode() {
+        return Objects.hash(userId, firstName, lastName, email, password, birthdate, zipCode, city, streetAddress, phoneNumber, mobileNumber, created, enabled, authorities);
     }
 }

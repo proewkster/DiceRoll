@@ -37,11 +37,12 @@ public class UserService {
         return this.findUserByEmail(email).isPresent();
     }
 
+    public List<User> findAll() { return _repo.findAll(); }
+
     public Optional<User> findUserById(Integer userID) {
         return _repo.findById(userID);
     }
 
-    public User GetUser(Integer userID){return _repo.getOne(userID);}
     public Optional<User> findUserByEmail(String email) {
         return _repo.findUserByEmail(email);
     }
@@ -54,81 +55,116 @@ public class UserService {
         _repo.save(anonymizeUser(user));
     }
 
-    public User register(UserDTO userDTO){
+    public void deleteUserById(int userId) {
+
+        // Get user account
+        User user = findUserById(userId).get();
+
+        // Anonymize user account
+        _repo.save(anonymizeUser(user));
+    }
+
+    public User register(RegisterUserDTO registerUserDTO){
         //Encrypt the password
-        userDTO.setPassword(_encoder.encode(userDTO.getPassword()));
+        registerUserDTO.setPassword(_encoder.encode(registerUserDTO.getPassword()));
 
         //Instantiate new User model
         User user = new User();
 
         //Map UserDTO model to User model
-        _mapper.map(userDTO, user);
+        _mapper.map(registerUserDTO, user);
 
         //Set User model creation date
         user.setCreated(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
 
         //Set default "User" role
-        Authority auth = authorityService.findAuthorityByName("User").get();
-
-        List<Authority> defaultAuthorities = new ArrayList<Authority>();
-        defaultAuthorities.add(auth);
-
-        user.setAuthorities(defaultAuthorities);
+        user.setAuthorities(addUserRole(new ArrayList<Authority>(), "User"));
 
         //Set default "Enabled" state
         user.setEnabled(true);
 
         //Save the User model in the database
         return save(user);
-        //return user;
     }
 
+    // Change user account from admin module
+    public User updateUser(UserMgmtDTO changes) {
+
+        // Get current user information from database
+        User currentUser = findUserById(changes.getUserId()).get();
+
+        // Set user roles
+        if (changes.isUserRole()) {
+            changes.setAuthorities(addUserRole(currentUser.getAuthorities(), "User"));
+        }
+        else {
+            changes.setAuthorities(removeUserRole(currentUser.getAuthorities(), "User"));
+        }
+
+        if (changes.isAdminRole()) {
+            changes.setAuthorities(addUserRole(currentUser.getAuthorities(), "Admin"));
+        }
+        else {
+            changes.setAuthorities(removeUserRole(currentUser.getAuthorities(), "Admin"));
+        }
+
+       // Map changes to user entity
+        _mapper.map(changes, currentUser);
+
+        // Save changes and return updated user entity
+        return save(currentUser);
+    }
+
+    // Change user's contact details only
     public User updateAuthUser(UserChangeContactDTO changes) {
 
         // Get current authenticated user information
-        User authUser = UserInformation.getAuthenticatedUser();
+        User user = UserInformation.getAuthenticatedUser();
 
         // Update user information
-        _mapper.map(changes, authUser);
+        _mapper.map(changes, user);
 
         // Save changes to database
-        return save(authUser);
+        return save(user);
     }
 
+    // Change user's personal information only
     public User updateAuthUser(UserChangePersonalDTO changes) {
 
         // Get current authenticated user information
-        User authUser = UserInformation.getAuthenticatedUser();
+        User user = UserInformation.getAuthenticatedUser();
 
         // Update user information
-        _mapper.map(changes, authUser);
+        _mapper.map(changes, user);
 
         // Save changes to database
-        return save(authUser);
+        return save(user);
     }
 
+    // Change user's email address only
     public User updateAuthUser(UserChangeEmailDTO changes) {
 
         // Get current authenticated user information
-        User authUser = UserInformation.getAuthenticatedUser();
+        User user = UserInformation.getAuthenticatedUser();
 
         // Update user information
-        authUser.setEmail(changes.getNewEmail());
+        user.setEmail(changes.getNewEmail());
 
         // Save changes to database
-        return save(authUser);
+        return save(user);
     }
 
+    // Change user's password
     public User updateAuthUser(UserChangePasswordDTO changes) {
 
         // Get current authenticated user information
-        User authUser = UserInformation.getAuthenticatedUser();
+        User user = UserInformation.getAuthenticatedUser();
 
         // Update user information
-        authUser.setPassword(_encoder.encode(changes.getNewPassword()));
+        user.setPassword(_encoder.encode(changes.getNewPassword()));
 
         // Save changes to database
-        return save(authUser);
+        return save(user);
     }
 
     public User anonymizeUser(User user) {
@@ -145,5 +181,47 @@ public class UserService {
         user.setBirthdate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
 
         return user;
+    }
+
+    private List<Authority> addUserRole(List<Authority> authorities, String role) {
+        Authority auth = null;
+
+        // Get authority from database
+        try {
+            auth = authorityService.findAuthorityByName(role).get();
+        }
+        catch(Exception ex) {
+            // Specified authority not found, return list without update
+            return authorities;
+        }
+
+        // If list does not contain the specified authority, add it
+        if (authorities.stream().noneMatch(a -> a.getName().equals(role))) {
+            authorities.add(auth);
+        }
+
+        // Return authority list
+        return authorities;
+    }
+
+    private List<Authority> removeUserRole(List<Authority> authorities, String role) {
+        Authority auth = null;
+
+        // Get authority from database
+        try {
+            auth = authorityService.findAuthorityByName(role).get();
+        }
+        catch(Exception ex) {
+            // Specified authority not found, return list without update
+            return authorities;
+        }
+
+        // If list does not contain the specified authority, add it
+        if (authorities.stream().anyMatch(a -> a.getName().equals(role))) {
+            authorities.remove(auth);
+        }
+
+        // Return authority list
+        return authorities;
     }
 }

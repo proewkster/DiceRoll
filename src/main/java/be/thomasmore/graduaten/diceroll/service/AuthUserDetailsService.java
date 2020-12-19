@@ -1,5 +1,6 @@
 package be.thomasmore.graduaten.diceroll.service;
 
+import be.thomasmore.graduaten.diceroll.entity.AuthenticatedUser;
 import be.thomasmore.graduaten.diceroll.entity.User;
 import be.thomasmore.graduaten.diceroll.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,13 @@ public class AuthUserDetailsService implements UserDetailsService {
         //Throw exception if user is not found
         user.orElseThrow(() -> new UsernameNotFoundException("No user found for email address: " + s));
 
-        //Return user found in DB. User entity implements the UserDetails interface, so type will match
+        //Create new Authenticated User instance and add user entity into it
         //.get() method to extract actual User object from the Optional<>
-        return user.get();
+        AuthenticatedUser authUser = new AuthenticatedUser();
+
+        authUser.setUser(user.get());
+
+        // Return authenticated user
+        return authUser;
     }
 }

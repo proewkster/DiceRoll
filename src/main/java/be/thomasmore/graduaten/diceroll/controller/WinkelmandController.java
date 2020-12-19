@@ -4,18 +4,20 @@ import be.thomasmore.graduaten.diceroll.entity.*;
 import be.thomasmore.graduaten.diceroll.helper.UserInformation;
 import be.thomasmore.graduaten.diceroll.objects.RentGameDTO;
 import be.thomasmore.graduaten.diceroll.objects.TestDTO;
-import be.thomasmore.graduaten.diceroll.repository.RentOrderRepository;
 import be.thomasmore.graduaten.diceroll.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @Transactional
@@ -90,7 +92,7 @@ public class WinkelmandController {
         ModelAndView mv = new ModelAndView("redirect:/");
         RentOrder rentOrder = new RentOrder();
         rentOrder.setPaid(true);
-        rentOrder.setUser(userService.GetUser(5));
+        rentOrder.setUser(userService.findUserById(5).get());
         rentOrderService.Save(rentOrder);
         return mv;
     }

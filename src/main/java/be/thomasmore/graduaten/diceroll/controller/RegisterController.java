@@ -1,6 +1,6 @@
 package be.thomasmore.graduaten.diceroll.controller;
 
-import be.thomasmore.graduaten.diceroll.objects.UserDTO;
+import be.thomasmore.graduaten.diceroll.objects.RegisterUserDTO;
 import be.thomasmore.graduaten.diceroll.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,28 +38,28 @@ public class RegisterController {
     }
 
     @GetMapping("register")
-    public ModelAndView register(UserDTO userDTO)
+    public ModelAndView register(RegisterUserDTO registerUserDTO)
     {
         ModelAndView mv = new ModelAndView("register");
-        mv.addObject("userDTO",userDTO);
+        mv.addObject("userDTO", registerUserDTO);
         return mv;
     }
 
     @PostMapping("register")
-    public ModelAndView registerUser(@ModelAttribute("userDTO") @Valid UserDTO userDTO, BindingResult bindingResult)
+    public ModelAndView registerUser(@ModelAttribute("userDTO") @Valid RegisterUserDTO registerUserDTO, BindingResult bindingResult)
     {
 
         //Check if user already exists
-        if (_userService.userExists(userDTO.getEmail())) {
+        if (_userService.userExists(registerUserDTO.getEmail())) {
 
             //Inject error message in validation result for email field
             bindingResult.addError(new FieldError("userDTO","email","This email address is already in use."));
         }
 
         //Check matching passwords
-        if (userDTO.getPassword() != null && userDTO.getConfirmPassword() != null) {
+        if (registerUserDTO.getPassword() != null && registerUserDTO.getConfirmPassword() != null) {
 
-            if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
+            if (!registerUserDTO.getPassword().equals(registerUserDTO.getConfirmPassword())) {
 
                 //Inject error message in validation result for confirmPassword field
                 bindingResult.addError(new FieldError("userDTO","confirmPassword","Passwords do not match"));
@@ -72,12 +72,12 @@ public class RegisterController {
 
             //Return original page with updated model to show errors
             ModelAndView mv = new ModelAndView("register");
-            mv.addObject("userDTO", userDTO);
+            mv.addObject("userDTO", registerUserDTO);
             return mv;
         }
 
         try {
-            log.info(">> Create new object: {}", _userService.register(userDTO).toString());
+            log.info(">> Create new object: {}", _userService.register(registerUserDTO).toString());
         }
         catch (Exception exception) {
             log.info(">> Exception encountered while creating the User data model.");

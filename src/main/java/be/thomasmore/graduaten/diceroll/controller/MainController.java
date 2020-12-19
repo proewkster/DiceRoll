@@ -1,23 +1,17 @@
 package be.thomasmore.graduaten.diceroll.controller;
 
-import be.thomasmore.graduaten.diceroll.entity.Categorie;
 import be.thomasmore.graduaten.diceroll.entity.Game;
 import be.thomasmore.graduaten.diceroll.entity.User;
+import be.thomasmore.graduaten.diceroll.helper.UserInformation;
 import be.thomasmore.graduaten.diceroll.objects.RentGameDTO;
 import be.thomasmore.graduaten.diceroll.objects.TestDTO;
-import be.thomasmore.graduaten.diceroll.service.CategorieService;
-import be.thomasmore.graduaten.diceroll.helper.UserInformation;
 import be.thomasmore.graduaten.diceroll.service.GameService;
-import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;

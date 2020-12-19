@@ -4,7 +4,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class UserDTO {
+public class RegisterUserDTO {
 
     //Attributes
 
@@ -41,7 +41,7 @@ public class UserDTO {
     private String mobileNumber;
 
     //Constructors
-    public UserDTO() {
+    public RegisterUserDTO() {
     }
 
     //Getters and Setters
