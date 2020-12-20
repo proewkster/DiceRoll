@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
-  User: Proew
+  User: Jeroen Leyssen
   Date: 13/12/2020
   Time: 14:44
   To change this template use File | Settings | File Templates.
@@ -54,16 +54,15 @@
                 <th style="width: 25%">Achternaam</th>
                 <th style="width: 10%; min-width: 100px">Acties</th>
             </tr>
+            <tr>
+                <td><input type="search" id="searchId" class="form-control m-1" placeholder="zoeken..." oninput="search()" /></td>
+                <td><input type="search" id="searchEmail" class="form-control m-1" placeholder="zoeken..." oninput="search()" /></td>
+                <td><input type="search" id="searchFirstName" class="form-control m-1" placeholder="zoeken..." oninput="search()" /></td>
+                <td><input type="search" id="searchLastName" class="form-control m-1" placeholder="zoeken..." oninput="search()" /></td>
+            </tr>
             </thead>
 
-            <tbody>
-                <tr>
-                    <td><input type="text" id="searchId" class="form-control m-1" placeholder="zoeken..." /></td>
-                    <td><input type="text" id="searchEmail" class="form-control m-1" placeholder="zoeken..." /></td>
-                    <td><input type="text" id="searchFirstName" class="form-control m-1" placeholder="zoeken..." /></td>
-                    <td><input type="text" id="searchLastName" class="form-control m-1" placeholder="zoeken..." /></td>
-                </tr>
-
+            <tbody id="userTableBody">
                 <c:forEach var="user" items="${displayUsers}">
                     <tr>
                         <td><c:out value="${user.userId}" /></td>
@@ -116,6 +115,60 @@
 <script src="../webjars/jquery/3.5.1/jquery.min.js"></script>
 <script src="../webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 <script>
+    var userList = [
+      <c:forEach items="${displayUsers}" var="user" varStatus="status">
+        {userId: '${user.userId}',
+            email: '${user.email}',
+            firstName: '${user.firstName}',
+            lastName: '${user.lastName}'
+        }
+        <c:if test="${!status.last}">
+        ,
+        </c:if>
+        </c:forEach>
+    ];
+
+    function search() {
+        var filteredData = [];
+
+        for (var i = 0; i < userList.length; i++) {
+            var searchValueUserId  = document.getElementById("searchId").value;
+            var searchValueEmail = document.getElementById("searchEmail").value;
+            var searchValueFirstName = document.getElementById("searchFirstName").value;
+            var searchValueLastName = document.getElementById("searchLastName").value;
+
+            if (userList[i].userId.toLowerCase().startsWith(searchValueUserId) &&
+                userList[i].email.toLowerCase().includes(searchValueEmail) &&
+                userList[i].firstName.toLowerCase().includes(searchValueFirstName) &&
+                userList[i].lastName.toLowerCase().includes(searchValueLastName)) {
+                filteredData.push(userList[i]);
+            }
+        }
+
+        rebuildTable(filteredData);
+    }
+
+    function rebuildTable(list) {
+        var table = document.getElementById("userTableBody")
+
+        table.innerHTML = '';
+
+        for (var i = 0; i < list.length; i++) {
+            var row = '<tr>' +
+                '<td>' + list[i].userId + '</td>' +
+                '<td>' + list[i].email + '</td>' +
+                '<td>' + list[i].firstName + '</td>' +
+                '<td>' + list[i].lastName + '</td>' +
+                '<td>' +
+            '<button class="btn btn-primary p-1 ml-1" title="Aanpassen" onclick="openEditModal(' + list[i].userId + ');"><i class="fa fa-edit"></i></button>' +
+            '<button class="btn btn-danger p-1 ml-1" title="Verwijderen" onclick="openDeleteModal(' + list[i].userId + ', \'' + list[i].email + '\');"><i class="fa fa-trash-o"></i></button>' +
+            '</td>' +
+            '</tr>';
+
+            table.innerHTML += row;
+        }
+    }
+
     function openEditModal(id) {
         $.ajax ({
             url: "/admin/users/edit/" + id,

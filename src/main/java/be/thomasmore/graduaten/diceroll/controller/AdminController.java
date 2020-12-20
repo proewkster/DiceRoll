@@ -211,6 +211,20 @@ public class AdminController {
         return mv;
     }
 
+    @GetMapping("/admin/orders")
+    public ModelAndView orders() {
+        // Create ModelAndView return-model
+        ModelAndView mv = new ModelAndView("admin/orders");
+
+        // Get current authenticated user and add it to the the model for the NavBar
+        User authUser = UserInformation.getAuthenticatedUser();
+
+        mv.addObject("authUser", authUser);
+
+        // Return ModelAndView return-model
+        return mv;
+    }
+
     // Helper Methods
 
     private List<UserMgmtDTO> getAllUsersAsDTO() {
