@@ -37,7 +37,7 @@ public class AuthenticatedUser implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //Convert database values to values of type GrantedAuthority for authorization purposes
         Set<GrantedAuthority> auth = new HashSet<>();
-        user.getAuthorities().forEach(x -> auth.add(new SimpleGrantedAuthority(x.getName())));
+        user.getAuthorities().forEach(x -> auth.add(new SimpleGrantedAuthority("ROLE_" + x.getName())));
         return auth;
     }
 

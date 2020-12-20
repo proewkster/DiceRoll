@@ -71,7 +71,16 @@
 
             <!-- Admin user only -->
             <sec:authorize access="hasRole('Admin')">
-                <a class="nav-link disabled d-flex justify-content-between" href="/admin">Admin</a>
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="adminMenu" role="button" data-toggle="dropdown">
+                    Admin
+                </a>
+
+                <div class="dropdown-menu dropdown-default navbar-dropdown-menu" aria-labelledby="adminMenu">
+                    <a class="nav-link text-dark" href="/admin/users">Gebruikers</a>
+                    <a class="nav-link text-dark" href="/admin/orders">Bestellingen</a>
+                </div>
+            </div>
             </sec:authorize>
 
         </div>
