@@ -1,9 +1,13 @@
 package be.thomasmore.graduaten.diceroll.service;
 
 import be.thomasmore.graduaten.diceroll.entity.Game;
+import be.thomasmore.graduaten.diceroll.entity.PageInfo;
 import be.thomasmore.graduaten.diceroll.objects.GameDTO;
 import be.thomasmore.graduaten.diceroll.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +21,12 @@ public class GameServiceImpl implements GameService {
     public Game getGameById(Long GameID) {return gameRepository.getOne(GameID);}
 
     @Override
-    public List<Game> getGames() {
-        return gameRepository.findAll();
+    public PageInfo getGames(int pageNo, int pageSize) {
+        Pageable paging = PageRequest.of(pageNo,pageSize);
+        Page<Game> pagedResult = gameRepository.findAll(paging);
+        return new PageInfo(pagedResult.toList(), pagedResult.getTotalPages(),pageNo, pageSize);
     }
+
 
     @Override
     public Game addGame(GameDTO gameDTO) throws Exception {
@@ -62,7 +69,10 @@ public class GameServiceImpl implements GameService {
         if (keyword != null){
         return gameRepository.findAll(keyword);
         }
-        return gameRepository.findAll();
+        //return gameRepository.findAll();
+        Pageable paging = PageRequest.of(0,20);
+        Page<Game> pagedResult = gameRepository.findAll(paging);
+        return pagedResult.toList();
     }
 
     @Override
@@ -70,12 +80,18 @@ public class GameServiceImpl implements GameService {
         if (id != null){
             return gameRepository.findAll(id);
         }
-        return gameRepository.findAll();
+        //return gameRepository.findAll();
+        Pageable paging = PageRequest.of(0,20);
+        Page<Game> pagedResult = gameRepository.findAll(paging);
+        return pagedResult.toList();
     }
 
     @Override
-    public List<Game> getHighestRated() {
-        return gameRepository.getTop20ByRating();
+    public List<Game> getHighestRated(int pageNo, int pageSize) {
+        Pageable paging = PageRequest.of(0,20);
+        Page<Game> pagedResult = gameRepository.getTop20ByRating(paging);
+        return pagedResult.toList();
+        //return gameRepository.getTop20ByRating();
     }
 
     @Override
@@ -84,19 +100,26 @@ public class GameServiceImpl implements GameService {
         gameRepository.save(game);
     }
 @Override
-    public List<Game> getFilterCategorie(Long id){
+    public PageInfo getFilterCategorie(Long id, int pageNo, int pageSize){
         if (id!= null){
-            return gameRepository.getfilter1categorie(id);
+            Pageable paging = PageRequest.of(pageNo,pageSize);
+            Page<Game> pagedResult =gameRepository.getfilter1categorie(id, paging);
+            return new PageInfo(pagedResult.toList(), pagedResult.getTotalPages(),pageNo, pageSize);
         }
-        return gameRepository.findAll();
+        //return gameRepository.findAll();
+    Pageable paging = PageRequest.of(0,20);
+    Page<Game> pagedResult = gameRepository.findAll(paging);
+    return new PageInfo(pagedResult.toList(), pagedResult.getTotalPages(),pageNo, pageSize);
 }
     @Override
     public List<Game> getFilter2Categories(Long id, Long id2){
         if (id!= null && id2!=null){
             return gameRepository.getfilter2categorie(id, id2);
         }
-        return gameRepository.findAll();
+        //return gameRepository.findAll();
+        Pageable paging = PageRequest.of(0,20);
+        Page<Game> pagedResult = gameRepository.findAll(paging);
+        return pagedResult.toList();
     }
 
 }
-

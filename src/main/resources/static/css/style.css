@@ -173,12 +173,7 @@ p{
     font-size: 16px;
     padding: 5px;
 }
-.flexcontainer{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    flex-direction: row;
-}
+
 .gameList{
     width: 400px;
     height: 500px;

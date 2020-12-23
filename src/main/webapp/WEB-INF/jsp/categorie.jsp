@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.List" %>
 <%@ page import="be.thomasmore.graduaten.diceroll.entity.Game" %>
-<%@ page import="be.thomasmore.graduaten.diceroll.entity.Categorie" %><%--
+<%@ page import="be.thomasmore.graduaten.diceroll.entity.Categorie" %>
+<%@ page import="be.thomasmore.graduaten.diceroll.entity.PageInfo" %><%--
   Created by IntelliJ IDEA.
   User: Koen Van Looy
   Date: 25/10/2020
@@ -12,6 +13,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -43,8 +45,7 @@
     </div>
 </header>
 <main>
-    <%
-        List<Categorie> categories = (List<Categorie>) request.getAttribute("categories");%>
+
         <h1>Categoriën</h1>
     <p> Kies er maximaal 2 om specifiek te filteren.</p>
         <div class="container-fluid">
@@ -55,7 +56,7 @@
 
                 <c:forEach items="${categories}" var="cat">
 
-                <form:checkbox name="${cat.categorieId}" path="categorieIds" value="${cat.categorieId}" onchange="document.getElementById('formCategories').submit()"/> ${cat.genre}
+                <form:checkbox name="${cat.categorieId}"  path="categorieIds" value="${cat.categorieId}" onchange="document.getElementById('formCategories').submit()"/> ${cat.genre}
 <br>
                 </c:forEach>
             </form:form>
@@ -65,7 +66,7 @@
 
     <%
         List<Game> games = (List<Game>) request.getAttribute("games");
-        out.print("<div class=\"col-md-9 col-lg-10 d-flex  flex-wrap\">");
+        out.print("<div class=\"col-md-9 col-lg-10 flex-wrap d-flex  justify-content-center align-items-baseline\">");
         for (Game game: games){
             out.print("<div class=\"gameList\">");
             if (game.getImgURL()==null){
@@ -144,6 +145,49 @@
         out.print("</div>");
     %>
 
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                <c:set var="enabledprev" value="${pageinfo.currentPage==0?'disabled':''}"/>
+                    <li class="page-item ${enabledprev}"><a class="page-link" href="/categorie/0">First</a></li>
+                    <li class="page-item ${enabledprev}"><a class="page-link" href="/categorie/${pageinfo.currentPage-1}">Previous</a></li>
+                    <c:set var="active" value=""/>
+                       <form:form  id="paging" action="/categorie" modelAttribute="pageinfo" method="get">
+<%--                           <c:choose>--%>
+<%--                               <c:when test="${pageinfo.currentPage<5}">--%>
+<%--                                   <c:forEach var = "i" begin = "0" end = "9">--%>
+<%--                                   <c:set var="active" value="${pageinfo.currentPage==i ? 'btn-primary': 'btn-secondary'}"/>--%>
+<%--                                       <form:button  class="btn ${active}" path="currentPage" type="submit" value="${i}">${i+1}</form:button>--%>
+<%--                                   </c:forEach>--%>
+<%--                               </c:when>--%>
+<%--                           </c:choose>--%>
+
+                           <c:choose>
+                               <c:when test="${pageinfo.currentPage<=5}">
+                                   <c:forEach var = "i" begin = "0" end = "9">
+                                       <c:set var="active" value="${pageinfo.currentPage==i ? 'btn-primary': 'btn-secondary'}"/>
+                                       <a  class="btn ${active}" path="currentPage" href="/categorie/${i}" >${i+1}</a>
+                                   </c:forEach>
+                               </c:when>
+                               <c:when test="${pageinfo.currentPage>5 && pageinfo.currentPage<pageinfo.totalPages-5}">
+                                   <c:forEach var = "i" begin = "${pageinfo.currentPage-5}" end = "${pageinfo.currentPage+4}">
+                                       <c:set var="active" value="${pageinfo.currentPage==i ? 'btn-primary': 'btn-secondary'}"/>
+                                       <a  class="btn ${active}" path="currentPage" href="/categorie/${i}" >${i+1}</a>
+                                   </c:forEach>
+                               </c:when>
+                               <c:when test="${pageinfo.currentPage>=pageinfo.totalPages-5}">
+                                   <c:forEach var = "i" begin = "${pageinfo.totalPages-11}" end = "${pageinfo.totalPages-1}">
+                                       <c:set var="active" value="${pageinfo.currentPage==i ? 'btn-primary': 'btn-secondary'}"/>
+                                       <a  class="btn ${active}" path="currentPage" href="/categorie/${i}" >${i+1}</a>
+                                   </c:forEach>
+                               </c:when>
+                           </c:choose>
+                    </form:form>
+                    <c:set var="enablednext" value="${pageinfo.currentPage ==pageinfo.totalPages-1?'disabled':''}"/>
+                    <li class="page-item ${enablednext}"><a class="page-link" href="/categorie/${pageinfo.currentPage+1}">Next</a></li>
+                    <li class="page-item ${enablednext}"><a class="page-link" href="/categorie/${pageinfo.totalPages-1}">Last</a></li>
+                </ul>
+            </nav>
 </main>
 <footer>
 

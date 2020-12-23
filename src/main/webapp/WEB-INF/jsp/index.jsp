@@ -44,7 +44,7 @@
     <%
        int counter =0;
         List<Game> games = (List<Game>) request.getAttribute("games");
-        out.print("<div class=\"flexcontainer\">");
+        out.print("<div class=\"flex-wrap d-flex justify-content-center align-items-baseline\">");
         for (Game game: games){
             out.print("<div class=\"gameList\">");
             if (game.getImgURL()==null){

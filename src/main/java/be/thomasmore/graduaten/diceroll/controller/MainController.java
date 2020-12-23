@@ -37,7 +37,7 @@ public class MainController {
         session.setAttribute("test",testen);
         session.setAttribute("RentGameDTOS",rentGameDTOS );
         i++;
-        List<Game> games = gameService.getHighestRated();
+        List<Game> games = gameService.getHighestRated(0,20);
         mv.addObject("games", games);
         mv.addObject("i",i);
         return mv;
