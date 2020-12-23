@@ -166,19 +166,19 @@
                                <c:when test="${pageinfo.currentPage<=5}">
                                    <c:forEach var = "i" begin = "0" end = "9">
                                        <c:set var="active" value="${pageinfo.currentPage==i ? 'btn-primary': 'btn-secondary'}"/>
-                                       <a  class="btn ${active}" path="currentPage" href="/categorie/${i}" >${i+1}</a>
+                                       <a  class="btn ${active}" href="/categorie/${i}" >${i+1}</a>
                                    </c:forEach>
                                </c:when>
                                <c:when test="${pageinfo.currentPage>5 && pageinfo.currentPage<pageinfo.totalPages-5}">
                                    <c:forEach var = "i" begin = "${pageinfo.currentPage-5}" end = "${pageinfo.currentPage+4}">
                                        <c:set var="active" value="${pageinfo.currentPage==i ? 'btn-primary': 'btn-secondary'}"/>
-                                       <a  class="btn ${active}" path="currentPage" href="/categorie/${i}" >${i+1}</a>
+                                       <a  class="btn ${active}" href="/categorie/${i}" >${i+1}</a>
                                    </c:forEach>
                                </c:when>
                                <c:when test="${pageinfo.currentPage>=pageinfo.totalPages-5}">
                                    <c:forEach var = "i" begin = "${pageinfo.totalPages-11}" end = "${pageinfo.totalPages-1}">
                                        <c:set var="active" value="${pageinfo.currentPage==i ? 'btn-primary': 'btn-secondary'}"/>
-                                       <a  class="btn ${active}" path="currentPage" href="/categorie/${i}" >${i+1}</a>
+                                       <a  class="btn ${active}" href="/categorie/${i}" >${i+1}</a>
                                    </c:forEach>
                                </c:when>
                            </c:choose>

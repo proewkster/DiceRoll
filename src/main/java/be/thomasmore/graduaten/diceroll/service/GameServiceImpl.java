@@ -59,9 +59,8 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public String deleteGame(Long id) {
+    public void deleteGame(Long id) {
         gameRepository.deleteById(id);
-        return "Item is Deleted";
     }
 
     @Override
@@ -70,7 +69,7 @@ public class GameServiceImpl implements GameService {
         return gameRepository.findAll(keyword);
         }
         //return gameRepository.findAll();
-        Pageable paging = PageRequest.of(0,20);
+        Pageable paging = PageRequest.of(0,1000);
         Page<Game> pagedResult = gameRepository.findAll(paging);
         return pagedResult.toList();
     }
@@ -81,7 +80,7 @@ public class GameServiceImpl implements GameService {
             return gameRepository.findAll(id);
         }
         //return gameRepository.findAll();
-        Pageable paging = PageRequest.of(0,20);
+        Pageable paging = PageRequest.of(0,1000);
         Page<Game> pagedResult = gameRepository.findAll(paging);
         return pagedResult.toList();
     }

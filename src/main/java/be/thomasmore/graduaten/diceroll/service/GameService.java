@@ -14,7 +14,7 @@ public interface GameService {
     List<Game> getHighestRated(int pageNo, int pageSize);
     public void adjustStockGame(Game game, int stock);
     public Game addGame(GameDTO gameDTO) throws Exception;
-    public String deleteGame(Long id);
+    public void deleteGame(Long id);
     public void  saveGame(Game game);
     PageInfo getFilterCategorie(Long Id, int pageNo, int pageSize);
     List<Game> getFilter2Categories(Long Id, Long id2);
