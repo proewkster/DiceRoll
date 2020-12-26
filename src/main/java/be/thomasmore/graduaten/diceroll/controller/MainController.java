@@ -20,9 +20,14 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    List<TestDTO> testen = new ArrayList<TestDTO>();
-    List<RentGameDTO> rentGameDTOS = new ArrayList<RentGameDTO>();
-    int i = 0;
+    private List<TestDTO> testen;
+    private List<RentGameDTO> rentGameDTOS;
+    private int i;
+    public MainController() {
+        this.testen = new ArrayList<TestDTO>();
+        this.rentGameDTOS = new ArrayList<RentGameDTO>();
+        i = 0;
+    }
     @Autowired
     GameService gameService;
 
@@ -65,31 +70,46 @@ public class MainController {
         return mv;
     }
 
-    @RequestMapping("/RentGame")
-    public ModelAndView rentGame(HttpSession session, @RequestParam String id){
+
+    @RequestMapping("/categories")
+        public ModelAndView categorieToCart(HttpSession session, @RequestParam String id,@RequestParam int aantal,@RequestParam(value="buy",required = false,defaultValue = "0") Integer buy){
         Game game = gameService.getGameById(Long.parseLong(id));
-        if (game.getStock_Rent() == 0)
-        {
-            ModelAndView mv  = new ModelAndView("stocksale");
-            User authUser = UserInformation.getAuthenticatedUser();
-            mv.addObject("authUser", authUser);
-            mv.addObject("Game", game);
+        if (buy != 1){
+
+            if (game.getStock_Rent()-aantal < 0)
+            {
+                ModelAndView mv  = new ModelAndView("stocksale");
+                User authUser = UserInformation.getAuthenticatedUser();
+                mv.addObject("authUser", authUser);
+                mv.addObject("Game", game);
+                return mv;
+            }
+            List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>)session.getAttribute("RentGameDTOS");
+            if(rentGameDTOS == null){rentGameDTOS = new ArrayList<RentGameDTO>();}
+            RentGameDTO rentGameDTO = new RentGameDTO();
+            rentGameDTO.setId(id);
+            rentGameDTO.setAantal(aantal);
+
+            rentGameDTO.setPrice(game.getPrice_Rent());
+            rentGameDTO.setTitle(game.getTitle());
+            boolean exist = false;
+            for (RentGameDTO rentGameDTO1:rentGameDTOS)
+            {
+                if (rentGameDTO.getId().equals(rentGameDTO1.getId()) ){
+                    exist = true;
+                    int res = rentGameDTO1.getAantal()+rentGameDTO.getAantal();
+                    rentGameDTO1.setAantal(res);
+                }
+            }
+            if (!exist){
+                rentGameDTOS.add(rentGameDTO);
+            }
+            session.setAttribute("RentGameDTOS",rentGameDTOS);
+            ModelAndView mv = new ModelAndView("winkelmand");
             return mv;
         }
-        List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>)session.getAttribute("RentGameDTOS");
-        RentGameDTO rentGameDTO = new RentGameDTO();
-        rentGameDTO.setId(id);
-        rentGameDTO.setPrice(game.getPrice_Rent());
-        rentGameDTO.setTitle(game.getTitle());
-        rentGameDTOS.add(rentGameDTO);
-        session.setAttribute("RentGameDTOS",rentGameDTOS);
-        ModelAndView mv = new ModelAndView("winkelmand");
-        return mv;
-    }
-    @RequestMapping("/categories")
-        public ModelAndView categorieToCart(HttpSession session, @RequestParam String id,@RequestParam int aantal){
-        Game game = gameService.getGameById(Long.parseLong(id));
-        if (game.getStock_Sale()-aantal <= 0){
+
+        if (game.getStock_Sale()-aantal < 0){
             ModelAndView mv  = new ModelAndView("stocksale");
             User authUser = UserInformation.getAuthenticatedUser();
             mv.addObject("authUser", authUser);

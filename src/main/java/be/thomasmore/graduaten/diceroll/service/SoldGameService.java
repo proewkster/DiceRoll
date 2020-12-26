@@ -10,7 +10,7 @@ public class SoldGameService {
     @Autowired
     SoldGameRepository soldGameRepository;
 
-    public void SaveSoldGame(SoldGame soldGame){
+    public void saveSoldGame(SoldGame soldGame){
         soldGameRepository.save(soldGame);
     }
 }

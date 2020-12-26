@@ -1,7 +1,6 @@
 package be.thomasmore.graduaten.diceroll.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 @Entity
@@ -9,28 +8,28 @@ import java.util.Set;
 public class RentOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int RentOrderID;
+    private int rentOrderID;
     @OneToMany(mappedBy = "rentOrder")
     Set<RentedGame> rentedGames = new HashSet<>();
     @ManyToOne
     @JoinColumn(name = "UserID",nullable = false)
     private User user;
-    private boolean Paid;
+    private boolean paid;
 
     public RentOrder() {
     }
 
     public RentOrder(User user, boolean paid) {
         this.user = user;
-        Paid = paid;
+        this.paid = paid;
     }
 
     public int getRentOrderID() {
-        return RentOrderID;
+        return rentOrderID;
     }
 
     public void setRentOrderID(int rentOrderID) {
-        RentOrderID = rentOrderID;
+        this.rentOrderID = rentOrderID;
     }
 
     public User getUser() {
@@ -42,11 +41,11 @@ public class RentOrder {
     }
 
     public boolean isPaid() {
-        return Paid;
+        return paid;
     }
 
     public void setPaid(boolean paid) {
-        Paid = paid;
+        this.paid = paid;
     }
 
     public Set<RentedGame> getRentedGames() {

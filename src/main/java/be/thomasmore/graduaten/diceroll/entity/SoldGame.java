@@ -9,19 +9,19 @@ public class SoldGame {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int SoldGameID;
+    private int soldGameID;
 
     @ManyToOne
-    @JoinColumn(name = "SaleOrderID")
+    @JoinColumn(name = "saleOrderID")
     private SaleOrder saleOrder;
 
     @ManyToOne
     @JoinColumn(name = "GameID")
     private Game game;
 
-    private double PricePaid;
-    private double Discount;
-    private int Amount;
+    private double pricePaid;
+    private double discount;
+    private int amount;
 
     public SoldGame() {
     }
@@ -44,26 +44,26 @@ public class SoldGame {
     }
 
     public double getPricePaid() {
-        return PricePaid;
+        return pricePaid;
     }
 
     public void setPricePaid(double pricePaid) {
-        PricePaid = pricePaid;
+        this.pricePaid = pricePaid;
     }
 
     public double getDiscount() {
-        return Discount;
+        return discount;
     }
 
     public void setDiscount(double discount) {
-        Discount = discount;
+        this.discount = discount;
     }
 
     public int getAmount() {
-        return Amount;
+        return amount;
     }
 
     public void setAmount(int amount) {
-        Amount = amount;
+        this.amount = amount;
     }
 }

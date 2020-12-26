@@ -10,7 +10,7 @@ public class RentedGameService {
     @Autowired
     RentedGameRepository repository;
 
- public void Save(RentedGame rentedGame){
+ public void save(RentedGame rentedGame){
      repository.save(rentedGame);
  }
 }

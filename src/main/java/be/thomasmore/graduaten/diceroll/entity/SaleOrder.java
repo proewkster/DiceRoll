@@ -10,16 +10,16 @@ import java.util.Set;
 public class SaleOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int SaleOrderID;
+    private int saleOrderID;
 
     @OneToMany(mappedBy = "saleOrder")
     Set<SoldGame> soldGames = new HashSet<>();
     @ManyToOne
     @JoinColumn(name = "UserID",nullable = false)
     private User user;
-    private boolean Paid;
-    private boolean Delivered;
-    private Date OrderDate;
+    private boolean paid;
+    private boolean delivered;
+    private Date orderDate;
 
     public Set<SoldGame> getSoldGames() {
         return soldGames;
@@ -33,11 +33,11 @@ public class SaleOrder {
     }
 
     public int getSaleOrderID() {
-        return SaleOrderID;
+        return saleOrderID;
     }
 
     public void setSaleOrderID(int saleOrderID) {
-        SaleOrderID = saleOrderID;
+        this.saleOrderID = saleOrderID;
     }
 
     public User getUser() {
@@ -49,26 +49,26 @@ public class SaleOrder {
     }
 
     public boolean isPaid() {
-        return Paid;
+        return paid;
     }
 
     public void setPaid(boolean paid) {
-        Paid = paid;
+        this.paid = paid;
     }
 
     public boolean isDelivered() {
-        return Delivered;
+        return delivered;
     }
 
     public void setDelivered(boolean delivered) {
-        Delivered = delivered;
+        this.delivered = delivered;
     }
 
     public Date getOrderDate() {
-        return OrderDate;
+        return orderDate;
     }
 
     public void setOrderDate(Date orderDate) {
-        OrderDate = orderDate;
+        this.orderDate = orderDate;
     }
 }

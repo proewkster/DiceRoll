@@ -4,6 +4,15 @@ public class RentGameDTO {
     private String id;
     private String Title;
     private double price;
+    private int Aantal;
+
+    public int getAantal() {
+        return Aantal;
+    }
+
+    public void setAantal(int aantal) {
+        Aantal = aantal;
+    }
 
     public RentGameDTO() {
     }

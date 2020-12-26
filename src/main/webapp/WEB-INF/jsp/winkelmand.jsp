@@ -40,20 +40,21 @@
     <section>
 
         <div class="container-md">
-            <h1 class="text-center">Soldgames</h1>
+            <h1 class="text-center">Gekochte games</h1>
             <table class="table">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Title</th>
+                    <th scope="col">Titel</th>
                     <th scope="col">Aantal</th>
-                    <th scope="col">Price</th>
+                    <th scope="col">Prijs</th>
                 </tr>
                 </thead>
                 <tbody>
                 <%List<TestDTO> testen = (List<TestDTO>) session.getAttribute("test");
                 if (testen == null){testen = new ArrayList<TestDTO>();}
                     int i = 1;
+                    int id = 0;
                     double totaal1 = 0;
                     for (TestDTO test:testen)
                     {
@@ -62,21 +63,25 @@
                         out.print("<td> "+test.getTitle() +"</td>");
                         out.print("<td> "+test.getAantal() +"</td>");
                         out.print("<td> €"+test.getAantal() * test.getPrice() +"</td>");
+                        out.print("<td><a href=/delitemwinkelmand?id="+id+">Delete</a></td>");
+                        out.print("<td><a href=/additemwinkelmand?id="+id+">+</a></td>");
+                        out.print("<td><a href=/minitemwinkelmand?id="+id+">-</a></td>");
                         totaal1 += test.getAantal()*test.getPrice();
                         out.print("</tr>");
                         i++;
+                        id++;
                     }
                 %>
                 </tbody>
             </table>
-            <h1 class="text-center">Rented Games</h1>
+            <h1 class="text-center">Gehuurde games</h1>
         <table class="table" style="float: left">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Title</th>
+                <th scope="col">Titel</th>
                 <th scope="col">Aantal</th>
-                <th scope="col">Price</th>
+                <th scope="col">Prijs</th>
             </tr>
             </thead>
             <tbody>
@@ -87,11 +92,11 @@
                 for (RentGameDTO rentGameDTO:rentGameDTOS)
                 {
                     out.print("<tr>");
-                    out.print("<th scope=row>"+i+"</th>");
+                    out.print("<th scope=row>"+j+"</th>");
                     out.print("<td> "+rentGameDTO.getTitle() +"</td>");
-                    out.print("<td></td>");
-                    out.print("<td> €"+rentGameDTO.getPrice() +"</td>");
-                    totaal2 += rentGameDTO.getPrice();
+                    out.print("<td>"+rentGameDTO.getAantal()+"</td>");
+                    out.print("<td> €"+rentGameDTO.getPrice()*rentGameDTO.getAantal() +"</td>");
+                    totaal2 += rentGameDTO.getPrice()*rentGameDTO.getAantal();
                     out.print("</tr>");
                     j++;
                 }

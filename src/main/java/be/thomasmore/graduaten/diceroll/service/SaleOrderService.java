@@ -10,10 +10,10 @@ public class SaleOrderService {
     @Autowired
     SaleOrderRepository repository;
 
-    public SaleOrder GetSaleOder(Integer id){
+    public SaleOrder getSaleOder(Integer id){
         return repository.getOne(id);
     }
-    public void Save(SaleOrder saleOrder){
+    public void save(SaleOrder saleOrder){
         repository.save(saleOrder);
     }
 }

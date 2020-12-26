@@ -63,7 +63,6 @@
 
    </div>
 
-
     <%
         List<Game> games = (List<Game>) request.getAttribute("games");
         out.print("<div class=\"col-md-9 col-lg-10 flex-wrap d-flex  justify-content-center align-items-baseline\">");
@@ -87,11 +86,11 @@
                     </tr>
                     <tr>
                         <td><label for="aantal">Aantal</label></td>
-                        <td><input id="aantal" type="number"  name="aantal"/></td>
+                        <td><input id="aantal" type="number" min="1" name="aantal" value="1" style="margin-bottom: 10px;"/></td>
                     </tr>
                     <tr>
-               <td><button class="buttonac" type="submit">Buy</button></td>
-                        <td><% out.print("<a class=buttonac href=/RentGame?id="+game.getGameID()+">Rent</a>");%></td>
+                        <td><button class="buttonac" type="submit" style="margin-left: 0px;" id="buy" name="buy" value="1">Koop</button></td>
+                        <td><button class="buttonac" type="submit">Huur</button></td>
                     </tr>
 
                </form>

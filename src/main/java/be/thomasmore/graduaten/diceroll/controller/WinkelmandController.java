@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +42,31 @@ public class WinkelmandController {
        return mv;
     }
 
+    @RequestMapping("/delitemwinkelmand")
+    public ModelAndView delitemwinkelmand(HttpSession session, @RequestParam int id){
+        List<TestDTO> testen = (List<TestDTO>)session.getAttribute("test");
+        ModelAndView mv = new ModelAndView("winkelmand");
+        testen.remove(id);
+        return mv;
+    }
+    @RequestMapping("/additemwinkelmand")
+    public ModelAndView additemwinkelmand(HttpSession session, @RequestParam int id){
+        List<TestDTO> testen = (List<TestDTO>)session.getAttribute("test");
+        ModelAndView mv = new ModelAndView("winkelmand");
+        TestDTO test = testen.get(id);
+        test.setAantal(test.getAantal()+1);
+        testen.set(id,test);
+        return mv;
+    }
+    @RequestMapping("/minitemwinkelmand")
+    public ModelAndView minitemwinkelmand(HttpSession session, @RequestParam int id){
+        List<TestDTO> testen = (List<TestDTO>)session.getAttribute("test");
+        ModelAndView mv = new ModelAndView("winkelmand");
+        TestDTO test = testen.get(id);
+        test.setAantal(test.getAantal()-1);
+        testen.set(id,test);
+        return mv;
+    }
     @RequestMapping("/delwinkelmand")
     public ModelAndView DelListSoldGames(HttpSession session){
         ModelAndView mv = new ModelAndView("confirmation");
@@ -54,7 +80,7 @@ public class WinkelmandController {
         saleOrder.setOrderDate(new Date());
         saleOrder.setPaid(true);
         saleOrder.setDelivered(false);
-        orderService.Save(saleOrder);
+        orderService.save(saleOrder);
         List<TestDTO> testen =(List<TestDTO>) session.getAttribute("test");
         for (TestDTO test:testen) {
             SoldGame soldGame = new SoldGame();
@@ -65,10 +91,10 @@ public class WinkelmandController {
             soldGame.setSaleOrder(saleOrder);
             soldGame.setPricePaid(game.getPrice_Sale() * test.getAantal());
             soldGame.setDiscount(5);
-            soldGameService.SaveSoldGame(soldGame);
+            soldGameService.saveSoldGame(soldGame);
         }
         RentOrder rentOrder = new RentOrder(user,true);
-        rentOrderService.Save(rentOrder);
+        rentOrderService.save(rentOrder);
         List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>) session.getAttribute("RentGameDTOS");
         for (RentGameDTO rentGameDTO:rentGameDTOS) {
             Game game = service.getGameById(Long.parseLong(rentGameDTO.getId()));
@@ -78,7 +104,7 @@ public class WinkelmandController {
             c.add(Calendar.DATE,10);
             Date currentDate10 = c.getTime();
             RentedGame rentedGame = new RentedGame(rentOrder,game,game.getPrice_Rent(),5,false,false,new Date(),currentDate10);
-            rentedGameService.Save(rentedGame);
+            rentedGameService.save(rentedGame);
         }
         testen.clear();
         rentGameDTOS.clear();
@@ -93,7 +119,7 @@ public class WinkelmandController {
         RentOrder rentOrder = new RentOrder();
         rentOrder.setPaid(true);
         rentOrder.setUser(userService.findUserById(5).get());
-        rentOrderService.Save(rentOrder);
+        rentOrderService.save(rentOrder);
         return mv;
     }
     @RequestMapping("/testSolGame")

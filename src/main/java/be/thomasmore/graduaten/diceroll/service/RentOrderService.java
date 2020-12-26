@@ -10,7 +10,7 @@ public class RentOrderService {
     @Autowired
     RentOrderRepository repository;
 
-    public void Save(RentOrder rentOrder){
+    public void save(RentOrder rentOrder){
         repository.save(rentOrder);
     }
 }
