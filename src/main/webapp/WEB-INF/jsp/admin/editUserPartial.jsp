@@ -97,7 +97,7 @@
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
-                            <form:checkbox path="adminRole" cssClass="checkbox" id="isAdminToggel"/>
+                            <form:checkbox path="adminRole" cssClass="checkbox" id="isAdminToggle"/>
                         </div>
                     </div>
                     <input type="text" class="form-control" disabled value="Admin" readonly>

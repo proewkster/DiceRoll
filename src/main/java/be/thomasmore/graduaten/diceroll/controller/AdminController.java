@@ -1,8 +1,14 @@
 package be.thomasmore.graduaten.diceroll.controller;
 
+import be.thomasmore.graduaten.diceroll.entity.SaleOrder;
+import be.thomasmore.graduaten.diceroll.entity.SoldGame;
 import be.thomasmore.graduaten.diceroll.entity.User;
 import be.thomasmore.graduaten.diceroll.helper.UserInformation;
+import be.thomasmore.graduaten.diceroll.objects.SaleOrderAdminDisplayModel;
+import be.thomasmore.graduaten.diceroll.objects.SaleOrderDetailsDisplayModel;
+import be.thomasmore.graduaten.diceroll.objects.SoldGameDTO;
 import be.thomasmore.graduaten.diceroll.objects.UserMgmtDTO;
+import be.thomasmore.graduaten.diceroll.service.SaleOrderService;
 import be.thomasmore.graduaten.diceroll.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -19,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class AdminController {
@@ -26,12 +33,14 @@ public class AdminController {
     // Attributes
     private static final Logger log = LoggerFactory.getLogger(AdminController.class);
     private final UserService _userService;
+    private final SaleOrderService _saleOrderService;
     private final ModelMapper _mapper;
 
     // Constructor
     @Autowired
-    public AdminController(UserService userService, ModelMapper mapper) {
+    public AdminController(UserService userService, SaleOrderService saleOrderService, ModelMapper mapper) {
         this._userService = userService;
+        this._saleOrderService = saleOrderService;
         this._mapper = mapper;
     }
 
@@ -71,7 +80,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin/users/edit/{id}")
-    @ResponseStatus(value= HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.OK)
     public ModelAndView getSelectedUserPartial(@PathVariable("id") int id, ModelAndView mv) {
 
         mv.setViewName("admin/editUserPartial");
@@ -221,7 +230,36 @@ public class AdminController {
 
         mv.addObject("authUser", authUser);
 
+        // Get a list of all sale orders in the database and add it to the model for display
+        List<SaleOrderAdminDisplayModel> displaySaleOrders = getAllSaleOrdersAsDisplayModel();
+
+        mv.addObject("displaySaleOrders", displaySaleOrders);
+
         // Return ModelAndView return-model
+        return mv;
+    }
+
+    @GetMapping("admin/orders/sale/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public ModelAndView getSaleOrderDetails(@PathVariable("id") int id, ModelAndView mv) {
+
+        mv.setViewName("/admin/saleOrderDetailsPartial");
+
+        // Create empty instance of display model
+        SaleOrderDetailsDisplayModel orderDetailsDisplayModel = new SaleOrderDetailsDisplayModel();
+
+        // Get order details
+        SaleOrder orderDetail = _saleOrderService.getSaleOder(id);
+
+        // Map matching attributes
+        _mapper.map(orderDetail, orderDetailsDisplayModel);
+
+        // Convert games to DTO models
+        orderDetailsDisplayModel.setSoldGames(convertSoldGameToDTO(orderDetail.getSoldGames()));
+
+        // Add display model to page model
+        mv.addObject("displayModel", orderDetailsDisplayModel);
+
         return mv;
     }
 
@@ -258,5 +296,48 @@ public class AdminController {
         }
 
         return displayUsers;
+    }
+
+    private List<SaleOrderAdminDisplayModel> getAllSaleOrdersAsDisplayModel() {
+
+        // Get all sale orders from the database
+        List<SaleOrder> allSaleOrders = _saleOrderService.findAll();
+
+        // Create empty list as return model
+        List<SaleOrderAdminDisplayModel> displaySaleOrders = new ArrayList<SaleOrderAdminDisplayModel>();
+
+        // Map all entities to display models
+        for (SaleOrder saleOrder : allSaleOrders ) {
+            // Create empty display model
+            SaleOrderAdminDisplayModel saleOrderDisplay = new SaleOrderAdminDisplayModel();
+
+            // Map matching attributes
+            _mapper.map(saleOrder, saleOrderDisplay);
+
+            // Add new display model to the return model
+            displaySaleOrders.add(saleOrderDisplay);
+        }
+
+        return displaySaleOrders;
+    }
+
+    private List<SoldGameDTO> convertSoldGameToDTO(Set<SoldGame> soldGames) {
+
+        // Create empty instance of an ArrayList as return model
+        List<SoldGameDTO> returnModel = new ArrayList<SoldGameDTO>();
+
+        // Convert each object in the list to a DTO
+        for (SoldGame soldGame : soldGames ) {
+            // Create instance of DTO
+            SoldGameDTO dto = new SoldGameDTO();
+
+            // Map attributes
+            _mapper.map(soldGame, dto);
+
+            // Add DTO to return model
+            returnModel.add(dto);
+        }
+
+        return returnModel;
     }
 }
