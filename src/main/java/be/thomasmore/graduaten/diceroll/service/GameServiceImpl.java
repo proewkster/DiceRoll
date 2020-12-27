@@ -121,4 +121,12 @@ public class GameServiceImpl implements GameService {
         return pagedResult.toList();
     }
 
+    @Override
+    public void checkStockSale(Game game, int aantal) {
+        if (game.getStock_Sale() - aantal < 0)
+        {
+
+        }
+
+    }
 }

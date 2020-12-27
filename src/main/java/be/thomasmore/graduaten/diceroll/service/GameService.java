@@ -16,6 +16,7 @@ public interface GameService {
     public Game addGame(GameDTO gameDTO) throws Exception;
     public void deleteGame(Long id);
     public void  saveGame(Game game);
+    public void checkStockSale(Game game, int aantal);
     PageInfo getFilterCategorie(Long Id, int pageNo, int pageSize);
     List<Game> getFilter2Categories(Long Id, Long id2);
 }

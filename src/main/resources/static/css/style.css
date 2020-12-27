@@ -182,6 +182,21 @@ p{
     background-color: hsl(25, 94%, 61%);
     color: white;
 }
+.buttonplus{
+    background-color: white;
+    text-align: center;
+    display: inline-block;
+    color: cornflowerblue;
+    font-size: 20px;
+    padding-top: 0;
+    font-weight: bold;
+    border-radius: 2px;
+}
+.buttonplus:hover{
+    text-decoration: none;
+    color: white;
+    background-color: cornflowerblue;
+}
 
 .gameList{
     width: 400px;

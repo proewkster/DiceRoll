@@ -3,7 +3,7 @@ package be.thomasmore.graduaten.diceroll.controller;
 import be.thomasmore.graduaten.diceroll.entity.*;
 import be.thomasmore.graduaten.diceroll.helper.UserInformation;
 import be.thomasmore.graduaten.diceroll.objects.RentGameDTO;
-import be.thomasmore.graduaten.diceroll.objects.TestDTO;
+import be.thomasmore.graduaten.diceroll.objects.SessionGameDTO;
 import be.thomasmore.graduaten.diceroll.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +36,8 @@ public class WinkelmandController {
     RentOrderService rentOrderService;
     @Autowired
     RentedGameService rentedGameService;
+    @Autowired
+    GameService gameService;
 
     @RequestMapping(value = "/winkelmand",method = RequestMethod.GET)
     public ModelAndView ListSoldGames(ModelMap model, HttpServletRequest request){
@@ -43,28 +46,57 @@ public class WinkelmandController {
     }
 
     @RequestMapping("/delitemwinkelmand")
-    public ModelAndView delitemwinkelmand(HttpSession session, @RequestParam int id){
-        List<TestDTO> testen = (List<TestDTO>)session.getAttribute("test");
+    public ModelAndView delitemwinkelmand(HttpSession session, @RequestParam int id,@RequestParam(value="buy",required = false,defaultValue = "0") Integer buy){
+        List<SessionGameDTO> testen = (List<SessionGameDTO>)session.getAttribute("test");
+        List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>) session.getAttribute("RentGameDTOS");
         ModelAndView mv = new ModelAndView("winkelmand");
+        if (buy == 1){
         testen.remove(id);
+        }else{
+            rentGameDTOS.remove(id);
+        }
         return mv;
     }
     @RequestMapping("/additemwinkelmand")
-    public ModelAndView additemwinkelmand(HttpSession session, @RequestParam int id){
-        List<TestDTO> testen = (List<TestDTO>)session.getAttribute("test");
+    public ModelAndView additemwinkelmand(HttpSession session, @RequestParam int id,@RequestParam(value="buy",required = false,defaultValue = "0") Integer buy){
         ModelAndView mv = new ModelAndView("winkelmand");
-        TestDTO test = testen.get(id);
-        test.setAantal(test.getAantal()+1);
-        testen.set(id,test);
+        if (buy == 1) {
+           List<SessionGameDTO> testen = (List<SessionGameDTO>) session.getAttribute("test");
+           SessionGameDTO test = testen.get(id);
+           Game game = gameService.getGameById(Long.parseLong(test.getId()));
+           if (game.getStock_Sale() - (test.getAmount() + 1) >= 0) {
+               test.setAmount(test.getAmount() + 1);
+               testen.set(id, test);
+           }
+       }else {
+            List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>) session.getAttribute("RentGameDTOS");
+            RentGameDTO rentGameDTO = rentGameDTOS.get(id);
+            Game game = gameService.getGameById(Long.parseLong(rentGameDTO.getId()));
+            if (game.getStock_Rent() - (rentGameDTO.getAantal() + 1) >= 0) {
+                rentGameDTO.setAantal(rentGameDTO.getAantal() + 1);
+                rentGameDTOS.set(id, rentGameDTO);
+            }
+        }
         return mv;
     }
     @RequestMapping("/minitemwinkelmand")
-    public ModelAndView minitemwinkelmand(HttpSession session, @RequestParam int id){
-        List<TestDTO> testen = (List<TestDTO>)session.getAttribute("test");
+    public ModelAndView minitemwinkelmand(HttpSession session, @RequestParam int id,@RequestParam(value="buy",required = false,defaultValue = "0") Integer buy){
         ModelAndView mv = new ModelAndView("winkelmand");
-        TestDTO test = testen.get(id);
-        test.setAantal(test.getAantal()-1);
-        testen.set(id,test);
+        if (buy == 1) {
+            List<SessionGameDTO> testen = (List<SessionGameDTO>) session.getAttribute("test");
+            SessionGameDTO test = testen.get(id);
+            if (test.getAmount() - 1 != 0) {
+                test.setAmount(test.getAmount() - 1);
+                testen.set(id, test);
+            }
+        }else {
+            List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>) session.getAttribute("RentGameDTOS");
+            RentGameDTO rentGameDTO = rentGameDTOS.get(id);
+            if (rentGameDTO.getAantal() - 1 != 0) {
+                rentGameDTO.setAantal(rentGameDTO.getAantal() - 1);
+                rentGameDTOS.set(id, rentGameDTO);
+            }
+        }
         return mv;
     }
     @RequestMapping("/delwinkelmand")
@@ -81,15 +113,15 @@ public class WinkelmandController {
         saleOrder.setPaid(true);
         saleOrder.setDelivered(false);
         orderService.save(saleOrder);
-        List<TestDTO> testen =(List<TestDTO>) session.getAttribute("test");
-        for (TestDTO test:testen) {
+        List<SessionGameDTO> testen =(List<SessionGameDTO>) session.getAttribute("test");
+        for (SessionGameDTO test:testen) {
             SoldGame soldGame = new SoldGame();
-            soldGame.setAmount(test.getAantal());
+            soldGame.setAmount(test.getAmount());
             Game game = service.getGameById(Long.parseLong(test.getId()));
             soldGame.setGame(game);
-            service.adjustStockGame(game,test.getAantal());
+            service.adjustStockGame(game,test.getAmount());
             soldGame.setSaleOrder(saleOrder);
-            soldGame.setPricePaid(game.getPrice_Sale() * test.getAantal());
+            soldGame.setPricePaid(game.getPrice_Sale());
             soldGame.setDiscount(5);
             soldGameService.saveSoldGame(soldGame);
         }
@@ -134,4 +166,39 @@ public class WinkelmandController {
         //soldGameService.SaveSoldGame(soldGame);
         return mv;
     }
+    @RequestMapping("/koopResterend")
+    public ModelAndView koopResterend(HttpSession session, @RequestParam String id,@RequestParam int aantal,@RequestParam(value="buy",required = false,defaultValue = "0") Integer buy){
+        ModelAndView mv = new ModelAndView("winkelmand");
+        Game game = gameService.getGameById(Long.parseLong(id));
+        if (buy == 1) {
+            ArrayList<SessionGameDTO> testen = (ArrayList<SessionGameDTO>) session.getAttribute("test");
+            for (SessionGameDTO test : testen) {
+                if (game.getGameID() == Long.parseLong(test.getId())) {
+                    test.setAmount(aantal);
+                    session.setAttribute("test", testen);
+                    ModelAndView mav = new ModelAndView("winkelmand");
+                    return mav;
+                }
+            }
+            SessionGameDTO test1 = new SessionGameDTO(id, game.getTitle(), aantal, game.getPrice_Sale());
+            testen.add(test1);
+            session.setAttribute("test", testen);
+        }
+        else{
+            ArrayList<RentGameDTO> rentGameDTOS = (ArrayList<RentGameDTO>) session.getAttribute("RentGameDTOS");
+            for (RentGameDTO rentGameDTO : rentGameDTOS) {
+                if (game.getGameID() == Long.parseLong(rentGameDTO.getId())) {
+                    rentGameDTO.setAantal(aantal);
+                    session.setAttribute("RentGameDTOS", rentGameDTOS);
+                    ModelAndView mav = new ModelAndView("winkelmand");
+                    return mav;
+                }
+            }
+            RentGameDTO rentGameDTO = new RentGameDTO(id, game.getTitle(),game.getPrice_Rent(),aantal);
+            rentGameDTOS.add(rentGameDTO);
+            session.setAttribute("RentGameDTOS", rentGameDTOS);
+        }
+        return mv;
+    }
+
 }

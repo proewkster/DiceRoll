@@ -2,29 +2,35 @@ package be.thomasmore.graduaten.diceroll.objects;
 
 import java.util.Objects;
 
-public class RentGameDTO {
+public class SessionGameDTO {
     private String id;
     private String title;
-    private double price;
     private int amount;
+    private double price;
+    private double discount;
 
-    public int getAantal() {
-        return amount;
+    public SessionGameDTO() {
     }
 
-    public void setAantal(int aantal) {
-        amount = aantal;
+    public double getDiscount() {
+        return discount;
     }
-
-    public RentGameDTO() {
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
 
@@ -43,19 +49,19 @@ public class RentGameDTO {
         this.price = price;
     }
 
-    public RentGameDTO(String id, String title, double price, int aantal) {
+    public SessionGameDTO(String id, String title, int amount, double price) {
         this.id = id;
         this.title = title;
+        this.amount = amount;
         this.price = price;
-        this.amount = aantal;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RentGameDTO)) return false;
-        RentGameDTO that = (RentGameDTO) o;
-        return getId().equals(that.getId());
+        if (!(o instanceof SessionGameDTO)) return false;
+        SessionGameDTO sessionGameDTO = (SessionGameDTO) o;
+        return getId().equals(sessionGameDTO.getId());
     }
 
     @Override
@@ -63,3 +69,4 @@ public class RentGameDTO {
         return Objects.hash(getId());
     }
 }
+

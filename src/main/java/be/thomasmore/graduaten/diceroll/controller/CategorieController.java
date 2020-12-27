@@ -58,6 +58,7 @@ public class CategorieController {
             pageinfo = gameService.getGames(pageinfo.currentPage, 20);
             games =  pageinfo.gamePage;
         }
+
         mav.addObject("categories", categories);
         mav.addObject("games", games);
         mav.addObject("filter", filter);

@@ -17,10 +17,7 @@
     <link rel="stylesheet" href="css/style.css">
     <title> DiceRollBoardGames</title>
 </head>
-
 <body>
-
-
 <jsp:include page="navbar.jsp">
     <jsp:param name="userFirstName" value="${authUser.firstName}"/>
 </jsp:include>

@@ -19,15 +19,22 @@
     <jsp:param name="userFirstName" value="${authUser.firstName}"/>
 </jsp:include>
     <div class="container">
+        <div class="row">
         <% Game game = (Game)request.getAttribute("Game");
             if (game.getStock_Sale()==0){
         %>
-        <p class="text-center text-black-50">No More items of <%out.print(game.getTitle());%> Available</p>
+        <p class="text-center text-black-50">Geen <%out.print(game.getTitle());%> spel meer beschikbaar.</p>
         <% }else if (game.getStock_Sale()==1){%>
-        <p class="text-center text-black-50">Only <%out.print(game.getStock_Sale());%> More item of <%out.print(game.getTitle());%> Available</p>
+        <p class="text-center text-black-50">Nog maar <%out.print(game.getStock_Sale());%> spel van <%out.print(game.getTitle());%> te koop.</p>
         <%} else {%>
-        <p class="text-center text-black-50">Only <%out.print(game.getStock_Sale());%> More items of <%out.print(game.getTitle());%> Available</p>
+        <p class="text-center text-black-50">Nog maar <%out.print(game.getStock_Sale());%> spellen van <%out.print(game.getTitle());%> te koop.</p>
         <%};%>
+        </div>
+        <div class="row">
+            <a class="buttonac" <%out.print("href=/koopResterend?id="+game.getGameID()+"&aantal="+game.getStock_Sale()+"&buy=1");%>>Koop <%out.print(game.getStock_Sale());%> </a>
+            <a class="buttonac" href="/categorie">Herbekijk Het gamma</a>
+        </div>
     </div>
+
 </body>
 </html>

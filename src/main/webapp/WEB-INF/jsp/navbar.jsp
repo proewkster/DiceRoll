@@ -45,6 +45,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="nav-link text-dark" href="register">
                     <i class="fa fa-user-plus mr-2"></i>Registreren
+
                 </a>
             </sec:authorize>
 

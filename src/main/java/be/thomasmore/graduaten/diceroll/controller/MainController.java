@@ -4,7 +4,7 @@ import be.thomasmore.graduaten.diceroll.entity.Game;
 import be.thomasmore.graduaten.diceroll.entity.User;
 import be.thomasmore.graduaten.diceroll.helper.UserInformation;
 import be.thomasmore.graduaten.diceroll.objects.RentGameDTO;
-import be.thomasmore.graduaten.diceroll.objects.TestDTO;
+import be.thomasmore.graduaten.diceroll.objects.SessionGameDTO;
 import be.thomasmore.graduaten.diceroll.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,11 +20,11 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    private List<TestDTO> testen;
+    private List<SessionGameDTO> testen;
     private List<RentGameDTO> rentGameDTOS;
     private int i;
     public MainController() {
-        this.testen = new ArrayList<TestDTO>();
+        this.testen = new ArrayList<SessionGameDTO>();
         this.rentGameDTOS = new ArrayList<RentGameDTO>();
         i = 0;
     }
@@ -75,17 +75,31 @@ public class MainController {
         public ModelAndView categorieToCart(HttpSession session, @RequestParam String id,@RequestParam int aantal,@RequestParam(value="buy",required = false,defaultValue = "0") Integer buy){
         Game game = gameService.getGameById(Long.parseLong(id));
         if (buy != 1){
-
+            List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>)session.getAttribute("RentGameDTOS");
+            if(rentGameDTOS == null){rentGameDTOS = new ArrayList<RentGameDTO>();}
+            for (RentGameDTO rentGameDTO:rentGameDTOS) {
+                if (Long.parseLong(rentGameDTO.getId()) == game.getGameID())
+                {
+                    int totaal = rentGameDTO.getAantal() + aantal;
+                    if (game.getStock_Rent()-totaal < 0)
+                    {
+                        ModelAndView mv  = new ModelAndView("rentsale");
+                        User authUser = UserInformation.getAuthenticatedUser();
+                        mv.addObject("authUser", authUser);
+                        mv.addObject("Game", game);
+                        return mv;
+                     }
+                }
+            }
             if (game.getStock_Rent()-aantal < 0)
             {
-                ModelAndView mv  = new ModelAndView("stocksale");
+                ModelAndView mv  = new ModelAndView("rentsale");
                 User authUser = UserInformation.getAuthenticatedUser();
                 mv.addObject("authUser", authUser);
                 mv.addObject("Game", game);
                 return mv;
             }
-            List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>)session.getAttribute("RentGameDTOS");
-            if(rentGameDTOS == null){rentGameDTOS = new ArrayList<RentGameDTO>();}
+
             RentGameDTO rentGameDTO = new RentGameDTO();
             rentGameDTO.setId(id);
             rentGameDTO.setAantal(aantal);
@@ -108,7 +122,20 @@ public class MainController {
             ModelAndView mv = new ModelAndView("winkelmand");
             return mv;
         }
-
+        List<SessionGameDTO> testen = (List<SessionGameDTO>) session.getAttribute("test");
+        if(testen == null){testen = new ArrayList<SessionGameDTO>();}
+        for (SessionGameDTO testdto:testen) {
+            int totaal = testdto.getAmount()+aantal;
+            if (Long.parseLong(testdto.getId()) == game.getGameID()) {
+                if (game.getStock_Sale() - totaal < 0) {
+                    ModelAndView mv = new ModelAndView("stocksale");
+                    User authUser = UserInformation.getAuthenticatedUser();
+                    mv.addObject("authUser", authUser);
+                    mv.addObject("Game", game);
+                    return mv;
+                }
+            }
+        }
         if (game.getStock_Sale()-aantal < 0){
             ModelAndView mv  = new ModelAndView("stocksale");
             User authUser = UserInformation.getAuthenticatedUser();
@@ -116,21 +143,19 @@ public class MainController {
             mv.addObject("Game", game);
             return mv;
         }
-        List<TestDTO> testen = (List<TestDTO>) session.getAttribute("test");
-        if(testen == null){testen = new ArrayList<TestDTO>();}
-        TestDTO test = new TestDTO();
+        SessionGameDTO test = new SessionGameDTO();
         test.setId(id);
-        test.setAantal(aantal);
+        test.setAmount(aantal);
         test.setTitle(game.getTitle());
         test.setPrice(game.getPrice_Sale());
         int i=0;
         boolean exists = false;
-        for (TestDTO test1:testen)
+        for (SessionGameDTO test1:testen)
         {
             if (test1.getId().equals(test.getId()) ){
                 exists = true;
-                int res = test1.getAantal()+test.getAantal();
-                test1.setAantal(res);
+                int res = test1.getAmount()+test.getAmount();
+                test1.setAmount(res);
             }
         }
         if (!exists){

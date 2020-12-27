@@ -71,7 +71,6 @@ public class GameController {
     @PostMapping("addGame")
     public ModelAndView registerUser(@ModelAttribute("game") @Valid Game game, BindingResult bindingResult) {
 
-
         //Validate form input for errors
         if (bindingResult.hasErrors()) {
             log.info(">> Controller has detected errors");

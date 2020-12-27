@@ -89,8 +89,22 @@
                         <td><input id="aantal" type="number" min="1" name="aantal" value="1" style="margin-bottom: 10px;"/></td>
                     </tr>
                     <tr>
-                        <td><button class="buttonac" type="submit" style="margin-left: 0px;" id="buy" name="buy" value="1">Koop</button></td>
-                        <td><button class="buttonac" type="submit">Huur</button></td>
+                        <%String disabled="";
+                        String koop="Koop";
+                        if (game.getStock_Sale()==0){
+                            disabled = "disabled";
+                            koop = "Geen Stock";
+                        }%>
+                        <td><button class="buttonac" <%out.print(disabled);%> type="submit" style="margin-left: 0px;" id="buy" name="buy" value="1"><%out.print(koop);%></button></td>
+                        <%String disabledhuur="";
+                        String hidden="";
+                        if (game.getStock_Rent()==0)
+                        {
+                            disabledhuur="disabled";
+                            hidden="hidden";
+                        }
+                        %>
+                        <td><button class="buttonac"<%out.print(disabledhuur+" "+hidden); %> type="submit">Huur</button></td>
                     </tr>
 
                </form>
