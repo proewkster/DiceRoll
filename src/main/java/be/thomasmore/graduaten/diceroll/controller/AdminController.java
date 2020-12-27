@@ -4,10 +4,7 @@ import be.thomasmore.graduaten.diceroll.entity.SaleOrder;
 import be.thomasmore.graduaten.diceroll.entity.SoldGame;
 import be.thomasmore.graduaten.diceroll.entity.User;
 import be.thomasmore.graduaten.diceroll.helper.UserInformation;
-import be.thomasmore.graduaten.diceroll.objects.SaleOrderAdminDisplayModel;
-import be.thomasmore.graduaten.diceroll.objects.SaleOrderDetailsDisplayModel;
-import be.thomasmore.graduaten.diceroll.objects.SoldGameDTO;
-import be.thomasmore.graduaten.diceroll.objects.UserMgmtDTO;
+import be.thomasmore.graduaten.diceroll.objects.*;
 import be.thomasmore.graduaten.diceroll.service.SaleOrderService;
 import be.thomasmore.graduaten.diceroll.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -105,7 +102,7 @@ public class AdminController {
     @PostMapping("/admin/users/edit")
     public ModelAndView updateUser(@ModelAttribute("selectedUser") @Valid UserMgmtDTO selectedUser, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        // Create view model and add display model as flash attribute
+        // Create view model and redirect to HTTP GET methods
         ModelAndView mv = new ModelAndView("redirect:/admin/users");
 
         // Check if user is authenticated
@@ -221,7 +218,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin/orders")
-    public ModelAndView orders() {
+    public ModelAndView orders(@ModelAttribute("saleOrderFilter") SaleOrderFilter saleOrderFilter) {
         // Create ModelAndView return-model
         ModelAndView mv = new ModelAndView("admin/orders");
 
@@ -230,10 +227,17 @@ public class AdminController {
 
         mv.addObject("authUser", authUser);
 
-        // Get a list of all sale orders in the database and add it to the model for display
-        List<SaleOrderAdminDisplayModel> displaySaleOrders = getAllSaleOrdersAsDisplayModel();
+        // Get a list of all sale orders in the database based on the current filter
+        List<SaleOrderAdminDisplayModel> displaySaleOrders = getAllSaleOrdersAsDisplayModel(saleOrderFilter);
 
+        // Add list to View Model
         mv.addObject("displaySaleOrders", displaySaleOrders);
+
+        // Get a list of all users and add it to the View Model (for filter)
+        mv.addObject("applicationUsers", getAllUsersAsDisplayModel());
+
+        // Add filter object to View Model
+        mv.addObject("saleOrderFilter", saleOrderFilter);
 
         // Return ModelAndView return-model
         return mv;
@@ -260,6 +264,19 @@ public class AdminController {
         // Add display model to page model
         mv.addObject("displayModel", orderDetailsDisplayModel);
 
+        return mv;
+    }
+
+    @PostMapping("admin/orders/sale/filter")
+    public ModelAndView SaleOrdersFiltered(@ModelAttribute("saleOrderFilter") SaleOrderFilter saleOrderFilter, RedirectAttributes redirectAttributes) {
+
+        // Create View Model and redirect to HTTP GET method
+        ModelAndView mv = new ModelAndView("redirect:/admin/orders");
+
+        // Add filter object to redirect attributes as flash attribute
+        redirectAttributes.addFlashAttribute("saleOrderFilter", saleOrderFilter);
+
+        // Redirect to page with filter object
         return mv;
     }
 
@@ -298,10 +315,37 @@ public class AdminController {
         return displayUsers;
     }
 
-    private List<SaleOrderAdminDisplayModel> getAllSaleOrdersAsDisplayModel() {
+    private List<UserDisplayModel> getAllUsersAsDisplayModel() {
+
+        // Get all users from database
+        List<User> allUsers = _userService.findAll();
+
+        // Create empty list as return model
+        List<UserDisplayModel> displayUsers = new ArrayList<UserDisplayModel>();
+
+        // Map all user entities to DTO models
+        for (User user : allUsers) {
+            // If user entity was anonymized, skip it
+            if (!user.getEmail().equals("anonymized")) {
+
+                // Create empty DTO model
+                UserDisplayModel mappedUser = new UserDisplayModel();
+
+                // Map matching attributes
+                _mapper.map(user, mappedUser);
+
+                // Add new DTO object to return model
+                displayUsers.add(mappedUser);
+            }
+        }
+
+        return displayUsers;
+    }
+
+    private List<SaleOrderAdminDisplayModel> getAllSaleOrdersAsDisplayModel(SaleOrderFilter filter) {
 
         // Get all sale orders from the database
-        List<SaleOrder> allSaleOrders = _saleOrderService.findAll();
+        List<SaleOrder> allSaleOrders = _saleOrderService.findAll(filter);
 
         // Create empty list as return model
         List<SaleOrderAdminDisplayModel> displaySaleOrders = new ArrayList<SaleOrderAdminDisplayModel>();

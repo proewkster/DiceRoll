@@ -1,6 +1,7 @@
 package be.thomasmore.graduaten.diceroll.service;
 
 import be.thomasmore.graduaten.diceroll.entity.SaleOrder;
+import be.thomasmore.graduaten.diceroll.objects.SaleOrderFilter;
 import be.thomasmore.graduaten.diceroll.repository.SaleOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ public class SaleOrderService {
     }
 
     public List<SaleOrder> findAll() { return repository.findAll(); }
+
+    public List<SaleOrder> findAll(SaleOrderFilter filter) { return repository.findAll(filter); }
 
     public void save(SaleOrder saleOrder){
         repository.save(saleOrder);

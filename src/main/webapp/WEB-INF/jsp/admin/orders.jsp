@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Jeroen Leyssen
@@ -12,9 +13,12 @@
     <meta name="viewport" content="width=device-width">
     <link href="../webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="../css/style.css">
 
     <title>DiceRoll - Admin - Orders</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 </head>
 <body>
 
@@ -34,6 +38,121 @@
 
     <div class="tab-content p-3">
         <div id="verkoop" class="tab-pane fade show active" role="tabpanel">
+            <!-- Filter -->
+            <button class="btn btn-dark mb-3" type="button" data-toggle="collapse" data-target="#saleFilter" aria-expanded="false" aria-controls="saleFilter">
+                Filter
+            </button>
+            <div class="collapse mb-3" id="saleFilter">
+                <div class="card card-body bg-transparent border-dark">
+                    <form:form method="post" action="/admin/orders/sale/filter" modelAttribute="saleOrderFilter">
+                        <div class="row">
+                            <div class="col-12 col-lg-6 px-5 py-2">
+                                <table>
+                                    <tr>
+                                        <th scope="row" class="align-middle text-right pt-2 pr-3">
+                                            <label>Order ID:</label>
+                                        </td>
+                                        <td class="align-middle">
+                                            <form:input type="number" min="0" max="65536" cssClass="form-control" path="orderId" />
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row" class="align-middle text-right pt-2 pr-3">
+                                            <label>Gebruiker:</label>
+                                        </td>
+                                        <td class="align-middle">
+                                            <form:select path="userId" cssClass="form-control selectpicker" data-live-search="true" data-size="10" dropupAuto="false" data-live-search-placeholder="Zoeken..." data-live-search-style="contains">
+                                                <option value="">-- Geen --</option>
+                                                <c:forEach var="user" items="${applicationUsers}">
+                                                    <option value="${user.userId}">${user.displayName}</option>
+                                                </c:forEach>
+                                            </form:select>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <table class="mt-3">
+                                    <tr>
+                                        <th scope="row" class="align-middle text-right pt-2 pr-3">
+                                            <label>Betaald:</label>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="btn-group btn-group-toggle btn-group-sm" data-toggle="buttons">
+                                                <label class="btn btn-secondary">
+                                                    <form:radiobutton path="paid" autocomplete="off" value="On"/>JA
+                                                </label>
+                                                <label class="btn btn-secondary active">
+                                                    <form:radiobutton path="paid" autocomplete="off" value="Disabled"/>UIT
+                                                </label>
+                                                <label class="btn btn-secondary">
+                                                    <form:radiobutton path="paid" autocomplete="off" value="Off" />NEE
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row" class="align-middle text-right pt-2 pr-3">
+                                            <label>Geleverd:</label>
+                                        </th>
+                                        <td class="align-middle">
+                                            <div class="btn-group btn-group-toggle btn-group-sm" data-toggle="buttons">
+                                                <label class="btn btn-secondary">
+                                                    <form:radiobutton path="delivered" autocomplete="off" value="On" />JA
+                                                </label>
+                                                <label class="btn btn-secondary">
+                                                    <form:radiobutton path="delivered" autocomplete="off" value="Disabled" />UIT
+                                                </label>
+                                                <label class="btn btn-secondary">
+                                                    <form:radiobutton path="delivered" autocomplete="off" value="Off" />NEE
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="col-12 col-lg-6 px-5 py-2">
+                                <table>
+                                    <tr>
+                                        <th scope="row" class="align-middle text-right pt-2 pr-3">
+                                            <label>Startdatum:</label>
+                                        </td>
+                                        <td class="align-middle">
+                                            <form:input type="date" cssClass="form-control" path="startDate" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><form:errors path="startDate" cssClass="text-danger" /></td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row" class="align-middle text-right pt-2 pr-3">
+                                            <label>Einddatum:</label>
+                                        </td>
+                                        <td class="align-middle">
+                                            <form:input type="date" cssClass="form-control" path="endDate" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><form:errors path="endDate" cssClass="text-danger" /></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <a href="/admin/orders" class="btn btn-danger">Filters verwijderen</a>
+                                <button type="submit" class="btn btn-dark">Filter toepassen</button>
+                            </div>
+                        </div>
+                    </form:form>
+                </div>
+            </div>
+
+            <!-- Data table -->
             <table class="table table-striped table-bordered table-advance table-hover table-responsive-xl">
                 <thead class="thead-dark">
                 <tr>
@@ -82,7 +201,7 @@
             </table>
         </div>
         <div id="verhuur" class="tab-pane fade" role="tabpanel">
-            <jsp:include page="./rentOrdersPartial.jsp"></jsp:include>
+
         </div>
     </div>
 </div>
@@ -98,6 +217,7 @@
 
 <script src="../webjars/jquery/3.5.1/jquery.min.js"></script>
 <script src="../webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 <script>
     function openSaleOrderDetails(id) {
         $.ajax ({
