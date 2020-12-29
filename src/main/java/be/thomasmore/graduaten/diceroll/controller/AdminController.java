@@ -1,16 +1,18 @@
 package be.thomasmore.graduaten.diceroll.controller;
 
-import be.thomasmore.graduaten.diceroll.entity.SaleOrder;
-import be.thomasmore.graduaten.diceroll.entity.SoldGame;
-import be.thomasmore.graduaten.diceroll.entity.User;
+import be.thomasmore.graduaten.diceroll.entity.*;
 import be.thomasmore.graduaten.diceroll.helper.UserInformation;
 import be.thomasmore.graduaten.diceroll.objects.*;
+import be.thomasmore.graduaten.diceroll.service.RentOrderService;
 import be.thomasmore.graduaten.diceroll.service.SaleOrderService;
 import be.thomasmore.graduaten.diceroll.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -31,13 +33,15 @@ public class AdminController {
     private static final Logger log = LoggerFactory.getLogger(AdminController.class);
     private final UserService _userService;
     private final SaleOrderService _saleOrderService;
+    private final RentOrderService _rentOrderService;
     private final ModelMapper _mapper;
 
     // Constructor
     @Autowired
-    public AdminController(UserService userService, SaleOrderService saleOrderService, ModelMapper mapper) {
+    public AdminController(UserService userService, SaleOrderService saleOrderService, RentOrderService rentOrderService, ModelMapper mapper) {
         this._userService = userService;
         this._saleOrderService = saleOrderService;
+        this._rentOrderService = rentOrderService;
         this._mapper = mapper;
     }
 
@@ -217,33 +221,77 @@ public class AdminController {
         return mv;
     }
 
-    @GetMapping("/admin/orders")
-    public ModelAndView orders(@ModelAttribute("saleOrderFilter") SaleOrderFilter saleOrderFilter) {
+    @GetMapping("/admin/sale")
+    public ModelAndView orders(@ModelAttribute("saleOrderFilter") SaleOrderFilter saleFilter) {
         // Create ModelAndView return-model
-        ModelAndView mv = new ModelAndView("admin/orders");
+        ModelAndView mv = new ModelAndView("admin/sale");
 
         // Get current authenticated user and add it to the the model for the NavBar
         User authUser = UserInformation.getAuthenticatedUser();
 
         mv.addObject("authUser", authUser);
 
-        // Get a list of all sale orders in the database based on the current filter
-        List<SaleOrderAdminDisplayModel> displaySaleOrders = getAllSaleOrdersAsDisplayModel(saleOrderFilter);
+        // Extract page information from filter objects
+        Pageable salePageable = PageRequest.of(saleFilter.getCurrentPage(), saleFilter.getObjectsPerPage());
+
+        // Retrieve paged database result
+        Page<SaleOrder> saleResult = _saleOrderService.findAll(saleFilter, salePageable);
+
+        // Convert resulting list to Display Models
+        List<SaleOrderAdminDisplayModel> displaySaleOrders = convertSaleOrdersToDisplayModel(saleResult.toList());
 
         // Add list to View Model
         mv.addObject("displaySaleOrders", displaySaleOrders);
+
+        // Update filter object with result information
+        saleFilter.setTotalPages(saleResult.getTotalPages());
 
         // Get a list of all users and add it to the View Model (for filter)
         mv.addObject("applicationUsers", getAllUsersAsDisplayModel());
 
         // Add filter object to View Model
-        mv.addObject("saleOrderFilter", saleOrderFilter);
+        mv.addObject("saleOrderFilter", saleFilter);
 
         // Return ModelAndView return-model
         return mv;
     }
 
-    @GetMapping("admin/orders/sale/{id}")
+    @GetMapping("/admin/rent")
+    public ModelAndView orders(@ModelAttribute("rentOrderFilter") RentOrderFilter rentFilter) {
+        // Create ModelAndView return-model
+        ModelAndView mv = new ModelAndView("admin/rent");
+
+        // Get current authenticated user and add it to the the model for the NavBar
+        User authUser = UserInformation.getAuthenticatedUser();
+
+        mv.addObject("authUser", authUser);
+
+        // Extract page information from filter objects
+        Pageable rentPageable = PageRequest.of(rentFilter.getCurrentPage(), rentFilter.getObjectsPerPage());
+
+        // Retrieve paged database result
+        Page<RentOrder> rentResult = _rentOrderService.findAll(rentFilter, rentPageable);
+
+        // Convert resulting list to Display Models
+        List<RentOrderAdminDisplayModel> displayRentOrders = convertRentOrdersToDisplayModel(rentResult.toList());
+
+        // Add list to View Model
+        mv.addObject("displayRentOrders", displayRentOrders);
+
+        // Update filter object with result information
+        rentFilter.setTotalPages(rentResult.getTotalPages());
+
+        // Get a list of all users and add it to the View Model (for filter)
+        mv.addObject("applicationUsers", getAllUsersAsDisplayModel());
+
+        // Add filter object to View Model
+        mv.addObject("rentOrderFilter", rentFilter);
+
+        // Return ModelAndView return-model
+        return mv;
+    }
+
+    @GetMapping("admin/sale/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public ModelAndView getSaleOrderDetails(@PathVariable("id") int id, ModelAndView mv) {
 
@@ -253,7 +301,7 @@ public class AdminController {
         SaleOrderDetailsDisplayModel orderDetailsDisplayModel = new SaleOrderDetailsDisplayModel();
 
         // Get order details
-        SaleOrder orderDetail = _saleOrderService.getSaleOder(id);
+        SaleOrder orderDetail = _saleOrderService.getSaleOrder(id);
 
         // Map matching attributes
         _mapper.map(orderDetail, orderDetailsDisplayModel);
@@ -267,14 +315,51 @@ public class AdminController {
         return mv;
     }
 
-    @PostMapping("admin/orders/sale/filter")
+    @GetMapping("admin/rent/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public ModelAndView getRentOrderDetails(@PathVariable("id") int id, ModelAndView mv) {
+
+        mv.setViewName("/admin/rentOrderDetailsPartial");
+
+        // Create empty instance of display model
+        RentOrderDetailsDisplayModel orderDetailsDisplayModel = new RentOrderDetailsDisplayModel();
+
+        // Get order details
+        RentOrder orderDetail = _rentOrderService.findById(id).get();
+
+        // Map matching attributes
+        _mapper.map(orderDetail, orderDetailsDisplayModel);
+
+        // Convert games to DTO models
+        orderDetailsDisplayModel.setRentedGames(convertRentedGameToDTO(orderDetail.getRentedGames()));
+
+        // Add display model to page model
+        mv.addObject("displayModel", orderDetailsDisplayModel);
+
+        return mv;
+    }
+
+    @PostMapping("admin/sale/filter")
     public ModelAndView SaleOrdersFiltered(@ModelAttribute("saleOrderFilter") SaleOrderFilter saleOrderFilter, RedirectAttributes redirectAttributes) {
 
         // Create View Model and redirect to HTTP GET method
-        ModelAndView mv = new ModelAndView("redirect:/admin/orders");
+        ModelAndView mv = new ModelAndView("redirect:/admin/sale");
 
         // Add filter object to redirect attributes as flash attribute
         redirectAttributes.addFlashAttribute("saleOrderFilter", saleOrderFilter);
+
+        // Redirect to page with filter object
+        return mv;
+    }
+
+    @PostMapping("admin/rent/filter")
+    public ModelAndView RentOrdersFiltered(@ModelAttribute("rentOrderfilter") RentOrderFilter rentOrderFilter, RedirectAttributes redirectAttributes) {
+
+        // Create View Model and redirect to HTTP GET method
+        ModelAndView mv = new ModelAndView("redirect:/admin/rent");
+
+        // Add filter object to redirect attributes as flash attribute
+        redirectAttributes.addFlashAttribute("rentOrderFilter", rentOrderFilter);
 
         // Redirect to page with filter object
         return mv;
@@ -342,29 +427,6 @@ public class AdminController {
         return displayUsers;
     }
 
-    private List<SaleOrderAdminDisplayModel> getAllSaleOrdersAsDisplayModel(SaleOrderFilter filter) {
-
-        // Get all sale orders from the database
-        List<SaleOrder> allSaleOrders = _saleOrderService.findAll(filter);
-
-        // Create empty list as return model
-        List<SaleOrderAdminDisplayModel> displaySaleOrders = new ArrayList<SaleOrderAdminDisplayModel>();
-
-        // Map all entities to display models
-        for (SaleOrder saleOrder : allSaleOrders ) {
-            // Create empty display model
-            SaleOrderAdminDisplayModel saleOrderDisplay = new SaleOrderAdminDisplayModel();
-
-            // Map matching attributes
-            _mapper.map(saleOrder, saleOrderDisplay);
-
-            // Add new display model to the return model
-            displaySaleOrders.add(saleOrderDisplay);
-        }
-
-        return displaySaleOrders;
-    }
-
     private List<SoldGameDTO> convertSoldGameToDTO(Set<SoldGame> soldGames) {
 
         // Create empty instance of an ArrayList as return model
@@ -383,5 +445,65 @@ public class AdminController {
         }
 
         return returnModel;
+    }
+
+    private List<RentedGameDTO> convertRentedGameToDTO(Set<RentedGame> rentedGames) {
+
+        // Create empty instance of an ArrayList as return model
+        List<RentedGameDTO> returnModel = new ArrayList<RentedGameDTO>();
+
+        // Convert each object in the list to a DTO
+        for (RentedGame rentedGame : rentedGames ) {
+            // Create instance of DTO
+            RentedGameDTO dto = new RentedGameDTO();
+
+            // Map attributes
+            _mapper.map(rentedGame, dto);
+
+            // Add DTO to return model
+            returnModel.add(dto);
+        }
+
+        return returnModel;
+    }
+
+    private List<SaleOrderAdminDisplayModel> convertSaleOrdersToDisplayModel(List<SaleOrder> saleOrders) {
+
+        // Create empty list as return model
+        List<SaleOrderAdminDisplayModel> displaySaleOrders = new ArrayList<SaleOrderAdminDisplayModel>();
+
+        // Map all entities to display models
+        for (SaleOrder saleOrder : saleOrders) {
+            // Create empty display model
+            SaleOrderAdminDisplayModel saleOrderDisplay = new SaleOrderAdminDisplayModel();
+
+            // Map matching attributes
+            _mapper.map(saleOrder, saleOrderDisplay);
+
+            // Add new display model to the return model
+            displaySaleOrders.add(saleOrderDisplay);
+        }
+
+        return displaySaleOrders;
+    }
+
+    private List<RentOrderAdminDisplayModel> convertRentOrdersToDisplayModel(List<RentOrder> rentOrders) {
+
+        // Create empty list as return model
+        List<RentOrderAdminDisplayModel> displayRentOrders = new ArrayList<RentOrderAdminDisplayModel>();
+
+        // Map all entities to display models
+        for (RentOrder rentOrder : rentOrders) {
+            // Create empty display model
+            RentOrderAdminDisplayModel rentOrderDisplay = new RentOrderAdminDisplayModel();
+
+            // Map matching attributes
+            _mapper.map(rentOrder, rentOrderDisplay);
+
+            // Add new display model to the return list
+            displayRentOrders.add(rentOrderDisplay);
+        }
+
+        return displayRentOrders;
     }
 }

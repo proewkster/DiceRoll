@@ -79,7 +79,8 @@
 
                 <div class="dropdown-menu dropdown-default navbar-dropdown-menu" aria-labelledby="adminMenu">
                     <a class="nav-link text-dark" href="/admin/users">Gebruikers</a>
-                    <a class="nav-link text-dark" href="/admin/orders">Bestellingen</a>
+                    <a class="nav-link text-dark" href="/admin/sale">Verkoop</a>
+                    <a class="nav-link text-dark" href="/admin/rent">Verhuur</a>
                 </div>
             </div>
             </sec:authorize>

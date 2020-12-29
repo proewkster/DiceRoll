@@ -47,7 +47,7 @@ public class SoldGameDTO {
         return pricePaid * ( (100 - discount) / 100) * amount;
     }
 
-    // String getters
+    // String Getters
     public String getPricePaidAsString() {
         return "€ " + String.format("%.2f", getPricePaid());
     }

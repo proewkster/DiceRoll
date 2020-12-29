@@ -14,9 +14,11 @@ public class SaleOrder {
 
     @OneToMany(mappedBy = "saleOrder")
     Set<SoldGame> soldGames = new HashSet<>();
+
     @ManyToOne
     @JoinColumn(name = "UserID",nullable = false)
     private User user;
+
     private boolean paid;
     private boolean delivered;
     private Date orderDate;

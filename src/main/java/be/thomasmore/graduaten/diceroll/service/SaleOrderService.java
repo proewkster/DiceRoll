@@ -4,6 +4,8 @@ import be.thomasmore.graduaten.diceroll.entity.SaleOrder;
 import be.thomasmore.graduaten.diceroll.objects.SaleOrderFilter;
 import be.thomasmore.graduaten.diceroll.repository.SaleOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,13 +15,13 @@ public class SaleOrderService {
     @Autowired
     SaleOrderRepository repository;
 
-    public SaleOrder getSaleOder(Integer id){
+    public SaleOrder getSaleOrder(Integer id){
         return repository.getOne(id);
     }
 
     public List<SaleOrder> findAll() { return repository.findAll(); }
 
-    public List<SaleOrder> findAll(SaleOrderFilter filter) { return repository.findAll(filter); }
+    public Page<SaleOrder> findAll(SaleOrderFilter filter, Pageable pageable) { return repository.findAll(filter, pageable); }
 
     public void save(SaleOrder saleOrder){
         repository.save(saleOrder);

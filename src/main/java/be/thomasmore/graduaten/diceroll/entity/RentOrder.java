@@ -9,11 +9,14 @@ public class RentOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int rentOrderID;
+
     @OneToMany(mappedBy = "rentOrder")
     Set<RentedGame> rentedGames = new HashSet<>();
+
     @ManyToOne
     @JoinColumn(name = "UserID",nullable = false)
     private User user;
+
     private boolean paid;
 
     public RentOrder() {

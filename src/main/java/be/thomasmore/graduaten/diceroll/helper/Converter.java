@@ -9,6 +9,8 @@ import java.io.File;
 
 public class Converter {
 
+    // Methods
+
     public static File convertUserToXML(User user) {
         // Instantiate required classes
         XmlMapper xmlMapper = new XmlMapper();
