@@ -85,7 +85,9 @@ public class GameController {
     }
     @RequestMapping("deleteGame/{id}")
     public String deleteGame(@PathVariable Long id){
-        gameService.deleteGame(id);
+        Game game = gameService.getGameById(id);
+        game.setIgnore(true);
+        gameService.saveGame(game);
         return "redirect:/game";
     }
 

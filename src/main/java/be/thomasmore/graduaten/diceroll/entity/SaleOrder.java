@@ -1,5 +1,7 @@
 package be.thomasmore.graduaten.diceroll.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -21,6 +23,7 @@ public class SaleOrder {
 
     private boolean paid;
     private boolean delivered;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date orderDate;
 
     public Set<SoldGame> getSoldGames() {

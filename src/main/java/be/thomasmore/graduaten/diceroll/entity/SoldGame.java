@@ -26,6 +26,13 @@ public class SoldGame {
     public SoldGame() {
     }
 
+    public SoldGame(SaleOrder saleOrder, Game game, double pricePaid, double discount, int amount) {
+        this.saleOrder = saleOrder;
+        this.game = game;
+        this.pricePaid = pricePaid;
+        this.discount = discount;
+        this.amount = amount;
+    }
 
     public Game getGame() {
         return game;

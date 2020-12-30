@@ -2,6 +2,7 @@ package be.thomasmore.graduaten.diceroll.entity;
 
 import org.hibernate.FetchMode;
 import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -18,7 +19,7 @@ import java.util.Set;
 
 @Entity
 @Table(name= "Games")
-
+@Where(clause = "Ignore=false")
 public class Game {
 
     @Id
@@ -42,6 +43,7 @@ public class Game {
     private double Price_Rent;
     private Long Stock_Sale;
     private Long Stock_Rent;
+    private boolean Ignore;
     @OneToMany(mappedBy = "game")
     Set<SoldGame> soldGame = new HashSet<>();
 
@@ -79,6 +81,14 @@ public class Game {
     }
     public void setYear(String year) throws Exception{
         this.Year = new SimpleDateFormat("yyyy").parse(year);
+    }
+
+    public boolean getIgnore() {
+        return Ignore;
+    }
+
+    public void setIgnore(boolean ignore) {
+        Ignore = ignore;
     }
 
     public String getDistributor() {
