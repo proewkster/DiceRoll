@@ -1,8 +1,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<div class="modal-header">
-    <h4 class="modal-title">Gebruiker aanpassen</h4>
-    <button type="button" class="close" data-dismiss="modal">&times;</button>
+<div class="modal-header navbar-color">
+    <h4 class="modal-title text-light">Gebruiker aanpassen</h4>
+    <button type="button" class="close text-light" data-dismiss="modal">&times;</button>
 </div>
 
 <form:form method="post" action="/admin/users/edit" modelAttribute="selectedUser">
@@ -10,7 +10,7 @@
 <div class="model-body p-4">
         <div class="row">
             <div class="col-6">
-                <h4 class="text-center mb-3">Gebruikersgegevens</h4>
+                <h4 class="text-center mb-3 highlight">Gebruikersgegevens</h4>
                 <hr/>
                 <table>
                 <tbody>
@@ -82,7 +82,7 @@
             </div>
 
             <div class="col-6">
-                <h4 class="text-center mb-3">Gebruikersrollen</h4>
+                <h4 class="text-center mb-3 highlight">Gebruikersrollen</h4>
                 <hr/>
 
                 <div class="input-group mb-3">
@@ -103,7 +103,7 @@
                     <input type="text" class="form-control" disabled value="Admin" readonly>
                 </div>
 
-                <h4 class="text-center mb-3 mt-5">Status</h4>
+                <h4 class="text-center mb-3 mt-5 highlight">Status</h4>
                 <hr/>
 
                 <div class="custom-control custom-switch text-center">

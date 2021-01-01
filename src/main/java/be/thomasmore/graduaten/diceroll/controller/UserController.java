@@ -1,9 +1,11 @@
 package be.thomasmore.graduaten.diceroll.controller;
 
-import be.thomasmore.graduaten.diceroll.entity.User;
+import be.thomasmore.graduaten.diceroll.entity.*;
 import be.thomasmore.graduaten.diceroll.helper.Converter;
 import be.thomasmore.graduaten.diceroll.helper.UserInformation;
 import be.thomasmore.graduaten.diceroll.objects.*;
+import be.thomasmore.graduaten.diceroll.service.RentOrderService;
+import be.thomasmore.graduaten.diceroll.service.SaleOrderService;
 import be.thomasmore.graduaten.diceroll.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -17,15 +19,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -33,14 +36,18 @@ public class UserController {
     // Attributes
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService _userService;
+    private final SaleOrderService _saleOrderService;
+    private final RentOrderService _rentOrderService;
     private final ModelMapper _mapper;
     private final BCryptPasswordEncoder _encoder;
 
 
     // Constructor
     @Autowired
-    public UserController(UserService userService, ModelMapper mapper, BCryptPasswordEncoder encoder) {
+    public UserController(UserService userService, SaleOrderService saleOrderService, RentOrderService rentOrderService, ModelMapper mapper, BCryptPasswordEncoder encoder) {
         this._userService = userService;
+        this._saleOrderService = saleOrderService;
+        this._rentOrderService = rentOrderService;
         this._mapper = mapper;
         this._encoder = encoder;
     }
@@ -231,6 +238,78 @@ public class UserController {
         return new ModelAndView("/user/info");
     }
 
+    @GetMapping("/user/orders")
+    public ModelAndView userOrders() {
+        // Create ModelAndView return-model
+        ModelAndView mv = new ModelAndView("user/orders");
+
+        // Get current authenticated user and add it to the the model for the NavBar
+        User authUser = UserInformation.getAuthenticatedUser();
+
+        mv.addObject("authUser", authUser);
+
+        // Get a list of all sale orders for the current user and add to the model
+        List<SaleOrderDisplayModel> saleOrders = convertSaleOrdersToDisplayModel(_saleOrderService.findAllByUser(authUser));
+
+        mv.addObject("saleOrders", saleOrders);
+
+        // Get a list of all rent orders for the current user and add to the model
+        List<RentOrderDisplayModel> rentOrders = convertRentOrdersToDisplayModel(_rentOrderService.findAllByUser(authUser));
+
+        mv.addObject("rentOrders", rentOrders);
+
+        // Return ModelAndView return-model
+        return mv;
+    }
+
+    @GetMapping("user/sale/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public ModelAndView getSaleOrderDetails(@PathVariable("id") int id, ModelAndView mv) {
+
+        mv.setViewName("saleOrderDetailsPartial");
+
+        // Create empty instance of display model
+        SaleOrderDetailsDisplayModel orderDetailsDisplayModel = new SaleOrderDetailsDisplayModel();
+
+        // Get order details
+        SaleOrder orderDetail = _saleOrderService.getSaleOrder(id);
+
+        // Map matching attributes
+        _mapper.map(orderDetail, orderDetailsDisplayModel);
+
+        // Convert games to DTO models
+        orderDetailsDisplayModel.setSoldGames(convertSoldGameToDTO(orderDetail.getSoldGames()));
+
+        // Add display model to page model
+        mv.addObject("displayModel", orderDetailsDisplayModel);
+
+        return mv;
+    }
+
+    @GetMapping("user/rent/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public ModelAndView getRentOrderDetails(@PathVariable("id") int id, ModelAndView mv) {
+
+        mv.setViewName("rentOrderDetailsPartial");
+
+        // Create empty instance of display model
+        RentOrderDetailsDisplayModel orderDetailsDisplayModel = new RentOrderDetailsDisplayModel();
+
+        // Get order details
+        RentOrder orderDetail = _rentOrderService.findById(id).get();
+
+        // Map matching attributes
+        _mapper.map(orderDetail, orderDetailsDisplayModel);
+
+        // Convert games to DTO models
+        orderDetailsDisplayModel.setRentedGames(convertRentedGameToDTO(orderDetail.getRentedGames()));
+
+        // Add display model to page model
+        mv.addObject("displayModel", orderDetailsDisplayModel);
+
+        return mv;
+    }
+
     // Source: https://stackoverflow.com/questions/55654740/download-file-xml-with-spring-boot
     @GetMapping("/user/download")
     public ResponseEntity downloadUserInformation() throws IOException {
@@ -244,5 +323,87 @@ public class UserController {
 
         byte[] content = Files.readAllBytes(file.toPath());
         return new ResponseEntity(content, headers, HttpStatus.OK);
+    }
+
+    // Helper Methods
+
+    private List<SaleOrderDisplayModel> convertSaleOrdersToDisplayModel(List<SaleOrder> saleOrders) {
+
+        // Create empty list as return model
+        List<SaleOrderDisplayModel> displaySaleOrders = new ArrayList<SaleOrderDisplayModel>();
+
+        // Map all entities to display models
+        for (SaleOrder saleOrder : saleOrders) {
+            // Create empty display model
+            SaleOrderDisplayModel saleOrderDisplay = new SaleOrderDisplayModel();
+
+            // Map matching attributes
+            _mapper.map(saleOrder, saleOrderDisplay);
+
+            // Add new display model to the return model
+            displaySaleOrders.add(saleOrderDisplay);
+        }
+
+        return displaySaleOrders;
+    }
+
+    private List<RentOrderDisplayModel> convertRentOrdersToDisplayModel(List<RentOrder> rentOrders) {
+
+        // Create empty list as return model
+        List<RentOrderDisplayModel> displayRentOrders = new ArrayList<RentOrderDisplayModel>();
+
+        // Map all entities to display models
+        for (RentOrder rentOrder : rentOrders) {
+            // Create empty display model
+            RentOrderDisplayModel rentOrderDisplay = new RentOrderDisplayModel();
+
+            // Map matching attributes
+            _mapper.map(rentOrder, rentOrderDisplay);
+
+            // Add new display model to the return list
+            displayRentOrders.add(rentOrderDisplay);
+        }
+
+        return displayRentOrders;
+    }
+
+    private List<SoldGameDTO> convertSoldGameToDTO(Set<SoldGame> soldGames) {
+
+        // Create empty instance of an ArrayList as return model
+        List<SoldGameDTO> returnModel = new ArrayList<SoldGameDTO>();
+
+        // Convert each object in the list to a DTO
+        for (SoldGame soldGame : soldGames ) {
+            // Create instance of DTO
+            SoldGameDTO dto = new SoldGameDTO();
+
+            // Map attributes
+            _mapper.map(soldGame, dto);
+
+            // Add DTO to return model
+            returnModel.add(dto);
+        }
+
+        return returnModel;
+    }
+
+    private List<RentedGameDTO> convertRentedGameToDTO(Set<RentedGame> rentedGames) {
+
+        // Create empty instance of an ArrayList as return model
+        List<RentedGameDTO> returnModel = new ArrayList<RentedGameDTO>();
+
+        // Convert each object in the list to a DTO
+        for (RentedGame rentedGame : rentedGames ) {
+            // Create instance of DTO
+            RentedGameDTO dto = new RentedGameDTO();
+
+            // Map attributes
+            _mapper.map(rentedGame, dto);
+
+            // Add DTO to return model
+            returnModel.add(dto);
+        }
+
+        return returnModel;
     }
 }

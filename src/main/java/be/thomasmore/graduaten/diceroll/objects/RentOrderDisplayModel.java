@@ -2,33 +2,22 @@ package be.thomasmore.graduaten.diceroll.objects;
 
 import be.thomasmore.graduaten.diceroll.entity.User;
 
-import java.sql.Date;
-
-public class SaleOrderAdminDisplayModel {
+public class RentOrderDisplayModel {
 
     // Attributes
-    private int saleOrderId;
-    private Date orderDate;
+    private int rentOrderId;
     private User user;
     private boolean paid;
-    private boolean delivered;
     private String userSummary;
 
     //Getters and Setters
-    public int getSaleOrderId() {
-        return saleOrderId;
+
+    public int getRentOrderId() {
+        return rentOrderId;
     }
 
-    public void setSaleOrderId(int orderId) {
-        this.saleOrderId = orderId;
-    }
-
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
+    public void setRentOrderId(int rentOrderId) {
+        this.rentOrderId = rentOrderId;
     }
 
     public User getUser() {
@@ -45,14 +34,6 @@ public class SaleOrderAdminDisplayModel {
 
     public void setPaid(boolean paid) {
         this.paid = paid;
-    }
-
-    public boolean isDelivered() {
-        return delivered;
-    }
-
-    public void setDelivered(boolean delivered) {
-        this.delivered = delivered;
     }
 
     public String getUserSummary() {

@@ -208,6 +208,11 @@
 <script src="../webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 <script>
+    $(document).ready(function() {
+        console.log("Script did run!!!");
+        $('.selectpicker').selectpicker('val', ${rentOrderFilter.userId});
+    });
+
     function openRentOrderDetails(id) {
         $.ajax ({
             url: "/admin/rent/" + id,

@@ -238,7 +238,7 @@ public class AdminController {
         Page<SaleOrder> saleResult = _saleOrderService.findAll(saleFilter, salePageable);
 
         // Convert resulting list to Display Models
-        List<SaleOrderAdminDisplayModel> displaySaleOrders = convertSaleOrdersToDisplayModel(saleResult.toList());
+        List<SaleOrderDisplayModel> displaySaleOrders = convertSaleOrdersToDisplayModel(saleResult.toList());
 
         // Add list to View Model
         mv.addObject("displaySaleOrders", displaySaleOrders);
@@ -273,7 +273,7 @@ public class AdminController {
         Page<RentOrder> rentResult = _rentOrderService.findAll(rentFilter, rentPageable);
 
         // Convert resulting list to Display Models
-        List<RentOrderAdminDisplayModel> displayRentOrders = convertRentOrdersToDisplayModel(rentResult.toList());
+        List<RentOrderDisplayModel> displayRentOrders = convertRentOrdersToDisplayModel(rentResult.toList());
 
         // Add list to View Model
         mv.addObject("displayRentOrders", displayRentOrders);
@@ -295,7 +295,7 @@ public class AdminController {
     @ResponseStatus(value = HttpStatus.OK)
     public ModelAndView getSaleOrderDetails(@PathVariable("id") int id, ModelAndView mv) {
 
-        mv.setViewName("/admin/saleOrderDetailsPartial");
+        mv.setViewName("saleOrderDetailsPartial");
 
         // Create empty instance of display model
         SaleOrderDetailsDisplayModel orderDetailsDisplayModel = new SaleOrderDetailsDisplayModel();
@@ -319,7 +319,7 @@ public class AdminController {
     @ResponseStatus(value = HttpStatus.OK)
     public ModelAndView getRentOrderDetails(@PathVariable("id") int id, ModelAndView mv) {
 
-        mv.setViewName("/admin/rentOrderDetailsPartial");
+        mv.setViewName("rentOrderDetailsPartial");
 
         // Create empty instance of display model
         RentOrderDetailsDisplayModel orderDetailsDisplayModel = new RentOrderDetailsDisplayModel();
@@ -467,15 +467,15 @@ public class AdminController {
         return returnModel;
     }
 
-    private List<SaleOrderAdminDisplayModel> convertSaleOrdersToDisplayModel(List<SaleOrder> saleOrders) {
+    private List<SaleOrderDisplayModel> convertSaleOrdersToDisplayModel(List<SaleOrder> saleOrders) {
 
         // Create empty list as return model
-        List<SaleOrderAdminDisplayModel> displaySaleOrders = new ArrayList<SaleOrderAdminDisplayModel>();
+        List<SaleOrderDisplayModel> displaySaleOrders = new ArrayList<SaleOrderDisplayModel>();
 
         // Map all entities to display models
         for (SaleOrder saleOrder : saleOrders) {
             // Create empty display model
-            SaleOrderAdminDisplayModel saleOrderDisplay = new SaleOrderAdminDisplayModel();
+            SaleOrderDisplayModel saleOrderDisplay = new SaleOrderDisplayModel();
 
             // Map matching attributes
             _mapper.map(saleOrder, saleOrderDisplay);
@@ -487,15 +487,15 @@ public class AdminController {
         return displaySaleOrders;
     }
 
-    private List<RentOrderAdminDisplayModel> convertRentOrdersToDisplayModel(List<RentOrder> rentOrders) {
+    private List<RentOrderDisplayModel> convertRentOrdersToDisplayModel(List<RentOrder> rentOrders) {
 
         // Create empty list as return model
-        List<RentOrderAdminDisplayModel> displayRentOrders = new ArrayList<RentOrderAdminDisplayModel>();
+        List<RentOrderDisplayModel> displayRentOrders = new ArrayList<RentOrderDisplayModel>();
 
         // Map all entities to display models
         for (RentOrder rentOrder : rentOrders) {
             // Create empty display model
-            RentOrderAdminDisplayModel rentOrderDisplay = new RentOrderAdminDisplayModel();
+            RentOrderDisplayModel rentOrderDisplay = new RentOrderDisplayModel();
 
             // Map matching attributes
             _mapper.map(rentOrder, rentOrderDisplay);
