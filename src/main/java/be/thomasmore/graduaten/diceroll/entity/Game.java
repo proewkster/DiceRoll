@@ -44,7 +44,7 @@ public class Game {
     private Long Stock_Sale;
     private Long Stock_Rent;
     private boolean Ignore;
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game",cascade = CascadeType.ALL,orphanRemoval = true)
     Set<SoldGame> soldGame = new HashSet<>();
 
     public Game() {

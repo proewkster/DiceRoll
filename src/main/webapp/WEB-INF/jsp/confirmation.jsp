@@ -1,4 +1,10 @@
-<%--
+<%@ page import="org.springframework.web.bind.annotation.ModelAttribute" %>
+<%@ page import="be.thomasmore.graduaten.diceroll.entity.RentOrder" %>
+<%@ page import="be.thomasmore.graduaten.diceroll.entity.RentedGame" %>
+<%@ page import="java.util.List" %>
+<%@ page import="be.thomasmore.graduaten.diceroll.entity.SaleOrder" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %><%--
   Created by IntelliJ IDEA.
   User: Koen Van Looy
   Date: 03/12/2020
@@ -19,10 +25,32 @@
     <jsp:param name="userFirstName" value="${authUser.firstName}"/>
 </jsp:include>
 <div class="container">
-    <p class="col-md-12 text-center" style="font-size: 17px;"> The order is processed correctly! </p>
+    <p class="col-md-12 text-center" style="font-size: 17px;"> Uw order is correct behandeld. </p>
     <div class="col-md-12 text-center">
-        <a href="/" class="btn-dark">Continue shopping</a>
+        <p><%
+            SaleOrder saleOrder = (SaleOrder) request.getAttribute("saleOrder");
+            String pattern = "dd-MM-yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            out.print("<p>Uw Bestelling kan worden afgehaald op "+simpleDateFormat.format(saleOrder.getOrderDate())+"</p>");
+            RentOrder rentOrder =(RentOrder) request.getAttribute("rentOrder");
+            List<RentedGame> rentedGames = (List<RentedGame>)request.getAttribute("rentedGames");
+            RentedGame rentedDateGame = rentedGames.get(0);
+            Date date = rentedDateGame.getEndDate();
+            out.print("Volgende gehuurde spellen moeten terug gebracht worden op "+simpleDateFormat.format(date)+"<br>");
+            for (RentedGame rentedGame: rentedGames) {
+
+                out.print(rentedGame.getGame().getTitle());
+                out.print("<br>");
+            }
+
+        %>
+
+        </p>
+
+        <a href="/" class="buttonac">Continue shopping</a>
     </div>
 </div>
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 </body>
 </html>

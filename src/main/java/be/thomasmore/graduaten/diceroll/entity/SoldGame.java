@@ -11,11 +11,11 @@ public class SoldGame {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int soldGameID;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "saleOrderID")
     private SaleOrder saleOrder;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "GameID")
     private Game game;
 

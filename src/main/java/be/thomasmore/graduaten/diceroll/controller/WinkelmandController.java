@@ -42,6 +42,8 @@ public class WinkelmandController {
     @RequestMapping(value = "/winkelmand",method = RequestMethod.GET)
     public ModelAndView ListSoldGames(ModelMap model, HttpServletRequest request){
        ModelAndView mv = new ModelAndView("winkelmand");
+        User authUser = UserInformation.getAuthenticatedUser();
+        mv.addObject("authUser", authUser);
        return mv;
     }
 
@@ -55,6 +57,8 @@ public class WinkelmandController {
         }else{
             rentGameDTOS.remove(id);
         }
+        User authUser = UserInformation.getAuthenticatedUser();
+        mv.addObject("authUser", authUser);
         return mv;
     }
     @RequestMapping("/additemwinkelmand")
@@ -77,6 +81,8 @@ public class WinkelmandController {
                 rentGameDTOS.set(id, rentGameDTO);
             }
         }
+        User authUser = UserInformation.getAuthenticatedUser();
+        mv.addObject("authUser", authUser);
         return mv;
     }
     @RequestMapping("/minitemwinkelmand")
@@ -97,6 +103,8 @@ public class WinkelmandController {
                 rentGameDTOS.set(id, rentGameDTO);
             }
         }
+        User authUser = UserInformation.getAuthenticatedUser();
+        mv.addObject("authUser", authUser);
         return mv;
     }
     @RequestMapping("/delwinkelmand")
@@ -198,6 +206,8 @@ public class WinkelmandController {
             rentGameDTOS.add(rentGameDTO);
             session.setAttribute("RentGameDTOS", rentGameDTOS);
         }
+        User authUser = UserInformation.getAuthenticatedUser();
+        mv.addObject("authUser", authUser);
         return mv;
     }
 

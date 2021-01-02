@@ -119,7 +119,7 @@ public class MainController {
                 rentGameDTOS.add(rentGameDTO);
             }
             session.setAttribute("RentGameDTOS",rentGameDTOS);
-            ModelAndView mv = new ModelAndView("winkelmand");
+            ModelAndView mv = new ModelAndView("redirect:/categorie");
             return mv;
         }
         List<SessionGameDTO> testen = (List<SessionGameDTO>) session.getAttribute("test");

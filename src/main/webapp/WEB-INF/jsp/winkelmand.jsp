@@ -22,26 +22,11 @@
     <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
+<jsp:include page="navbar.jsp">
+    <jsp:param name="userFirstName" value="${authUser.firstName}"/>
+</jsp:include>
 
-    <header>
-        <div class="container">
-            <div id="Branding">
-                <H1><span class="highlight">DiceRoll</span> BoardGames</H1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a  href="/">Home</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                    <li><a href="/overons">Over Ons</a></li>
-                    <li><a href="/categorie">Categorie</a></li>
-                    <li><a class="highlight" href="/winkelmand">Winkelmand</a></li>
-                    <li><a href="/login">Sign in</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <section>
-
+<section>
         <div class="container-md">
             <h1 class="text-center">Gekochte games</h1>
             <table class="table">
@@ -120,5 +105,7 @@
         </div>
 
     </section>
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,3 +1,7 @@
+<%@ page import="java.util.List" %>
+<%@ page import="be.thomasmore.graduaten.diceroll.entity.RentedGame" %>
+<%@ page import="be.thomasmore.graduaten.diceroll.objects.RentedGameDTO" %>
+<%@ page import="be.thomasmore.graduaten.diceroll.objects.SessionGameDTO" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
@@ -17,10 +21,20 @@
     <a class="navbar-brand ml-md-1 ml-auto" href="/"><span class="highlight">DiceRoll</span></a>
 
     <!-- User menu - Does not collapse -->
+
     <div class="nav-item dropdown ml-auto order-md-2">
-        <a class="nav-link dropdown-toggle text-light pl-0" href="#" id="userMenu" role="button" data-toggle="dropdown">
+        <a class="nav-link d-inline-block text-light" href="/winkelmand">Winkelmand <i class="fa fa-shopping-cart">
+            <% List<RentedGameDTO> rentedGameDTOS = (List<RentedGameDTO>)session.getAttribute("RentGameDTOS");
+                List<SessionGameDTO> sessionGameDTOS = (List<SessionGameDTO>)session.getAttribute("test");
+            if ((rentedGameDTOS!=null && rentedGameDTOS.size()!=0)|| (sessionGameDTOS!=null && sessionGameDTOS.size()!=0))
+            {
+                out.print(rentedGameDTOS.size()+sessionGameDTOS.size());
+            } %>
+        </i></a>
+        <a class="nav-link dropdown-toggle text-light pl-0 d-inline-block" href="#" id="userMenu" role="button" data-toggle="dropdown">
             <i class="fa fa-user mr-2"></i><%=request.getParameter("userFirstName")%>
         </a>
+
         <div class="dropdown-menu dropdown-menu-md-right dropdown-default navbar-dropdown-menu" aria-labelledby="userMenu">
             <!-- Menu elements when user is not logged in (= anonymous user) -->
             <sec:authorize access="isAnonymous()">
@@ -59,6 +73,7 @@
                 </a>
             </sec:authorize>
         </div>
+
     </div>
 
     <!-- Navigation menu - Collapse on medium screen to burger menu -->

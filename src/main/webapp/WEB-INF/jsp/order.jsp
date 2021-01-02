@@ -27,38 +27,20 @@
     <jsp:param name="userFirstName" value="${authUser.firstName}"/>
 </jsp:include>
 <div class="container">
-<form:form method="post" action="order" modelAttribute="saleOrder">
-    <div class="form-row py-1">
-    <div class="col-4">
-        <spring:bind path="orderDate">
-            <label>Afhaaldatum</label>
-            <form:input type="date" min="${date}" cssClass="form-control ${status.error ? 'is-invalid' : ''}" path="orderDate" id="orderDate"/>
-            <form:errors path="orderDate" cssClass="text-danger"/>
-        </spring:bind>
-        
-        <button class="buttonac" style="margin-top: 10px;margin-left: 0;" type="submit">Order bevestigen</button>
-    </div>
-        <div class="col-4 border-dark">
+<form:form method="post" action="order" modelAttribute="orderDTO">
+    <div class="form-row py-1 m-4">
+        <div class="col-1"></div>
+        <div class="col-4">
+            <spring:bind path="orderDate">
+                <label>Afhaaldatum</label>
+                <form:input type="date" min="${date}" cssClass="form-control ${status.error ? 'is-invalid' : ''}" path="orderDate" id="orderDate"/>
+                <form:errors path="orderDate" cssClass="text-danger"/>
+            </spring:bind>
+            <button class="buttonac" style="margin-top: 10px;margin-left: 0;" type="submit">Order bevestigen</button>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-6 border-dark">
             <h1>Overzicht</h1>
-            <h2>Verhuurde Games</h2>
-            <ol>
-                <% List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>)session.getAttribute("RentGameDTOS");
-                if (rentGameDTOS== null){rentGameDTOS=new ArrayList<RentGameDTO>();}
-                    for (RentGameDTO rentGameDTO: rentGameDTOS)
-                    {
-                        out.print("<dt>"+rentGameDTO.getGame().getTitle()+"</dt>");
-                        out.print("<dd>korting: "+rentGameDTO.getDiscountAsString()+"</dd>");
-                        out.print("<dd>prijs: "+rentGameDTO.getPricePaidAsString()+" x  Aantal: "+rentGameDTO.getAantal()+" = "+rentGameDTO.getSubTotalAsString()+"</dd>");
-                    }
-                %>
-            </ol>
-        </div>
-    </div>
-    <div class="form-row py-1">
-        <div class="col-4 ">
-
-        </div>
-        <div class="col-4 border-dark">
             <h2>Gekochte games</h2>
             <ol>
                 <% List<SoldGameDTO> soldGameDTOS = (List<SoldGameDTO>) request.getAttribute("soldGameDTOS");
@@ -73,7 +55,27 @@
             </ol>
         </div>
     </div>
+    <div class="form-row py-1">
+        <div class="col-6 ">
+        </div>
+        <div class="col-6 border-dark">
+            <h2>Verhuurde Games</h2>
+            <ol>
+                <% List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>)session.getAttribute("RentGameDTOS");
+                    if (rentGameDTOS== null){rentGameDTOS=new ArrayList<RentGameDTO>();}
+                    for (RentGameDTO rentGameDTO: rentGameDTOS)
+                    {
+                        out.print("<dt>"+rentGameDTO.getGame().getTitle()+"</dt>");
+                        out.print("<dd>korting: "+rentGameDTO.getDiscountAsString()+"</dd>");
+                        out.print("<dd>prijs: "+rentGameDTO.getPricePaidAsString()+" x  Aantal: "+rentGameDTO.getAantal()+" = "+rentGameDTO.getSubTotalAsString()+"</dd>");
+                    }
+                %>
+            </ol>
+        </div>
+    </div>
 </form:form>
 </div>
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 </body>
 </html>

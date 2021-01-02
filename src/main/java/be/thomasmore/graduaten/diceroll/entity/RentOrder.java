@@ -10,7 +10,7 @@ public class RentOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int rentOrderID;
 
-    @OneToMany(mappedBy = "rentOrder")
+    @OneToMany(mappedBy = "rentOrder",cascade = CascadeType.ALL)
     Set<RentedGame> rentedGames = new HashSet<>();
 
     @ManyToOne

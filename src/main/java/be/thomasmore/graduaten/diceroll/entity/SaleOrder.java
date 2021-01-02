@@ -3,6 +3,8 @@ package be.thomasmore.graduaten.diceroll.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +26,7 @@ public class SaleOrder {
     private boolean paid;
     private boolean delivered;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Gelieve Afhaaldatum in te geven")
     private Date orderDate;
 
     public Set<SoldGame> getSoldGames() {

@@ -2,6 +2,7 @@ package be.thomasmore.graduaten.diceroll.controller;
 
 import be.thomasmore.graduaten.diceroll.entity.*;
 import be.thomasmore.graduaten.diceroll.helper.UserInformation;
+import be.thomasmore.graduaten.diceroll.objects.OrderDTO;
 import be.thomasmore.graduaten.diceroll.objects.RentGameDTO;
 import be.thomasmore.graduaten.diceroll.objects.SessionGameDTO;
 import be.thomasmore.graduaten.diceroll.objects.SoldGameDTO;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,25 +70,31 @@ public class OrderController {
             soldGameDTO.setGame(gameService.getGameById(Long.parseLong(sessionGameDTO.getId())));
             soldGameDTOS.add(soldGameDTO);
         }
-        SaleOrder saleOrder = new SaleOrder();
+        OrderDTO orderDTO = new OrderDTO();
 
         mv.addObject("soldGameDTOS",soldGameDTOS);
-        mv.addObject("saleOrder",saleOrder);
+        mv.addObject("orderDTO",orderDTO);
         mv.addObject("rentGameDTOS",rentGameDTOS);
         mv.addObject("authUser", authUser);
         return mv;
     }
     @PostMapping("/order")
-    public ModelAndView orderresult(@ModelAttribute("saleOrder") SaleOrder saleOrder, BindingResult bindingResult,HttpSession session)
-    {
+    public ModelAndView orderresult(@ModelAttribute("orderDTO") @Valid OrderDTO orderDTO, BindingResult bindingResult,HttpSession session) throws ParseException {
         List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>)session.getAttribute("RentGameDTOS");
         List<SessionGameDTO> sessionGameDTOS = (List<SessionGameDTO>) session.getAttribute("test");
         User authUser = UserInformation.getAuthenticatedUser();
-
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        try {
+         Date date = simpleDateFormat.parse(orderDTO.getOrderDate());
+            SaleOrder saleOrder = new SaleOrder();
+            saleOrder.setOrderDate(date);
             saleOrder.setUser(authUser);
             saleOrder.setPaid(false);
             saleOrder.setDelivered(false);
             saleOrderService.save(saleOrder);
+
+
             if (bindingResult.hasErrors()) {
                 log.info(">> Controller has detected errors");
                 ModelAndView mv = new ModelAndView("order");
@@ -107,8 +115,23 @@ public class OrderController {
                 RentedGame rentedGame = new RentedGame(rentOrder, game, rentGameDTO.getPrice(), 0, false, false, saleOrder.getOrderDate(), currentDate10);
                 rentedGameService.save(rentedGame);
             }
+            ModelAndView mv = new ModelAndView("confirmation");
+            rentGameDTOS.clear();
+            sessionGameDTOS.clear();
+            session.setAttribute("RentGameDTOS",rentGameDTOS);
+            session.setAttribute("test",sessionGameDTOS);
+            RentOrder userRentOrder = rentOrderService.findById(rentOrder.getRentOrderID()).get();
+            List<RentedGame> rentedGames = rentedGameService.getRentedGamesFromRentOrder(userRentOrder);
+            mv.addObject("rentedGames",rentedGames);
+            mv.addObject("rentOrder",userRentOrder);
+            mv.addObject("saleOrder",saleOrder);
+            return mv;
+        }
+        catch (ParseException parseException){
+            ModelAndView mv = new ModelAndView("order");
+            return mv;
+        }
 
-        return new ModelAndView("redirect:/");
     }
     public Date add10DaysDate(Date date){
         Calendar c = Calendar.getInstance();

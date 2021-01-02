@@ -9,10 +9,10 @@ public class RentedGame {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int rentedGameID;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rentOrderID")
     private RentOrder rentOrder;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "GameID")
     private Game game;
     private double pricePaid;
