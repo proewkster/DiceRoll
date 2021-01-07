@@ -59,16 +59,6 @@ public class MainController {
         return mv;
     }
 
-    @GetMapping("/overons")
-    public ModelAndView overons() {
-        ModelAndView mv = new ModelAndView("overons");
-
-        User authUser = UserInformation.getAuthenticatedUser();
-
-        mv.addObject("authUser", authUser);
-
-        return mv;
-    }
 
 
     @RequestMapping("/categories")

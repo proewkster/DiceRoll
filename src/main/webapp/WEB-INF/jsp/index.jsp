@@ -37,7 +37,8 @@
             </form>
         </div>
     </section>
-<section>
+<div class="container-fluid d-flex justify-content-center"> <h2>Top 20 highest rated games</h2></div>
+<section class="container-fluid">
     <%
        int counter =0;
         List<Game> games = (List<Game>) request.getAttribute("games");
@@ -100,28 +101,7 @@
         }
         out.print("</div>");
     %>
-</section>
-    <section id="boxes">
-        <div class="container">
-            <div class="box">
-                <img src="images/familyboard.jpg">
-                <h3>Html 5 Markup</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam volutp a suscipit in,</p>
-            </div>
-            <div class="box">
-                <img src="images/familyboard.jpg">
-                <h3>css3 Markup</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam volutp a suscipit in,</p>
-            </div>
-            <div class="box">
-                <img src="images/familyboard.jpg">
-                <h3>responsive web design</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam volutp a suscipit in,</p>
-                <a href="/testOrder">Test</a>
-            </div>
-        </div>
 
-    </section>
 
 
  <!-- bg-modal !-->

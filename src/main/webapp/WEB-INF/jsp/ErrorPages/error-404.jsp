@@ -10,11 +10,11 @@
 <html>
 <head>
     <title>Error - 404</title>
-    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
-    <script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
-    <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="${pageContext.request.contextPath}/webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <style>
         .container, body, html, row{
             height: 100vh;
@@ -34,7 +34,7 @@
 
         <h1 class="col-12 text-center">ERROR 404 Page not found</h1>
 
-        <div class="col-6"><img src="images/Dice.png" class="img-fluid"></div>
+        <div class="col-6"><img src="${pageContext.request.contextPath}/images/Dice.png" class="img-fluid"></div>
 
         <h2 class="col-6 text-center">Oh nee, je hebt gegokt en verloren. De pagina werd niet gevonden.</h2>
     </div>
