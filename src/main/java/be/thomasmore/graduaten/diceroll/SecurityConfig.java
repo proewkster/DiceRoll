@@ -45,8 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/order").hasAnyRole("User") //Add pages accessible for Users
-                .antMatchers("/addGame","/game","editGame").hasAnyRole("Admin")// Add pages accessible for Admins
+                .antMatchers("/order","/user/**","/rentOrderDetailsPartial","/saleOrderDetailsPartial","/confirmation").hasAnyRole("User") //Add pages accessible for Users
+                .antMatchers("/addGame","/game","/editGame","/admin/**").hasAnyRole("Admin")// Add pages accessible for Admins
                 .and().formLogin()
                     .loginPage("/login")
                     .successHandler(authenticationSuccessHandler)

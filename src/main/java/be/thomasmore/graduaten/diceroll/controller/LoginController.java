@@ -18,7 +18,7 @@ public class LoginController {
 
         //If a user is already logged in, redirect to authenticated page
         if (UserInformation.getAuthenticatedUser() != null) {
-            return new ModelAndView("");
+            return new ModelAndView("redirect:/");
         }
 
         //Reset all parameters

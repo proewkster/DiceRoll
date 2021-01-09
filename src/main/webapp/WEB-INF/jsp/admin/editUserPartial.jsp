@@ -9,7 +9,7 @@
 
 <div class="model-body p-4">
         <div class="row">
-            <div class="col-6">
+            <div class="col-12 col-lg-6">
                 <h4 class="text-center mb-3 highlight">Gebruikersgegevens</h4>
                 <hr/>
                 <table>
@@ -81,7 +81,7 @@
             </table>
             </div>
 
-            <div class="col-6">
+            <div class="col-12 col-lg-6">
                 <h4 class="text-center mb-3 highlight">Gebruikersrollen</h4>
                 <hr/>
 
@@ -94,7 +94,7 @@
                     <input type="text" class="form-control" disabled value="User" readonly>
                 </div>
 
-                <div class="input-group mb-3">
+                <div class="input-group mb-3 mt-lg-5">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                             <form:checkbox path="adminRole" cssClass="checkbox" id="isAdminToggle"/>

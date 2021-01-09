@@ -231,7 +231,7 @@ public class UserController {
 
                 _userService.delete(UserInformation.getAuthenticatedUser());
 
-                return new ModelAndView("redirect:/");
+                return new ModelAndView("redirect:/logout");
             }
         }
 

@@ -1,5 +1,7 @@
 package be.thomasmore.graduaten.diceroll.controller;
 
+import be.thomasmore.graduaten.diceroll.entity.User;
+import be.thomasmore.graduaten.diceroll.helper.UserInformation;
 import be.thomasmore.graduaten.diceroll.objects.RegisterUserDTO;
 import be.thomasmore.graduaten.diceroll.service.UserService;
 import org.slf4j.Logger;
@@ -41,6 +43,10 @@ public class RegisterController {
     public ModelAndView register(RegisterUserDTO registerUserDTO)
     {
         ModelAndView mv = new ModelAndView("register");
+
+        User authUser = UserInformation.getAuthenticatedUser();
+
+        mv.addObject("authUser", authUser);
         mv.addObject("userDTO", registerUserDTO);
         return mv;
     }
@@ -78,6 +84,8 @@ public class RegisterController {
 
         try {
             log.info(">> Create new object: {}", _userService.register(registerUserDTO).toString());
+
+            return new ModelAndView("redirect:/");
         }
         catch (Exception exception) {
             log.info(">> Exception encountered while creating the User data model.");
