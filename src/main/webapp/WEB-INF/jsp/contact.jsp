@@ -13,7 +13,7 @@
     <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <title>Contact</title>
+    <title>Diceroll - Contact</title>
 </head>
 <body>
 <jsp:include page="navbar.jsp">
@@ -22,11 +22,11 @@
     <main class="container">
         <div class="col-lg-6 mx-auto">
         <h1>Contact</h1>
-        <p>Hello and welcome to Diceroll</p>
-        <p>If you have a question or a remark please contact us at info@Diceroll.be</p>
-        <p>Do you have a complaint? Please contact us at Joeri.Verlooy@ThomasMore.be</p>
+        <p>Hallo en welkom bij Diceroll</p>
+        <p>Heb je een vraag of een opmerking? Neem dan contact met ons op via info@Diceroll.be</p>
+        <p>Klachten? Contacteer ons op Joeri.Verlooy@ThomasMore.be</p>
         <br>
-        Alternatively you can fill in this form which will be sent to him.
+            <p>Je kan ook het onderstaande formulier invullen wat dan doorgestuurd zal worden.</p>
         </div>
         <br>
         <form >
@@ -35,23 +35,23 @@
                     <input type="email" class="form-control" id="inputEmail" placeholder="Email">
                 </div>
             <div class="form-group col-lg-6 mx-auto">
-                <label for="inputName">Your name</label>
-                <input type="text" class="form-control" id="inputName" placeholder="Your full name here">
+                <label for="inputName">Uw naam</label>
+                <input type="text" class="form-control" id="inputName" placeholder="Vul hier jou volledige naam in">
             </div>
             <div class="form-group col-lg-6 mx-auto">
-                <label for="message">Message to team Diceroll</label>
-                <textarea type="text" class="form-control" id="message" placeholder="Your message" rows="5"></textarea>
+                <label for="message">Boodschap aan team Diceroll</label>
+                <textarea type="text" class="form-control" id="message" placeholder="jou bericht" rows="5"></textarea>
             </div>
             <div class="form-group col-lg-6 mx-auto">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="gridCheck">
                     <label class="form-check-label" for="gridCheck">
-                        I agree that my data will be processed.
+                       Ik ga akkoord dat mijn data verwerkt zal worden.
                     </label>
                 </div>
             </div>
             <div class="form-group col-lg-6 mx-auto">
-            <button type="submit" class="btn btn-primary">Send</button>
+            <button type="submit" class="btn btn-primary">Verzenden</button>
             </div>
         </form>
     </main>

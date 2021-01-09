@@ -25,19 +25,18 @@
     <section id="showcase">
         <div class="container">
             <H1>Fantastisch Leuke Boardgames</H1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam volutpat neque in ipsum hendrerit venenatis. Vestibulum nulla ipsum, scelerisque a suscipit in,</p>
         </div>
     </section>
     <section id="newsletter">
         <div class="container">
-            <H1>Subscribe to our newsletter</H1>
+            <H1>Schrijf je nu in op onze nieuwsbrief.</H1>
             <form>
-                <input type="email" placeholder="Enter Email">
-                <button type="submit" class="button_1">Submit</button>
+                <input type="email" placeholder="Geef hier je mailadres in">
+                <button type="submit" class="button_1">Verzenden</button>
             </form>
         </div>
     </section>
-<div class="container-fluid d-flex justify-content-center"> <h2>Top 20 highest rated games</h2></div>
+<div class="container-fluid d-flex justify-content-center"> <h2>De top 20 van games met de hoogste rating.</h2></div>
 <section class="container-fluid">
     <%
        int counter =0;

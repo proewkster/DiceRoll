@@ -25,7 +25,7 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <title>Categorie</title>
+    <title>Diceroll - Games</title>
 </head>
 <body>
 <jsp:include page="navbar.jsp">

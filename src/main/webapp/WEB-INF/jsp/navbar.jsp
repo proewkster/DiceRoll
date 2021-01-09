@@ -85,7 +85,6 @@
             <a class="nav-link d-flex justify-content-between" href="/">Home</a>
             <a class="nav-link d-flex justify-content-between" href="/categorie">Games</a>
             <a class="nav-link d-flex justify-content-between" href="/contact">Contact</a>
-            <a class="nav-link disabled d-flex justify-content-between" href="/games">Admin GameList</a>
 
             <!-- Admin user only -->
             <sec:authorize access="hasRole('Admin')">
