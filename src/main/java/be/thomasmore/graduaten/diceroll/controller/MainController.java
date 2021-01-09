@@ -36,7 +36,6 @@ public class MainController {
         ModelAndView mv = new ModelAndView("index");
 
         User authUser = UserInformation.getAuthenticatedUser();
-
         mv.addObject("authUser", authUser);
 
         session.setAttribute("test",testen);
@@ -152,7 +151,7 @@ public class MainController {
         testen.add(test);
         }
         session.setAttribute("test",testen);
-        ModelAndView mv = new ModelAndView("winkelmand");
+        ModelAndView mv = new ModelAndView("redirect:/categorie");
         return mv;
     }
 

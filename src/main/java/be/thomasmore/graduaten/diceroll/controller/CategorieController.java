@@ -3,6 +3,8 @@ package be.thomasmore.graduaten.diceroll.controller;
 import be.thomasmore.graduaten.diceroll.entity.Categorie;
 import be.thomasmore.graduaten.diceroll.entity.Game;
 import be.thomasmore.graduaten.diceroll.entity.PageInfo;
+import be.thomasmore.graduaten.diceroll.entity.User;
+import be.thomasmore.graduaten.diceroll.helper.UserInformation;
 import be.thomasmore.graduaten.diceroll.objects.Filter;
 import be.thomasmore.graduaten.diceroll.service.CategorieService;
 import be.thomasmore.graduaten.diceroll.service.GameService;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -32,7 +35,7 @@ public class CategorieController {
         model.addAttribute("games", games);
         return "categorie";}*/
     @RequestMapping(value = "/categorie", method = RequestMethod.GET)
-    public ModelAndView GetCategorieGames(@ModelAttribute("filter")Filter filter, @ModelAttribute("pageinfo") PageInfo pageinfo){
+    public ModelAndView GetCategorieGames(@ModelAttribute("filter")Filter filter, @ModelAttribute("pageinfo") PageInfo pageinfo, HttpSession session){
         ModelAndView mav = new ModelAndView("categorie");
         List<Categorie> categories = categorieService.getCategories();
 
@@ -58,7 +61,8 @@ public class CategorieController {
             pageinfo = gameService.getGames(pageinfo.currentPage, 20);
             games =  pageinfo.gamePage;
         }
-
+        User authUser = UserInformation.getAuthenticatedUser();
+        mav.addObject("authUser", authUser);
         mav.addObject("categories", categories);
         mav.addObject("games", games);
         mav.addObject("filter", filter);

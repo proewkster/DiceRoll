@@ -52,6 +52,12 @@ public class OrderController {
         User authUser = UserInformation.getAuthenticatedUser();
         List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>)session.getAttribute("RentGameDTOS");
         List<SessionGameDTO> testen = (List<SessionGameDTO>) session.getAttribute("test");
+        if (rentGameDTOS == null && testen ==null){
+            ModelAndView mav = new ModelAndView("winkelmand");
+            String noNull = "Er is niet in de winkelmand";
+            mav.addObject("noNull",noNull);
+            return mav;
+        }
         for (RentGameDTO rentGameDTO:rentGameDTOS) {
             rentGameDTO.setGame(gameService.getGameById(Long.parseLong(rentGameDTO.getId())));
         }
