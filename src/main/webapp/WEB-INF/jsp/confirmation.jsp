@@ -4,7 +4,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="be.thomasmore.graduaten.diceroll.entity.SaleOrder" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %><%--
+<%@ page import="java.util.Date" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: Koen Van Looy
   Date: 03/12/2020
@@ -34,15 +35,16 @@
             out.print("<p>Uw Bestelling kan worden afgehaald op "+simpleDateFormat.format(saleOrder.getOrderDate())+"</p>");
             RentOrder rentOrder =(RentOrder) request.getAttribute("rentOrder");
             List<RentedGame> rentedGames = (List<RentedGame>)request.getAttribute("rentedGames");
-            RentedGame rentedDateGame = rentedGames.get(0);
-            Date date = rentedDateGame.getEndDate();
-            out.print("Volgende gehuurde spellen moeten terug gebracht worden op "+simpleDateFormat.format(date)+"<br>");
-            for (RentedGame rentedGame: rentedGames) {
+            if (rentedGames.size()!=0) {
+                RentedGame rentedDateGame = rentedGames.get(0);
+                Date date = rentedDateGame.getEndDate();
+                out.print("Volgende gehuurde spellen moeten terug gebracht worden op " + simpleDateFormat.format(date) + "<br>");
+                for (RentedGame rentedGame : rentedGames) {
 
-                out.print(rentedGame.getGame().getTitle());
-                out.print("<br>");
+                    out.print(rentedGame.getGame().getTitle());
+                    out.print("<br>");
+                }
             }
-
         %>
 
         </p>

@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
+
 </head>
 <body>
 <jsp:include page="navbar.jsp">
@@ -101,6 +102,10 @@
             </div>
             <div  style="float: right">
                  <a class="buttonac" href="/order"> Order bevestigen </a>
+                <p class="text-danger">
+                    <% String noNull = (String)request.getAttribute("noNull");
+                        if(noNull!=null){out.print(noNull);}%>
+                </p>
             </div>
         </div>
 

@@ -13,8 +13,13 @@
 <head>
     <title>AddGame</title>
     <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
-<body>
+<body style="background: white">
+<jsp:include page="../navbar.jsp">
+    <jsp:param name="userFirstName" value="${authUser.firstName}"/>
+</jsp:include>
 <div class="row justify-content-center">
     <div class="col text-center">
         <h1 class="display-5 bg-dark text-light py-1">Edit Game</h1>
@@ -183,5 +188,7 @@
 </form:form>
 </div>
 <script type="text/javascript" src="http://livejs.com/live.js"></script>
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 </body>
 </html>

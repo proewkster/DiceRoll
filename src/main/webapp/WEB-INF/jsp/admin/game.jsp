@@ -14,16 +14,18 @@
 <head>
     <title>DiceRoll - Register</title>
     <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<jsp:include page="../navbar.jsp">
+    <jsp:param name="userFirstName" value="${authUser.firstName}"/>
+</jsp:include>
 <div class="row justify-content-center">
     <div class="col text-center">
         <h1 class="display-5 bg-dark text-light py-1">CRUD Games</h1>
     </div>
 </div>
-
-
-
 
 <div class="container-md">
     <form:form action="/game" method="get" modelAttribute="search">

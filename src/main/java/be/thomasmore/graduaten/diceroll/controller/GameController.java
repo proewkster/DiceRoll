@@ -1,6 +1,8 @@
 package be.thomasmore.graduaten.diceroll.controller;
 
 import be.thomasmore.graduaten.diceroll.entity.Game;
+import be.thomasmore.graduaten.diceroll.entity.User;
+import be.thomasmore.graduaten.diceroll.helper.UserInformation;
 import be.thomasmore.graduaten.diceroll.objects.Search;
 import be.thomasmore.graduaten.diceroll.service.GameService;
 import org.modelmapper.ModelMapper;
@@ -28,20 +30,22 @@ public class GameController {
 
     @RequestMapping(value = "/game", method = RequestMethod.GET)
     public ModelAndView GetGame(Search search){
-        ModelAndView mv = new ModelAndView("game");
+        ModelAndView mv = new ModelAndView("admin/game");
         List<Game> games = null;
         if (search.getId() == null){
             games = gameService.getGamesByTitle(search.getKeyword());
         }else {
             games = gameService.getGamesById(search.getId());
         }
+        User authUser = UserInformation.getAuthenticatedUser();
+        mv.addObject("authUser", authUser);
         mv.addObject("games",games);
         mv.addObject("search",search);
         return mv;
     }
     @RequestMapping(value = "/game",method = RequestMethod.POST)
     public String PostGame(Model model,@RequestParam String keyword){
-    return "game";
+    return "admin/game";
     }
 
     //@RequestMapping("/addGame")
@@ -63,7 +67,9 @@ public class GameController {
     @GetMapping("addGame")
     public ModelAndView register(Game game)
     {
-        ModelAndView mv = new ModelAndView("addGame");
+        ModelAndView mv = new ModelAndView("admin/addGame");
+        User authUser = UserInformation.getAuthenticatedUser();
+        mv.addObject("authUser", authUser);
         mv.addObject("game",game);
         return mv;
     }
@@ -75,47 +81,52 @@ public class GameController {
         if (bindingResult.hasErrors()) {
             log.info(">> Controller has detected errors");
 
-            ModelAndView mv = new ModelAndView("addGame");
+            ModelAndView mv = new ModelAndView("admin/addGame");
             mv.addObject("game", game);
             return mv;
         }
             gameService.saveGame(game);
 
-        return new ModelAndView("addGame");
+        return new ModelAndView("admin/addGame");
     }
     @RequestMapping("deleteGame/{id}")
     public String deleteGame(@PathVariable Long id){
         Game game = gameService.getGameById(id);
         game.setIgnore(true);
         gameService.saveGame(game);
-        return "redirect:/game";
+        return "admin/game";
     }
 
     public ModelMapper mapper;
     @RequestMapping( value = "/editGame",method = RequestMethod.GET)
     public ModelAndView editGame(@RequestParam Long id){
-        ModelAndView mv = new ModelAndView("editGame");
+        ModelAndView mv = new ModelAndView("admin/editGame");
         Game game = gameService.getGameById(id);
+        User authUser = UserInformation.getAuthenticatedUser();
+        mv.addObject("authUser", authUser);
         mv.addObject( "game",game);
         return mv;
     }
     @RequestMapping(value = "/editGame", method = RequestMethod.POST)
         public ModelAndView saveGame(@ModelAttribute("game") @Valid Game game, BindingResult bindingResult ){
+        User authUser = UserInformation.getAuthenticatedUser();
 
         if (bindingResult.hasErrors()) {
             log.info(">> Controller has detected errors");
 
-            ModelAndView mv = new ModelAndView("editGame");
+            ModelAndView mv = new ModelAndView("admin/editGame");
             mv.addObject("game", game);
+            mv.addObject("authUser", authUser);
             return mv;
         }
         try {
         gameService.saveGame(game);
-        return new ModelAndView("redirect:/game");
+        return new ModelAndView("admin/game");
         }
         catch (Exception exception){
-            ModelAndView mv = new ModelAndView("editGame");
+            ModelAndView mv = new ModelAndView("admin/editGame");
             mv.addObject("game", game);
+            mv.addObject("authUser", authUser);
             return mv;
         }
 

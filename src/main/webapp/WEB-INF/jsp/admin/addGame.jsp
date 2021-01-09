@@ -12,15 +12,20 @@
 <head>
     <title>AddGame</title>
     <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
-<body>
+<body style="background: white">
+<jsp:include page="../navbar.jsp">
+    <jsp:param name="userFirstName" value="${authUser.firstName}"/>
+</jsp:include>
 <div class="row justify-content-center">
     <div class="col text-center">
         <h1 class="display-5 bg-dark text-light py-1">Add Game</h1>
     </div>
 </div>
 <%--@elvariable id="GameDTO" type="be.thomasmore.graduaten.diceroll.objects.GameDTO"--%>
-<div class="container-md">
+<div class="container-md" >
 <form:form method="post" action="addGame" modelAttribute="game">
     <div class="row">
 
@@ -169,8 +174,20 @@
                 </div>
             </spring:bind>
         </div>
-        <button class="btn-dark" type="submit">submit</button>
+        <div class="col-6">
+            <div class="form-row py-1">
+                <button class="btn-dark" type="submit">submit</button>
+            </div>
+        </div>
+            <div class="col-6">
+                <div class="form-row py-1">
+                    <a class="btn-dark" style="padding: 5px;text-decoration: none;float: right" href="/game">Terug naar overzicht</a>
+                </div>
+            </div>
+
 </form:form>
 </div>
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 <%@ page import="be.thomasmore.graduaten.diceroll.entity.RentedGame" %>
 <%@ page import="be.thomasmore.graduaten.diceroll.objects.RentedGameDTO" %>
 <%@ page import="be.thomasmore.graduaten.diceroll.objects.SessionGameDTO" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
@@ -26,7 +27,9 @@
         <a class="nav-link d-inline-block text-light" href="/winkelmand">Winkelmand <i class="fa fa-shopping-cart">
             <% List<RentedGameDTO> rentedGameDTOS = (List<RentedGameDTO>)session.getAttribute("RentGameDTOS");
                 List<SessionGameDTO> sessionGameDTOS = (List<SessionGameDTO>)session.getAttribute("test");
-            if ((rentedGameDTOS!=null && rentedGameDTOS.size()!=0)|| (sessionGameDTOS!=null && sessionGameDTOS.size()!=0))
+                if (rentedGameDTOS==null){rentedGameDTOS= new ArrayList<RentedGameDTO>();}
+                if (sessionGameDTOS==null){sessionGameDTOS = new ArrayList<SessionGameDTO>();}
+            if ( rentedGameDTOS.size()!=0 || sessionGameDTOS.size()!=0)
             {
                 out.print(rentedGameDTOS.size()+sessionGameDTOS.size());
             } %>
@@ -95,6 +98,7 @@
                     <a class="nav-link text-dark" href="/admin/users">Gebruikers</a>
                     <a class="nav-link text-dark" href="/admin/sale">Verkoop</a>
                     <a class="nav-link text-dark" href="/admin/rent">Verhuur</a>
+                    <a class="nav-link text-dark" href="/game">Games</a>
                 </div>
             </div>
             </sec:authorize>
