@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="form-group col-lg-6 mx-auto">
-            <button type="submit" class="btn btn-primary">Verzenden</button>
+            <button type="submit" class="btn buttonac">Verzenden</button>
             </div>
         </form>
         <div class="d-flex justify-content-center">

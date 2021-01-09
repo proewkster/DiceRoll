@@ -52,10 +52,41 @@
             out.print("<button type=\"button\" class=\"btn moreInfo\" data-toggle=\"modal\" data-target=\"#gameid"+game.getGameID()+"\">"+game.getTitle()+"</button>");
             out.print("<p>Dit spel heeft een rating van "+game.getRating()+"/10.</p>");
             out.print("<p>Koopprijs: €"+game.getPrice_Sale()+"</p>");
-            out.print("<p>Huurprijs: €"+game.getPrice_Rent()+"</p>");
-            out.print("</div>");
+            out.print("<p>Huurprijs: €"+game.getPrice_Rent()+"</p>"); %>
+        <table>
+            <form action="categories" method="get">
+                <tr>
+                    <% out.print("<td><input id=\"id\" name=\"id\" type=\"hidden\" value="+game.getGameID()+ "></td>"); %>
+                </tr>
+                <tr>
+                    <td><label for="aantal">Aantal</label></td>
+                    <td><input id="aantal" type="number" min="1" name="aantal" value="1" style="margin-bottom: 10px;"/></td>
+                </tr>
+                <tr>
+                    <%String disabled="";
+                        String koop="Koop";
+                        if (game.getStock_Sale()==0){
+                            disabled = "disabled";
+                            koop = "Geen Stock";
+                        }%>
+                    <td><button class="buttonac" <%out.print(disabled);%> type="submit" style="margin-left: 0px;" id="buy" name="buy" value="1"><%out.print(koop);%></button></td>
+                    <%String disabledhuur="";
+                        String hidden="";
+                        if (game.getStock_Rent()==0)
+                        {
+                            disabledhuur="disabled";
+                            hidden="hidden";
+                        }
+                    %>
+                    <td><button class="buttonac"<%out.print(disabledhuur+" "+hidden); %> type="submit">Huur</button></td>
+                </tr>
+
+            </form>
+        </table>
+           <% out.print("</div>");
             out.print("</div>");
             %>
+
     <!-- Modal per Game-->
 
 
