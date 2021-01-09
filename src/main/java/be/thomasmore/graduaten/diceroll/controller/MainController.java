@@ -166,15 +166,4 @@ public class MainController {
 
         return mv;
     }
-
-    @GetMapping("/newhome")
-    public ModelAndView newHome() {
-        ModelAndView mv = new ModelAndView("newHome");
-
-        User authUser = UserInformation.getAuthenticatedUser();
-
-        mv.addObject("authUser", authUser);
-
-        return mv;
-    }
 }

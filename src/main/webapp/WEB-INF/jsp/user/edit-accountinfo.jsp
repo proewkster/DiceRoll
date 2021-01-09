@@ -35,7 +35,7 @@
 
         <!-- SECTION - Edit email address -->
         <div class="col col-8 offset-2 text-center p-md-5">
-            <h2 class="text-left text-primary">Emailadres wijzigen</h2>
+            <h2 class="text-left highlight">Emailadres wijzigen</h2>
 
             <p class="text-left mt-4"><strong>Huidig emailadres:</strong></p>
             <p class="text-left pl-5">${authUser.email}</p>
@@ -57,8 +57,8 @@
                 </spring:bind>
 
                 <div class="row justify-content-center">
-                    <button type="submit" class="btn btn-dark col-md-4 mt-4 mx-4">Aanpassen</button>
-                    <a href="/user/info" class="btn btn-info col-md-4 mt-4 mx-4">Annuleren</a>
+                    <button type="submit" class="btn btn-primary col-md-4 mt-4 mx-4">Aanpassen</button>
+                    <a href="/user/info" class="btn btn-primary col-md-4 mt-4 mx-4">Annuleren</a>
                 </div>
             </form:form>
         </div>
@@ -66,7 +66,7 @@
         <!-- SECTION - Edit password -->
         <div class="col col-8 offset-2 text-center p-md-5">
 
-            <h2 class="text-left text-primary">Wachtwoord wijzigen</h2>
+            <h2 class="text-left highlight">Wachtwoord wijzigen</h2>
 
             <form:form method="post" action="/user/edit-password" modelAttribute="userChangePasswordDTO">
                 <spring:bind path="oldPassword">
@@ -92,8 +92,8 @@
                 </spring:bind>
 
                 <div class="row justify-content-center">
-                    <button type="submit" class="btn btn-dark col-md-4 mt-4 mx-4">Aanpassen</button>
-                    <a href="/user/info" class="btn btn-info col-md-4 mt-4 mx-4">Annuleren</a>
+                    <button type="submit" class="btn btn-primary col-md-4 mt-4 mx-4">Aanpassen</button>
+                    <a href="/user/info" class="btn btn-primary col-md-4 mt-4 mx-4">Annuleren</a>
                 </div>
 
             </form:form>

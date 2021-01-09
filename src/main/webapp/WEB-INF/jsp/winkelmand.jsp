@@ -15,7 +15,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>winkelmand</title>
+    <title>DiceRoll - Winkelmand</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="css/style.css">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">

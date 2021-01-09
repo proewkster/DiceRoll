@@ -24,7 +24,7 @@
 
     <div class="row justify-content-center">
         <div class="col text-center">
-            <h1 class="display-5 bg-dark text-light py-1">Register for an account</h1>
+            <h1 class="display-5 bg-dark text-light py-1">Account aanmaken</h1>
         </div>
     </div>
 
@@ -34,11 +34,11 @@
             <div class="row">
                 <div class="col col-md-6 col-12 text-center">
 
-                    <h2 class="py-1">Account Information</h2>
+                    <h2 class="py-1 highlight">Account informatie</h2>
 
                     <spring:bind path="email">
                         <div class="form-row py-1">
-                            <label>Email Address*:</label>
+                            <label>Emailadres*:</label>
                             <form:input type="text" cssClass="form-control ${status.error ? 'is-invalid' : ''}" path="email" id="email"/>
                             <form:errors path="email" cssClass="text-danger"/>
                         </div>
@@ -46,7 +46,7 @@
 
                     <spring:bind path="password">
                         <div class="form-row py-1">
-                            <label>Password*:</label>
+                            <label>Wachtwoord*:</label>
                             <form:input type="password" cssClass="form-control ${status.error ? 'is-invalid' : ''}" path="password" id="password"/>
                             <form:errors path="password" cssClass="text-danger"/>
                         </div>
@@ -54,7 +54,7 @@
 
                     <spring:bind path="confirmPassword">
                         <div class="form-row py-1">
-                            <label>Confirm Password*:</label>
+                            <label>Wachtwoord bevestigen*:</label>
                             <form:input type="password" cssClass="form-control ${status.error ? 'is-invalid' : ''}" path="confirmPassword" id="confirmPassword"/>
                             <form:errors path="confirmPassword" cssClass="text-danger"/>
                         </div>
@@ -64,11 +64,11 @@
 
                 <div class="col col-md-6 text-center">
 
-                    <h2 class="py-1">Personal information</h2>
+                    <h2 class="py-1 highlight">Persoonlijke informatie</h2>
 
                     <spring:bind path="firstname">
                         <div class="form-row py-1">
-                            <label>First Name*:</label>
+                            <label>Voornaam*:</label>
                             <form:input type="text" cssClass="form-control ${status.error ? 'is-invalid' : ''}" path="firstname" id="firstname"/>
                             <form:errors path="firstname" cssClass="text-danger"/>
                         </div>
@@ -76,7 +76,7 @@
 
                     <spring:bind path="lastname">
                         <div class="form-row py-1">
-                            <label>Last Name*:</label>
+                            <label>Achternaam*:</label>
                             <form:input type="text" cssClass="form-control ${status.error ? 'is-invalid' : ''}" path="lastname" id="lastname"/>
                             <form:errors path="lastname" cssClass="text-danger"/>
                         </div>
@@ -84,19 +84,19 @@
 
                     <spring:bind path="birthdate">
                         <div class="form-row py-1">
-                            <label>Birthdate*:</label>
+                            <label>Geboortedatum*:</label>
                             <form:input type="date" cssClass="form-control ${status.error ? 'is-invalid' : ''}" path="birthdate" id="birthdate"/>
                             <form:errors path="birthdate" cssClass="text-danger"/>
                         </div>
                     </spring:bind>
 
-                    <h2 class="py-1">Address information</h2>
+                    <h2 class="py-1 highlight">Adres informatie</h2>
 
                     <div class="row">
                         <div class="col-12">
                             <spring:bind path="streetAddress">
                                 <div class="form-row py-1">
-                                    <label>Street Address*:</label>
+                                    <label>Straat en huisnummer*:</label>
                                     <form:input type="text" cssClass="form-control ${status.error ? 'is-invalid' : ''}" path="streetAddress" id="streetAddress"/>
                                     <form:errors path="streetAddress" cssClass="text-danger"/>
                                 </div>
@@ -108,7 +108,7 @@
                         <div class="col-4">
                             <spring:bind path="zipcode">
                                 <div class="form-row py-1">
-                                    <label>Zipcode*:</label>
+                                    <label>Postcode*:</label>
                                     <form:input type="text" cssClass="form-control ${status.error ? 'is-invalid' : ''}" path="zipcode" id="zipcode"/>
                                     <form:errors path="zipcode" cssClass="text-danger"/>
                                 </div>
@@ -118,7 +118,7 @@
                         <div class="col-8">
                             <spring:bind path="city">
                                 <div class="form-row py-1">
-                                    <label>City*:</label>
+                                    <label>Gemeente*:</label>
                                     <form:input type="text" cssClass="form-control ${status.error ? 'is-invalid' : ''}" path="city" id="city"/>
                                     <form:errors path="city" cssClass="text-danger"/>
                                 </div>
@@ -126,11 +126,11 @@
                         </div>
                     </div>
 
-                    <h2 class="py-1">Contact Information</h2>
+                    <h2 class="py-1 highlight">Contact informatie</h2>
 
                     <spring:bind path="phoneNumber">
                         <div class="form-row py-1">
-                            <label>Phone Number:</label>
+                            <label>Telefoonnummer:</label>
                             <form:input type="text" cssClass="form-control ${status.error ? 'is-invalid' : ''}" path="phoneNumber" id="phoneNumber"/>
                             <form:errors path="phoneNumber" cssClass="text-danger"/>
                         </div>
@@ -138,7 +138,7 @@
 
                     <spring:bind path="mobileNumber">
                         <div class="form-row py-1">
-                            <label>Mobile Number:</label>
+                            <label>Mobiel nummer:</label>
                             <form:input type="text" cssClass="form-control ${status.error ? 'is-invalid' : ''}" path="mobileNumber" id="mobileNumber"/>
                             <form:errors path="mobileNumber" cssClass="text-danger"/>
                         </div>
@@ -148,13 +148,13 @@
             </div>
 
             <div class="row justify-content-center">
-                <p class="text-muted">Fields marked with * are mandatory</p>
+                <p class="text-muted">Velden gemarkeerd met * zijn verplicht</p>
             </div>
             <div class="row justify-content-center">
-                <button type="submit" class="btn btn-dark btn-block col-md-6 mt-4 mx-4">Register</button>
+                <button type="submit" class="btn btn-primary btn-block col-md-6 mt-4 mx-4">Registreren</button>
             </div>
             <div class="row justify-content-center">
-                <p class="py-1">Already have an account? <a href="login">Sign in</a></p>
+                <p class="py-1">Heb je al een account? <a href="login">Log hier in</a></p>
             </div>
 
         </form:form>

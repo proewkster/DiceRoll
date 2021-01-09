@@ -26,8 +26,8 @@
     <div class="row">
         <div class="col-xl-6 col-12 d-flex align-items-lg-stretch order-1">
             <div class="card text-center mx-xl-1 my-1 w-100">
-                <div class="card-header">
-                    <p class="card-title">Account informatie</p>
+                <div class="card-header navbar-color pb-1">
+                    <h2 class="card-title text-light">Account informatie</h2>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -48,14 +48,14 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="/user/edit-accountinfo" class="btn btn-dark btn-block">Aanpassen</a>
+                    <a href="/user/edit-accountinfo" class="btn btn-primary btn-block">Aanpassen</a>
                 </div>
             </div>
         </div>
         <div class="col-xl-6 col-12 d-flex align-items-lg-stretch order-2">
             <div class="card text-center mx-xl-1 my-1 w-100">
-                <div class="card-header">
-                    <p class="card-title">Persoonlijke informatie</p>
+                <div class="card-header card-header navbar-color pb-1">
+                    <h2 class="card-title text-light">Persoonlijke informatie</h2>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -79,12 +79,12 @@
                             <p><strong>Geboortedatum: </strong></p>
                         </div>
                         <div class="col-8 text-left text-muted">
-                            <p>${authUser.birthdate}</p>
+                            <p>${authUser.formattedBDate}</p>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="/user/edit-personalinfo" class="btn btn-dark btn-block">Aanpassen</a>
+                    <a href="/user/edit-personalinfo" class="btn btn-primary btn-block">Aanpassen</a>
                 </div>
             </div>
         </div>
@@ -93,8 +93,8 @@
 
         <div class="col-xl-6 col-12 d-flex align-items-lg-stretch order-xl-4 order-3">
             <div class="card text-center mx-xl-1 my-1 w-100">
-                <div class="card-header">
-                    <p class="card-title">Contactinformatie</p>
+                <div class="card-header card-header navbar-color pb-1">
+                    <h2 class="card-title text-light">Contactinformatie</h2>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -139,7 +139,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="/user/edit-contactinfo" class="btn btn-dark btn-block">Aanpassen</a>
+                    <a href="/user/edit-contactinfo" class="btn btn-primary btn-block">Aanpassen</a>
                 </div>
             </div>
         </div>
@@ -149,7 +149,7 @@
                 <div class="col-8 offset-2 w-100 m-2 p-3">
                     <div class="border border-dark w-100 p-3 rounded text-center">
                         <i class="fa fa-download fa-4x mx-auto"></i>
-                        <a href="/user/download" class="btn btn-dark btn-block">Gegevens downloaden</a>
+                        <a href="/user/download" class="btn btn-primary btn-block">Gegevens downloaden</a>
                     </div>
                 </div>
                 <div class="col-8 offset-2 w-100 m-2 p-3 rounded">
@@ -185,7 +185,7 @@
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger">Verwijderen</button>
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">Annuleren</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Annuleren</button>
                 </div>
                 </form:form>
             </div>

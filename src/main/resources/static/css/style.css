@@ -221,3 +221,12 @@ p{
     margin: 10px 5%;
     object-fit: contain;
 }
+
+.btn-primary {
+    background-color: #e8491d;
+    border-color: #e8491d;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #c5270b;
+    border-color: #c5270b;
+}

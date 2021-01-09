@@ -106,7 +106,7 @@
 
             <div class="modal-footer">
                 <a href="#" class="btn btn-danger mx-1" id="btnRemoveUser">Verwijderen</a>
-                <button type="button" class="btn btn-dark mx-1" data-dismiss="modal">Annuleren</button>
+                <button type="button" class="btn buttonac mx-1" data-dismiss="modal">Annuleren</button>
             </div>
         </div>
     </div>

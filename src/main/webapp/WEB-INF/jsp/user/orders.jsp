@@ -15,7 +15,7 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
 
-    <title>DiceRoll - Admin - Orders</title>
+    <title>DiceRoll - Mijn orders</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 </head>
@@ -27,8 +27,8 @@
 
 <div class="container">
     <nav class="nav nav-tabs mt-3" role="tablist">
-        <a class="nav-item nav-link active" href="#saleOverview" data-toggle="tab" role="tab" aria-controls="saleOverview">Overzicht aankopen</a>
-        <a class="nav-item nav-link" href="#rentOverview" data-toggle="tab" role="tab" aria-controls="rentOverview">Overzicht huur</a>
+        <a class="nav-item nav-link active text-dark" href="#saleOverview" data-toggle="tab" role="tab" aria-controls="saleOverview">Overzicht aankopen</a>
+        <a class="nav-item nav-link text-dark" href="#rentOverview" data-toggle="tab" role="tab" aria-controls="rentOverview">Overzicht huur</a>
     </nav>
 
     <div class="tab-content">
@@ -83,9 +83,9 @@
             <table class="table table-striped table-bordered table-advance table-hover table-responsive-xl">
                 <thead class="thead-dark">
                 <tr>
-                    <th style="width: 25%;">Order ID</th>
-                    <th style="width: 25%;">Betaald</th>
-                    <th style="width: 25%;"></th>
+                    <th style="width: 35%;">Order ID</th>
+                    <th style="width: 35%;">Betaald</th>
+                    <th style="width: 30%;"></th>
                 </tr>
                 </thead>
 

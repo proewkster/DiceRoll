@@ -101,5 +101,5 @@
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-dark mx-1" data-dismiss="modal">Sluiten</button>
+    <button type="button" class="btn btn-primary mx-1" data-dismiss="modal">Sluiten</button>
 </div>

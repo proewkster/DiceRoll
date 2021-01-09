@@ -1,6 +1,8 @@
 package be.thomasmore.graduaten.diceroll.entity;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -23,7 +25,7 @@ public class User {
     @Column(name = "Password")
     private String password;
     @Column(name = "Birthdate")
-    private Date birthdate;
+    private java.sql.Date birthdate;
     @Column(name = "PostalCode")
     private String zipCode;
     @Column(name = "City")
@@ -85,11 +87,11 @@ public class User {
         this.password = password;
     }
 
-    public Date getBirthdate() {
+    public java.sql.Date getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(java.sql.Date birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -155,6 +157,13 @@ public class User {
 
     public void setAuthorities(List<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    // Custom Getters and Setters
+    public String getFormattedBDate() {
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+        return format.format(getBirthdate());
     }
 
     //Constructors

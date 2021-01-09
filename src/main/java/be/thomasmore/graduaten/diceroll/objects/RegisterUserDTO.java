@@ -8,33 +8,33 @@ public class RegisterUserDTO {
 
     //Attributes
 
-    @NotBlank(message = "Enter your first name")
+    @NotBlank(message = "Gelieve je voornaam in te geven")
     private String firstname;
 
-    @NotBlank(message = "Enter your last name")
+    @NotBlank(message = "Gelieve je achternaam in te geven")
     private String lastname;
 
-    @NotBlank(message = "Enter your email address")
-    @Email(message = "Enter a valid email address")
+    @NotBlank(message = "Gelieve je emailadres in te geven")
+    @Email(message = "Gelieve een geldig emailadres in te geven")
     private String email;
 
-    @NotBlank(message = "Enter a password")
-    @Size(min = 6, message = "Password must be at least 6 characters")
+    @NotBlank(message = "Gelieve een wachtwoord in te geven")
+    @Size(min = 6, message = "Het wachtwoord moet uit minstens 6 tekens bestaan")
     private String password;
 
-    @NotBlank(message = "Re-enter your password")
+    @NotBlank(message = "Gelieve je wachtwoord te bevestigen")
     private String confirmPassword;
 
-    @NotBlank(message = "Select your birthdate")
+    @NotBlank(message = "Selecteer je geboortedatum")
     private String birthdate;
 
-    @NotBlank(message = "Enter your zipcode")
+    @NotBlank(message = "Gelieve een postcode in te geven")
     private String zipcode;
 
-    @NotBlank(message = "Enter your city")
+    @NotBlank(message = "Gelieve een gemeente in te geven")
     private String city;
 
-    @NotBlank(message = "Enter your street address")
+    @NotBlank(message = "Gelieve straat en huisnummer in te geven")
     private String streetAddress;
 
     private String phoneNumber;

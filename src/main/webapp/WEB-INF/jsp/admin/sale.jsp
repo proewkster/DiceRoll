@@ -36,7 +36,7 @@
     <div class="row">
             <!-- Filter -->
         <div class="col-12">
-            <button class="btn btn-dark mb-3" type="button" data-toggle="collapse" data-target="#saleFilter" aria-expanded="false" aria-controls="saleFilter">
+            <button class="btn buttonac mb-3" type="button" data-toggle="collapse" data-target="#saleFilter" aria-expanded="false" aria-controls="saleFilter">
                 Filter
             </button>
         </div>
@@ -145,7 +145,7 @@
                         <div class="row">
                             <div class="col-12 text-right">
                                 <a href="/admin/sale" class="btn btn-danger">Filters verwijderen</a>
-                                <button type="submit" class="btn btn-dark">Filter toepassen</button>
+                                <button type="submit" class="btn buttonac">Filter toepassen</button>
                             </div>
                         </div>
                     </form:form>

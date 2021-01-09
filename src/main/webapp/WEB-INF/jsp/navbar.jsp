@@ -54,7 +54,7 @@
                     </div>
 
                     <div class="row justify-content-center">
-                        <button type="submit" class="btn btn-dark btn-block mt-2">Inloggen</button>
+                        <button type="submit" class="btn btn-primary btn-block mt-2">Inloggen</button>
                     </div>
 
                 </form>

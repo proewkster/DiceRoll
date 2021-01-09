@@ -53,7 +53,7 @@ public class RegisterController {
         if (_userService.userExists(registerUserDTO.getEmail())) {
 
             //Inject error message in validation result for email field
-            bindingResult.addError(new FieldError("userDTO","email","This email address is already in use."));
+            bindingResult.addError(new FieldError("userDTO","email","Dit emailadres is reeds in gebruik"));
         }
 
         //Check matching passwords
@@ -62,7 +62,7 @@ public class RegisterController {
             if (!registerUserDTO.getPassword().equals(registerUserDTO.getConfirmPassword())) {
 
                 //Inject error message in validation result for confirmPassword field
-                bindingResult.addError(new FieldError("userDTO","confirmPassword","Passwords do not match"));
+                bindingResult.addError(new FieldError("userDTO","confirmPassword","Wachtwoorden komen niet overeen"));
             }
         }
 

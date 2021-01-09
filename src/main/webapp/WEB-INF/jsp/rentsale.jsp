@@ -12,7 +12,7 @@
     <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <title> DiceRollBoardGames | stocksale</title>
+    <title> DiceRoll - Stock Verhuur</title>
 </head>
 <body>
 <jsp:include page="navbar.jsp">

@@ -22,7 +22,7 @@
 
 <div class="row justify-content-center">
     <div class="col text-center">
-        <h1 class="display-5 bg-dark text-light py-1">Sign in</h1>
+        <h1 class="display-5 bg-dark text-light py-1">Inloggen</h1>
     </div>
 </div>
 
@@ -41,12 +41,12 @@
                 </c:if>
 
                 <div class="form-row py-1">
-                    <label>Email Address:</label>
+                    <label>Emailadres:</label>
                     <input type="text" class="form-control" name="username" id="username" placeholder="email address"/>
                 </div>
 
                 <div class="form-row py-1">
-                    <label>Password:</label>
+                    <label>Wachtwoord:</label>
                     <input type="password" class="form-control" name="password" id="password" placeholder="password"/>
                 </div>
 
@@ -54,10 +54,10 @@
         </div>
 
         <div class="row justify-content-center">
-            <button type="submit" class="btn btn-dark btn-block col-md-6 mt-4 mx-4">Sign in</button>
+            <button type="submit" class="btn btn-primary btn-block col-md-6 mt-4 mx-4">Sign in</button>
         </div>
         <div class="row justify-content-center">
-            <p class="py-1">Don't have an account? <a href="register">Register here</a></p>
+            <p class="py-1">Geen account? <a href="register">Maak er een aan</a></p>
         </div>
     </form>
 </div>

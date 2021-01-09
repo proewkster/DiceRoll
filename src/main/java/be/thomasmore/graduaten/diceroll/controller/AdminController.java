@@ -353,7 +353,7 @@ public class AdminController {
     }
 
     @PostMapping("admin/rent/filter")
-    public ModelAndView RentOrdersFiltered(@ModelAttribute("rentOrderfilter") RentOrderFilter rentOrderFilter, RedirectAttributes redirectAttributes) {
+    public ModelAndView RentOrdersFiltered(@ModelAttribute("rentOrderFilter") RentOrderFilter rentOrderFilter, RedirectAttributes redirectAttributes) {
 
         // Create View Model and redirect to HTTP GET method
         ModelAndView mv = new ModelAndView("redirect:/admin/rent");

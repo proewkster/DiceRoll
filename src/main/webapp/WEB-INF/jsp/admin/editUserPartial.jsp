@@ -117,7 +117,7 @@
 
 <div class="modal-footer">
     <button type="submit" class="btn btn-primary mx-1">Aanpassen</button>
-    <button type="button" class="btn btn-dark mx-1" data-dismiss="modal">Annuleren</button>
+    <button type="button" class="btn btn-primary mx-1" data-dismiss="modal">Annuleren</button>
 </div>
 
 </form:form>

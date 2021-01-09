@@ -32,7 +32,7 @@
 
     <div class="row">
         <div class="col col-8 offset-2 text-center p-md-5">
-            <h2 class="text-left text-primary">Gegevens wijzigen</h2>
+            <h2 class="text-left highlight">Gegevens wijzigen</h2>
 
             <form:form method="post" action="/user/edit-personalinfo" modelAttribute="userChangePersonalDTO">
                 <spring:bind path="firstName">
@@ -58,8 +58,8 @@
                 </spring:bind>
 
                 <div class="row justify-content-center">
-                    <button type="submit" class="btn btn-dark col-md-4 mt-4 mx-4">Aanpassen</button>
-                    <a href="/user/info" class="btn btn-info col-md-4 mt-4 mx-4">Annuleren</a>
+                    <button type="submit" class="btn btn-primary col-md-4 mt-4 mx-4">Aanpassen</button>
+                    <a href="/user/info" class="btn btn-primary col-md-4 mt-4 mx-4">Annuleren</a>
                 </div>
             </form:form>
         </div>

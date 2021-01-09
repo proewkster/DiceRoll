@@ -14,6 +14,7 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -178,7 +179,8 @@ public class UserService {
         user.setPhoneNumber("anonymized");
         user.setMobileNumber("anonymized");
         user.setEnabled(false);
-        user.setBirthdate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+        user.setBirthdate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+        //user.setBirthdate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
 
         return user;
     }

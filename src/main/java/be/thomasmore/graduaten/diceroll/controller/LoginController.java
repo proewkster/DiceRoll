@@ -27,12 +27,12 @@ public class LoginController {
 
         //Set parameters if login error occurred
         if (error) {
-            errorMessage = "Wrong username and/or password";
+            errorMessage = "Onjuiste gebruikersnaam of wachtwoord!";
         }
 
         //Set parameters if logout occurred
         if (logout) {
-            logoutMessage = "You have been successfully logged out!";
+            logoutMessage = "Je bent succesvol afgemeld.";
         }
 
         //Add parameters to page model

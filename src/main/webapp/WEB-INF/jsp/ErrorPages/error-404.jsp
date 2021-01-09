@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Error - 404</title>
+    <title>DiceRoll - Pagina niet gevonden</title>
     <script src="${pageContext.request.contextPath}/webjars/jquery/3.5.1/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>

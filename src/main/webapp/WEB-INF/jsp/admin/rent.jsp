@@ -36,7 +36,7 @@
     <div class="row">
         <!-- Filter -->
         <div class="col-12">
-            <button class="btn btn-dark mb-3" type="button" data-toggle="collapse" data-target="#rentFilter" aria-expanded="false" aria-controls="rentFilter">
+            <button class="btn btn-primary mb-3" type="button" data-toggle="collapse" data-target="#rentFilter" aria-expanded="false" aria-controls="rentFilter">
                 Filter
             </button>
         </div>
@@ -98,7 +98,7 @@
                         <div class="row">
                             <div class="col-12 text-right">
                                 <a href="/admin/rent" class="btn btn-danger">Filters verwijderen</a>
-                                <button type="submit" class="btn btn-dark">Filter toepassen</button>
+                                <button type="submit" class="btn btn-primary">Filter toepassen</button>
                             </div>
                         </div>
                     </form:form>
