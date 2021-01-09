@@ -131,7 +131,11 @@ header nav{
 }
 .moreInfo{
     background-color: #e8491d;
-
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    text-overflow: ellipsis;
+    max-width: 90%;
 }
 footer{
     margin-top: 20px;
@@ -200,7 +204,7 @@ p{
 
 .gameList{
     width: 400px;
-    height: 500px;
+    height: 550px;
     margin: 10px;
     border: black 1px solid;
     display: flex;
@@ -213,7 +217,7 @@ p{
 }
 .gameList img, .afbModal{
     max-width: 90%;
-    max-height: 50%;
+    max-height: 45%;
     margin: 10px 5%;
     object-fit: contain;
 }

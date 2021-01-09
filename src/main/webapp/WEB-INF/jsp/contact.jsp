@@ -26,7 +26,7 @@
         <p>Heb je een vraag of een opmerking? Neem dan contact met ons op via info@Diceroll.be</p>
         <p>Klachten? Contacteer ons op Joeri.Verlooy@ThomasMore.be</p>
         <br>
-            <p>Je kan ook het onderstaande formulier invullen wat dan doorgestuurd zal worden.</p>
+            <p>Je kan ook het onderstaande formulier invullen.</p>
         </div>
         <br>
         <form >
@@ -54,6 +54,9 @@
             <button type="submit" class="btn btn-primary">Verzenden</button>
             </div>
         </form>
+        <div class="d-flex justify-content-center">
+        <iframe  width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=4.938547611236572%2C51.15384536302758%2C4.980604648590089%2C51.1705583212067&amp;layer=mapnik" style="border: 1px solid black"></iframe>
+        </div>
     </main>
 
 <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
