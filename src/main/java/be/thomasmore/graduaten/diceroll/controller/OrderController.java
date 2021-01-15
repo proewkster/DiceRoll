@@ -52,12 +52,14 @@ public class OrderController {
         User authUser = UserInformation.getAuthenticatedUser();
         List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>)session.getAttribute("RentGameDTOS");
         List<SessionGameDTO> testen = (List<SessionGameDTO>) session.getAttribute("test");
+
         if (rentGameDTOS == null && testen ==null){
             ModelAndView mav = new ModelAndView("winkelmand");
-            String noNull = "Er is niet in de winkelmand";
+            String noNull = "Er is niets in de winkelmand";
             mav.addObject("noNull",noNull);
             return mav;
         }
+        if (rentGameDTOS == null){rentGameDTOS = new ArrayList<RentGameDTO>();}
         for (RentGameDTO rentGameDTO:rentGameDTOS) {
             rentGameDTO.setGame(gameService.getGameById(Long.parseLong(rentGameDTO.getId())));
         }
@@ -108,15 +110,17 @@ public class OrderController {
             }
             for (SessionGameDTO sessionGameDTO : sessionGameDTOS) {
                 Game game = gameService.getGameById(Long.parseLong(sessionGameDTO.getId()));
+                game.setStock_Sale(game.getStock_Sale()-sessionGameDTO.getAmount());
                 SoldGame soldGame = new SoldGame(saleOrder, game, sessionGameDTO.getPrice(), 0, sessionGameDTO.getAmount());
                 soldGameService.saveSoldGame(soldGame);
             }
 
             RentOrder rentOrder = new RentOrder(authUser, false);
             rentOrderService.save(rentOrder);
-
+            if (rentGameDTOS == null){rentGameDTOS = new ArrayList<RentGameDTO>();}
             for (RentGameDTO rentGameDTO : rentGameDTOS) {
                 Game game = gameService.getGameById(Long.parseLong(rentGameDTO.getId()));
+                game.setStock_Rent(game.getStock_Rent()-rentGameDTO.getAantal());
                 Date currentDate10 = add10DaysDate(saleOrder.getOrderDate());
                 RentedGame rentedGame = new RentedGame(rentOrder, game, rentGameDTO.getPrice(), 0, false, false, saleOrder.getOrderDate(), currentDate10);
                 rentedGameService.save(rentedGame);

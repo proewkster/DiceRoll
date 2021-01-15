@@ -44,7 +44,8 @@ public class Game {
     private Long Stock_Sale;
     private Long Stock_Rent;
     private boolean Ignore;
-    @OneToMany(mappedBy = "game",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "game",cascade = CascadeType.ALL)
+
     Set<SoldGame> soldGame = new HashSet<>();
 
     public Game() {
@@ -106,7 +107,7 @@ public class Game {
     public void setGameID(Long gameID) {
         GameID = gameID;
     }
-    @NotBlank(message = "Minplayer moet ingevuld zijn")
+    @NotBlank(message = "Titel moet ingevuld zijn")
     public String getTitle() {
         return Title;
     }
@@ -114,7 +115,7 @@ public class Game {
     public void setTitle(String title) {
         Title = title;
     }
-    @NotNull(message = "Value May not be null")
+    @NotNull(message = "Minplayer mag niet null zijn")
     public Long getMinPlayers() {
         return MinPlayers;
     }
@@ -122,7 +123,7 @@ public class Game {
     public void setMinPlayers(Long minPlayers) {
         MinPlayers = minPlayers;
     }
-    @NotNull(message = "Value May not be null")
+    @NotNull(message = "Maxplayer mag niet null zijn")
     public Long getMaxPlayers() {
         return MaxPlayers;
     }
@@ -130,7 +131,7 @@ public class Game {
     public void setMaxPlayers(Long maxPlayers) {
         MaxPlayers = maxPlayers;
     }
-    @NotNull(message = "Value May not be null")
+    @NotNull(message = "Gelieve een tijd in te geven")
     public Long getMinTime() {
         return MinTime;
     }
@@ -138,7 +139,7 @@ public class Game {
     public void setMinTime(Long minTime) {
         MinTime = minTime;
     }
-    @NotNull(message = "Value May not be null")
+    @NotNull(message = "Gelieve een tijd in te geven")
     public Long getMaxtime() {
         return Maxtime;
     }
@@ -146,7 +147,7 @@ public class Game {
     public void setMaxtime(Long maxtime) {
         Maxtime = maxtime;
     }
-    @NotNull(message = "Value May not be null")
+    @NotNull(message = "Gelieve een tijd in te geven")
     public Long getAvgTime() {
         return AvgTime;
     }
@@ -154,7 +155,7 @@ public class Game {
     public void setAvgTime(Long avgTime) {
         AvgTime = avgTime;
     }
-    @NotNull(message = "Value May not be null")
+    @NotNull(message = "Gelieve een Rating in te geven")
     public Long getRating() {
         return Rating;
     }
@@ -162,7 +163,7 @@ public class Game {
     public void setRating(Long rating) {
         Rating = rating;
     }
-    @NotNull(message = "Value May not be null")
+    @NotNull(message = "Gelieve de numvotes in te geven")
     public Long getNumVotes() {
         return NumVotes;
     }
@@ -170,7 +171,7 @@ public class Game {
     public void setNumVotes(Long numVotes) {
         NumVotes = numVotes;
     }
-    @NotBlank(message = "No null String allowed")
+    @NotBlank(message = "Gelieve de link naar de img in te geven ")
     public String getImgURL() {
         return ImgURL;
     }
@@ -186,7 +187,7 @@ public class Game {
     public void setAge(Long age) {
         Age = age;
     }
-    @NotBlank(message = "No null String allowed")
+    @NotBlank(message = "Gelieve een category in te geven")
     public String getCategory() {
         return Category;
     }
@@ -194,7 +195,7 @@ public class Game {
     public void setCategory(String category) {
         Category = category;
     }
-    @NotBlank(message = "No null String allowed")
+
     public String getDesigner() {
         return Designer;
     }
@@ -202,7 +203,7 @@ public class Game {
     public void setDesigner(String designer) {
         Designer = designer;
     }
-    @NotBlank(message = "No null String allowed")
+
     public String getDistributer() {
         return Distributor;
     }
@@ -210,7 +211,7 @@ public class Game {
     public void setDistributer(String distributer) {
         Distributor = distributer;
     }
-    @NotNull(message = "Value May not be null")
+    @NotNull(message = "Geef een verkoopprijs mee")
     public double getPrice_Sale() {
         return Price_Sale;
     }
@@ -218,7 +219,7 @@ public class Game {
     public void setPrice_Sale(double price_Sale) {
         Price_Sale = price_Sale;
     }
-    @NotNull(message = "Value May not be null")
+    @NotNull(message = "Geef een verhuurprijs mee")
     public double getPrice_Rent() {
         return Price_Rent;
     }
@@ -226,7 +227,7 @@ public class Game {
     public void setPrice_Rent(double price_Rent) {
         Price_Rent = price_Rent;
     }
-    @NotNull(message = "Value May not be null")
+    @NotNull(message = "Geef een verkoopstock in")
     public Long getStock_Sale() {
         return Stock_Sale;
     }
@@ -234,7 +235,7 @@ public class Game {
     public void setStock_Sale(Long stock_Sale) {
         Stock_Sale = stock_Sale;
     }
-    @NotNull(message = "Value May not be null")
+    @NotNull(message = "Geef een verhuurstock in")
     public Long getStock_Rent() {
         return Stock_Rent;
     }

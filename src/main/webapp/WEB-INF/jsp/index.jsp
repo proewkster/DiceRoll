@@ -13,7 +13,7 @@
 <head>
     <meta name="viewport" content="width=device-width">
     <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <title>DiceRollBoardGames</title>
 </head>
@@ -138,7 +138,7 @@
     <div class="bg-modal">
         <div class="custom-modal-content">
 
-            <button class="buttonac">Accept</button>
+            <button class="buttonaccept">Accept</button>
             <h1>Privacy Policy</h1>
             <p>Last updated: November 05, 2020</p>
             <p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.</p>
@@ -324,7 +324,7 @@
 <script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 <script>
     <% int i = (int) request.getAttribute("i"); if(i==1){%>
-    document.querySelector('.buttonac').addEventListener('click',function (){document.querySelector('.bg-modal').style.display='none';});
+    document.querySelector('.buttonaccept').addEventListener('click',function (){document.querySelector('.bg-modal').style.display='none';});
     window.onload = function (){document.querySelector('.bg-modal').style.display='flex';}
     <%};%>
 </script>

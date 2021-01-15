@@ -64,6 +64,7 @@ public class WinkelmandController {
     @RequestMapping("/additemwinkelmand")
     public ModelAndView additemwinkelmand(HttpSession session, @RequestParam int id,@RequestParam(value="buy",required = false,defaultValue = "0") Integer buy){
         ModelAndView mv = new ModelAndView("winkelmand");
+        String tooMuch = "";
         if (buy == 1) {
            List<SessionGameDTO> testen = (List<SessionGameDTO>) session.getAttribute("test");
            SessionGameDTO test = testen.get(id);

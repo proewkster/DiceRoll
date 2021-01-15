@@ -97,7 +97,7 @@
                     <a class="nav-link text-dark" href="/admin/users">Gebruikers</a>
                     <a class="nav-link text-dark" href="/admin/sale">Verkoop</a>
                     <a class="nav-link text-dark" href="/admin/rent">Verhuur</a>
-                    <a class="nav-link text-dark" href="/game">Games</a>
+                    <a class="nav-link text-dark" href="/admin/game">Games</a>
                 </div>
             </div>
             </sec:authorize>

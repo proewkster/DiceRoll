@@ -230,3 +230,19 @@ p{
     background-color: #c5270b;
     border-color: #c5270b;
 }
+.buttonaccept{
+    background-color: #e8491d;
+    text-align: center;
+    display: inline-block;
+    margin-left: 10px;
+    color: white;
+    border: none;
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 2px;
+}
+.buttonaccept:hover{
+    text-decoration: none;
+    background-color: hsl(25, 94%, 61%);
+    color: white;
+}

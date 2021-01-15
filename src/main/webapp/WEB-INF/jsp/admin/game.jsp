@@ -12,10 +12,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>DiceRoll - Register</title>
-    <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <title>DiceRoll - Admin Game</title>
+    <link href="../webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 <jsp:include page="../navbar.jsp">
@@ -28,13 +28,14 @@
 </div>
 
 <div class="container-md">
-    <form:form action="/game" method="get" modelAttribute="search">
-        <label for="keyword">By Title:</label>
+    <form:form action="/admin/game" method="get" modelAttribute="search">
+        <label for="keyword">Door Titel:</label>
         <form:input path="keyword" id="keyword"/>
-        <label for="id">By Id:</label>
+        <label for="id">Door Id:</label>
         <form:input path="id"/>
-        <button class="btn-dark" type="submit">Search</button>
-        <a class="btn-dark" style="padding: 5px;text-decoration: none;float: right" href="/addGame">Add Game</a>
+        <button class="btn-dark" type="submit">Zoeken</button>
+
+        <a class="btn-dark" style="padding: 5px;text-decoration: none;float: right" href="/admin/addGame">Game Toevoegen</a>
     </form:form>
     <table class="table table-hover">
         <tr>
@@ -64,8 +65,8 @@
 
 </div>
 
-<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
-<script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+<script src="../webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="../webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 
 </body>
 </html>

@@ -8,11 +8,13 @@ import be.thomasmore.graduaten.diceroll.objects.SessionGameDTO;
 import be.thomasmore.graduaten.diceroll.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +63,9 @@ public class MainController {
 
 
     @RequestMapping("/categories")
-        public ModelAndView categorieToCart(HttpSession session, @RequestParam String id,@RequestParam int aantal,@RequestParam(value="buy",required = false,defaultValue = "0") Integer buy){
+        public ModelAndView categorieToCart(HttpSession session, @RequestParam String id,@RequestParam int aantal,@RequestParam(value="buy",required = false,defaultValue = "0") Integer buy,
+    HttpServletRequest request){
+        String referer = request.getHeader("Referer");
         Game game = gameService.getGameById(Long.parseLong(id));
         if (buy != 1){
             List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>)session.getAttribute("RentGameDTOS");
@@ -72,11 +76,11 @@ public class MainController {
                     int totaal = rentGameDTO.getAantal() + aantal;
                     if (game.getStock_Rent()-totaal < 0)
                     {
-                        ModelAndView mv  = new ModelAndView("rentsale");
+                        ModelAndView mav  = new ModelAndView("rentsale");
                         User authUser = UserInformation.getAuthenticatedUser();
-                        mv.addObject("authUser", authUser);
-                        mv.addObject("Game", game);
-                        return mv;
+                        mav.addObject("authUser", authUser);
+                        mav.addObject("Game", game);
+                        return mav;
                      }
                 }
             }
@@ -108,7 +112,7 @@ public class MainController {
                 rentGameDTOS.add(rentGameDTO);
             }
             session.setAttribute("RentGameDTOS",rentGameDTOS);
-            ModelAndView mv = new ModelAndView("redirect:/categorie");
+            ModelAndView  mv = new ModelAndView("redirect:"+referer);
             return mv;
         }
         List<SessionGameDTO> testen = (List<SessionGameDTO>) session.getAttribute("test");
@@ -117,20 +121,20 @@ public class MainController {
             int totaal = testdto.getAmount()+aantal;
             if (Long.parseLong(testdto.getId()) == game.getGameID()) {
                 if (game.getStock_Sale() - totaal < 0) {
-                    ModelAndView mv = new ModelAndView("stocksale");
+                    ModelAndView mav = new ModelAndView("stocksale");
                     User authUser = UserInformation.getAuthenticatedUser();
-                    mv.addObject("authUser", authUser);
-                    mv.addObject("Game", game);
-                    return mv;
+                    mav.addObject("authUser", authUser);
+                    mav.addObject("Game", game);
+                    return mav;
                 }
             }
         }
         if (game.getStock_Sale()-aantal < 0){
-            ModelAndView mv  = new ModelAndView("stocksale");
+            ModelAndView mav  = new ModelAndView("stocksale");
             User authUser = UserInformation.getAuthenticatedUser();
-            mv.addObject("authUser", authUser);
-            mv.addObject("Game", game);
-            return mv;
+            mav.addObject("authUser", authUser);
+            mav.addObject("Game", game);
+            return mav;
         }
         SessionGameDTO test = new SessionGameDTO();
         test.setId(id);
@@ -151,7 +155,7 @@ public class MainController {
         testen.add(test);
         }
         session.setAttribute("test",testen);
-        ModelAndView mv = new ModelAndView("redirect:/categorie");
+        ModelAndView  mv = new ModelAndView("redirect:"+referer);
         return mv;
     }
 

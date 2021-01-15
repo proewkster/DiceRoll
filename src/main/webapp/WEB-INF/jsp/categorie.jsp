@@ -24,7 +24,7 @@
             integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <title>Diceroll - Games</title>
 </head>
 <body>
@@ -91,7 +91,7 @@
                             hidden="hidden";
                         }
                         %>
-                        <td><button class="buttonac"<%out.print(disabledhuur+" "+hidden); %> type="submit">Huur</button></td>
+                        <td><button class="buttonac"<%out.print(disabledhuur+" "+hidden); %>  type="submit">Huur</button></td>
                     </tr>
 
                </form>

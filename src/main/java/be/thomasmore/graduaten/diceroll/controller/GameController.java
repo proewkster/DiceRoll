@@ -28,7 +28,7 @@ public class GameController {
     public GameController() {
 }
 
-    @RequestMapping(value = "/game", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/game", method = RequestMethod.GET)
     public ModelAndView GetGame(Search search){
         ModelAndView mv = new ModelAndView("admin/game");
         List<Game> games = null;
@@ -43,10 +43,10 @@ public class GameController {
         mv.addObject("search",search);
         return mv;
     }
-    @RequestMapping(value = "/game",method = RequestMethod.POST)
-    public String PostGame(Model model,@RequestParam String keyword){
-    return "admin/game";
-    }
+   // @RequestMapping(value = "/admin/game",method = RequestMethod.POST)
+    //public String PostGame(Model model,@RequestParam String keyword){
+   // return "admin/game";
+    //}
 
     //@RequestMapping("/addGame")
     //public String AddGame(Model model){
@@ -64,7 +64,7 @@ public class GameController {
         dataBinder.registerCustomEditor(String.class,stringTrimmerEditor);
     }
 
-    @GetMapping("addGame")
+    @GetMapping("/admin/addGame")
     public ModelAndView register(Game game)
     {
         ModelAndView mv = new ModelAndView("admin/addGame");
@@ -74,7 +74,7 @@ public class GameController {
         return mv;
     }
 
-    @PostMapping("addGame")
+    @PostMapping("/admin/addGame")
     public ModelAndView registerUser(@ModelAttribute("game") @Valid Game game, BindingResult bindingResult) {
 
         //Validate form input for errors
@@ -89,16 +89,17 @@ public class GameController {
 
         return new ModelAndView("admin/addGame");
     }
-    @RequestMapping("deleteGame/{id}")
-    public String deleteGame(@PathVariable Long id){
+    @RequestMapping("/admin/deleteGame/{id}")
+    public ModelAndView deleteGame(@PathVariable Long id){
         Game game = gameService.getGameById(id);
         game.setIgnore(true);
         gameService.saveGame(game);
-        return "admin/game";
+        ModelAndView mv = new ModelAndView("redirect:/admin/game");
+        return mv;
     }
 
     public ModelMapper mapper;
-    @RequestMapping( value = "/editGame",method = RequestMethod.GET)
+    @RequestMapping( value = "/admin/editGame",method = RequestMethod.GET)
     public ModelAndView editGame(@RequestParam Long id){
         ModelAndView mv = new ModelAndView("admin/editGame");
         Game game = gameService.getGameById(id);
@@ -107,7 +108,7 @@ public class GameController {
         mv.addObject( "game",game);
         return mv;
     }
-    @RequestMapping(value = "/editGame", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/editGame", method = RequestMethod.POST)
         public ModelAndView saveGame(@ModelAttribute("game") @Valid Game game, BindingResult bindingResult ){
         User authUser = UserInformation.getAuthenticatedUser();
 
@@ -121,7 +122,7 @@ public class GameController {
         }
         try {
         gameService.saveGame(game);
-        return new ModelAndView("admin/game");
+        return new ModelAndView("redirect:/admin/game");
         }
         catch (Exception exception){
             ModelAndView mv = new ModelAndView("admin/editGame");
