@@ -49,7 +49,7 @@
 
         </p>
 
-        <a href="/" class="buttonac">Continue shopping</a>
+        <a href="/" class="buttonac">Verder shoppen</a>
     </div>
 </div>
 <script src="webjars/jquery/3.5.1/jquery.min.js"></script>

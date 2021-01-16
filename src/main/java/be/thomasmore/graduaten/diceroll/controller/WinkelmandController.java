@@ -108,51 +108,6 @@ public class WinkelmandController {
         mv.addObject("authUser", authUser);
         return mv;
     }
-    @RequestMapping("/delwinkelmand")
-    public ModelAndView DelListSoldGames(HttpSession session){
-        ModelAndView mv = new ModelAndView("confirmation");
-        User user = UserInformation.getAuthenticatedUser();
-        mv.addObject("authUser",user);
-        if (user == null){
-            return new ModelAndView("login");
-        }
-        SaleOrder saleOrder = new SaleOrder();
-        saleOrder.setUser(UserInformation.getAuthenticatedUser());
-        saleOrder.setOrderDate(new Date());
-        saleOrder.setPaid(true);
-        saleOrder.setDelivered(false);
-        orderService.save(saleOrder);
-        List<SessionGameDTO> testen =(List<SessionGameDTO>) session.getAttribute("test");
-        for (SessionGameDTO test:testen) {
-            SoldGame soldGame = new SoldGame();
-            soldGame.setAmount(test.getAmount());
-            Game game = service.getGameById(Long.parseLong(test.getId()));
-            soldGame.setGame(game);
-            service.adjustStockGame(game,test.getAmount());
-            soldGame.setSaleOrder(saleOrder);
-            soldGame.setPricePaid(game.getPrice_Sale());
-            soldGame.setDiscount(5);
-            soldGameService.saveSoldGame(soldGame);
-        }
-        RentOrder rentOrder = new RentOrder(user,true);
-        rentOrderService.save(rentOrder);
-        List<RentGameDTO> rentGameDTOS = (List<RentGameDTO>) session.getAttribute("RentGameDTOS");
-        for (RentGameDTO rentGameDTO:rentGameDTOS) {
-            Game game = service.getGameById(Long.parseLong(rentGameDTO.getId()));
-            Date currentdate = new Date();
-            Calendar c = Calendar.getInstance();
-            c.setTime(currentdate);
-            c.add(Calendar.DATE,10);
-            Date currentDate10 = c.getTime();
-            RentedGame rentedGame = new RentedGame(rentOrder,game,game.getPrice_Rent(),5,false,false,new Date(),currentDate10);
-            rentedGameService.save(rentedGame);
-        }
-        testen.clear();
-        rentGameDTOS.clear();
-        session.setAttribute("RentGameDTOS",rentGameDTOS);
-        session.setAttribute("test",testen);
-        return mv;
-    }
 
     @RequestMapping("/testOrder")
     public ModelAndView TestOrder(){

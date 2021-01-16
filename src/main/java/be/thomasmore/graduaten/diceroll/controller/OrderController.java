@@ -108,6 +108,7 @@ public class OrderController {
                 ModelAndView mv = new ModelAndView("order");
                 return mv;
             }
+            if (sessionGameDTOS == null){sessionGameDTOS = new ArrayList<SessionGameDTO>();}
             for (SessionGameDTO sessionGameDTO : sessionGameDTOS) {
                 Game game = gameService.getGameById(Long.parseLong(sessionGameDTO.getId()));
                 game.setStock_Sale(game.getStock_Sale()-sessionGameDTO.getAmount());
