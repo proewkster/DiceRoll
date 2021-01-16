@@ -54,7 +54,7 @@
             <button type="submit" class="btn btn-primary">Verzenden</button>
             </div>
         </form>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center mb-3">
         <iframe  width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=4.938547611236572%2C51.15384536302758%2C4.980604648590089%2C51.1705583212067&amp;layer=mapnik" style="border: 1px solid black"></iframe>
         </div>
     </main>
