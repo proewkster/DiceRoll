@@ -1,14 +1,20 @@
 package be.thomasmore.graduaten.diceroll.controller;
 
 import be.thomasmore.graduaten.diceroll.helper.UserInformation;
+import be.thomasmore.graduaten.diceroll.objects.RentGameDTO;
+import be.thomasmore.graduaten.diceroll.objects.SessionGameDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
+import java.util.List;
+
 @Controller
 public class LoginController {
+
 
     @GetMapping("/login")
     public ModelAndView login(

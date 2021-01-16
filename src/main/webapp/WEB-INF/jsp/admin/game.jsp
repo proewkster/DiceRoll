@@ -33,9 +33,9 @@
         <form:input path="keyword" id="keyword"/>
         <label for="id">Door Id:</label>
         <form:input path="id"/>
-        <button class="btn-dark" type="submit">Zoeken</button>
+        <button class="btn-primary" type="submit">Zoeken</button>
 
-        <a class="btn-dark" style="padding: 5px;text-decoration: none;float: right" href="/admin/addGame">Game Toevoegen</a>
+        <a class="btn-primary" style="padding: 5px;text-decoration: none;float: right" href="/admin/addGame">Game Toevoegen</a>
     </form:form>
     <table class="table table-hover">
         <tr>

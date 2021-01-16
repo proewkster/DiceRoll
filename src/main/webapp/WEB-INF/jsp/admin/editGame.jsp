@@ -216,12 +216,12 @@
         </div>
         <div class="col-6">
             <div class="form-row py-1">
-                <button class="btn-dark" type="submit">submit</button>
+                <button class="btn-primary" type="submit">submit</button>
             </div>
         </div>
         <div class="col-6">
             <div class="form-row py-1">
-                <a class="btn-dark" style="padding: 5px;text-decoration: none;float: right" href="/admin/game">Terug naar overzicht</a>
+                <a class="btn-primary" style="padding: 5px;text-decoration: none;float: right" href="/admin/game">Terug naar overzicht</a>
             </div>
         </div>
 </form:form>
